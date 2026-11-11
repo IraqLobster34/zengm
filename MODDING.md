@@ -4,19 +4,7 @@ Local copy of https://github.com/zengm-games/zengm at commit
 `ac109bb79273da0b47e4d583cb889be051bfdf7f` (2026-11-11).
 Work on branch `mods`. The original repository is the `upstream` remote.
 
-## Repository map
-
-Open these Graphify outputs in a browser:
-
-- [Interactive community map](graphify-out/graph.html)
-- [Browsable file and symbol tree](graphify-out/GRAPH_TREE.html)
-- [Graph report](graphify-out/GRAPH_REPORT.md)
-- [Queryable graph data](graphify-out/graph.json)
-
-Graphify 0.9.94 mapped the working tree including the NBA Cup mod, producing
-6,096 nodes and 148 communities. The JSON retains 27,571 relationships; the clustered
-report counts 26,757 edges after collapsing parallel connections. Community names
-are numeric because this map was generated without an LLM.
+## Code overview
 
 ### Where to start a mod
 
@@ -36,27 +24,6 @@ are numeric because this map was generated without an LLM.
 The browser UI communicates with the game worker through `toWorker` and
 `toUI`. Most simulation logic lives in the worker. When changing cached
 records, write them back with the appropriate `idb.cache.*.put` call.
-
-### Query or rebuild the map
-
-Run from the repository root (PowerShell):
-
-```powershell
-graphify explain 'src/worker/core/GameSim.basketball/index.ts::GameSim'
-graphify query 'draft' --budget 2000
-
-graphify extract . --code-only --no-cluster --max-workers 4
-graphify cluster-only . --no-label
-graphify tree --root . --label 'ZenGM Mods'
-```
-
-Coverage limitations: docs and images were intentionally excluded. Graphify
-skipped 229 unclassified files; 122 code files yielded no symbols. One R
-file lacked an optional parser dependency. `src/worker/api/index.ts` had
-parser errors and only four symbols were extracted, so inspect that file
-directly when modifying worker actions. These are map limitations, not
-confirmed game defects. The graph is a navigation aid, not a complete
-runtime call graph.
 
 ## Run the game locally
 

@@ -1,4 +1,13 @@
-# NBA Cup mod — initial release
+# NBA Cup mod release notes
+
+## 0.1.1 — source package cleanup
+
+- Removed generated Graphify output from the published source tree.
+- Ignored local repository maps so they cannot be included accidentally again.
+- Removed documentation links to files that are no longer distributed.
+- No gameplay changes.
+
+## 0.1.0 — initial release
 
 An in-season Cup for Basketball GM, integrated with the existing simulation.
 

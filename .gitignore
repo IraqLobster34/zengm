@@ -12,3 +12,6 @@
 /foo
 /.vscode
 /tools/names-groups-html
+
+# Generated local repository maps
+/graphify-out/

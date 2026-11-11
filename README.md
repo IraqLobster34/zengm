@@ -72,7 +72,7 @@ node --run test
 
 The Cup, schedule, award grouping, and route checks passed **32 tests**, with one upstream test skipped. TypeScript and lint checks on changed source files passed. Browser checks covered a full Cup and regular season, 82 counting games per team, profile awards, history screens, and the championship banner.
 
-See [MODDING.md](MODDING.md) for implementation notes and the Graphify map, [release notes](RELEASE_NOTES.md) for this mod, and the [original upstream README](README.upstream.md) for ZenGM's development and contribution documentation.
+See [MODDING.md](MODDING.md) for implementation notes, [release notes](RELEASE_NOTES.md) for this mod, and the [original upstream README](README.upstream.md) for ZenGM's development and contribution documentation.
 
 ## License and credits
 
