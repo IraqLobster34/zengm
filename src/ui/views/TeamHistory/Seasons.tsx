@@ -3,6 +3,7 @@ import { RecordAndPlayoffs } from "../../components/RecordAndPlayoffs.tsx";
 import type { View } from "../../../common/types.ts";
 import { useState } from "react";
 import { onEnterOrSpace } from "../../util/onEnterOrSpace.ts";
+import { helpers } from "../../util/helpers.ts";
 
 const ExpandableNote = ({ note }: { note: string | undefined }) => {
 	const [expand, setExpand] = useState(false);
@@ -82,6 +83,18 @@ const Seasons = ({
 						/>
 					) : null}
 					{recordAndPlayoffs}
+					{h.nbaCupWinner ? (
+						<>
+							{" "}
+							·{" "}
+							<a
+								className="fw-bold"
+								href={helpers.leagueUrl(["nba_cup", h.season])}
+							>
+								NBA Cup Winner
+							</a>
+						</>
+					) : null}
 				</div>
 				<ExpandableNote note={h.note} />
 			</div>

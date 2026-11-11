@@ -11,6 +11,7 @@ import { Championships } from "./TeamHistory/Championships.tsx";
 const GmHistory = ({
 	bestRecord,
 	championships,
+	nbaCupWins,
 	finalsAppearances,
 	players,
 	playoffAppearances,
@@ -50,6 +51,7 @@ const GmHistory = ({
 							<Overall
 								bestRecord={bestRecord}
 								championships={championships}
+								nbaCupWins={nbaCupWins}
 								finalsAppearances={finalsAppearances}
 								numSeasons={Math.sumPrecise(
 									teamHistories.map((row) => row.history.length),
@@ -78,6 +80,7 @@ const GmHistory = ({
 								<Overall
 									bestRecord={teamHistory.bestRecord}
 									championships={teamHistory.championships}
+									nbaCupWins={teamHistory.nbaCupWins}
 									finalsAppearances={teamHistory.finalsAppearances}
 									numSeasons={teamHistory.history.length}
 									playoffAppearances={teamHistory.playoffAppearances}

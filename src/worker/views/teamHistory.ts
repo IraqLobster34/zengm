@@ -1,4 +1,5 @@
 import { idb } from "../db/index.ts";
+import { getCupSeason } from "../core/season/nbaCup.ts";
 import { g, helpers } from "../util/index.ts";
 import type { TeamSeason, Player } from "../../common/types.ts";
 import { defineView } from "../util/defineView.ts";
@@ -31,6 +32,7 @@ export const getHistoryTeam = (
 	let worstWinp = Infinity;
 
 	const history: {
+		nbaCupWinner: boolean;
 		season: number;
 		won: number;
 		lost: number;
@@ -64,6 +66,8 @@ export const getHistoryTeam = (
 		).length;
 
 		history.push({
+			nbaCupWinner:
+				getCupSeason(teamSeason.season)?.champion === teamSeason.tid,
 			season: teamSeason.season,
 			won: teamSeason.won,
 			lost: teamSeason.lost,
@@ -149,6 +153,7 @@ export const getHistoryTeam = (
 
 	return {
 		history,
+		nbaCupWins: history.filter((row) => row.nbaCupWinner).length,
 		totalWon,
 		totalLost,
 		totalTied,

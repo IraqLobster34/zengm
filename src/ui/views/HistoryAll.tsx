@@ -104,6 +104,12 @@ const HistoryAll = ({ awards, seasons }: View<"historyAll">) => {
 		"Season",
 		"League Champion",
 		"Runner Up",
+		...(__SPORT === "basketball"
+			? [
+					{ title: "NBA Cup Champion", sortType: "name" as const },
+					{ title: "NBA Cup MVP", sortType: "name" as const },
+				]
+			: []),
 		...awards.map((award) => {
 			return {
 				desc: award.name,
@@ -139,6 +145,16 @@ const HistoryAll = ({ awards, seasons }: View<"historyAll">) => {
 				seasonLink,
 				champEl,
 				runnerUpEl,
+				...(__SPORT === "basketball"
+					? [
+							formatTeam(s.nbaCupChamp, s.season, userTid),
+							s.nbaCupMvp ? (
+								<a href={helpers.leagueUrl(["player", s.nbaCupMvp.pid])}>
+									{s.nbaCupMvp.name}
+								</a>
+							) : null,
+						]
+					: []),
 				...awards.map(({ shortName }) => {
 					const award = awardsByShortName[shortName];
 					if (!award || !award[0]) {

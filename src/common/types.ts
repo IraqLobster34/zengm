@@ -401,6 +401,7 @@ type GameTeam = {
 };
 
 export type Game = {
+	nbaCup?: import("./nbaCup.ts").CupStage;
 	att: number;
 	clutchPlays?: string[];
 	day?: number; // Only optional for legacy
@@ -585,6 +586,8 @@ export type TragicDeaths = {
 type FootballOvertime = "suddenDeath" | "exceptFg" | "bothPossess";
 
 export type GameAttributesLeague = {
+	nbaCup?: import("./nbaCup.ts").NbaCup | null;
+	nbaCupHistory?: Record<number, import("./nbaCup.ts").NbaCup>;
 	aiJerseyRetirement: boolean;
 	aiTradesFactor: number;
 	allStarGame: number | null;
@@ -2008,6 +2011,7 @@ export type ContractInfo = {
 };
 
 export type ScheduleGameWithoutKey = {
+	nbaCup?: import("./nbaCup.ts").CupStage;
 	gid?: number;
 	awayTid: number;
 	homeTid: number;

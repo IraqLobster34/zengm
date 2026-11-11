@@ -183,7 +183,15 @@ const History = (props: View<"history">) => {
 		);
 	}
 
-	const { awards, champ, confs, retiredPlayers, retiredStat } = props;
+	const {
+		awards,
+		champ,
+		confs,
+		retiredPlayers,
+		retiredStat,
+		nbaCup,
+		nbaCupChampion,
+	} = props;
 
 	const { teamAwards1, teamAwards2 } = splitTeamAwards(awards.teamAwards);
 
@@ -196,6 +204,32 @@ const History = (props: View<"history">) => {
 	return (
 		<>
 			<MoreLinks type="awards" page="history" season={season} />
+			{nbaCupChampion ? (
+				<section className="mb-3">
+					<h2>NBA Cup Champions</h2>
+					<p>
+						<a
+							href={helpers.leagueUrl([
+								"roster",
+								`${nbaCupChampion.seasonAttrs.abbrev}_${nbaCupChampion.tid}`,
+								season,
+							])}
+						>
+							{nbaCupChampion.seasonAttrs.region}{" "}
+							{nbaCupChampion.seasonAttrs.name}
+						</a>{" "}
+						· <a href={helpers.leagueUrl(["nba_cup", season])}>Cup bracket</a>
+					</p>
+					{nbaCup?.mvp ? (
+						<p>
+							NBA Cup MVP:{" "}
+							<a href={helpers.leagueUrl(["player", nbaCup.mvp.pid])}>
+								{nbaCup.mvp.name}
+							</a>
+						</p>
+					) : null}
+				</section>
+			) : null}
 
 			<div className="row">
 				<div className="col-md-3 col-sm-4 col-12">

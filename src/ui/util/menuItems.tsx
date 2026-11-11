@@ -178,6 +178,18 @@ export const menuItems: (MenuItemLink | MenuItemHeader)[] = [
 				path: ["playoffs"],
 				text: "Playoffs",
 			},
+			...(__SPORT === "basketball"
+				? [
+						{
+							type: "link" as const,
+							active: (pageID?: string) => pageID === "nbaCup",
+							league: true,
+							commandPalette: true,
+							path: ["nba_cup"],
+							text: "NBA Cup",
+						} satisfies MenuItemLink,
+					]
+				: []),
 			{
 				type: "link",
 				active: (pageID) => pageID === "dailySchedule",

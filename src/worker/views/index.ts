@@ -17,6 +17,7 @@ export { default as comparePlayers } from "./comparePlayers.ts";
 export { default as countries } from "./countries.ts";
 export { default as customizePlayer } from "./customizePlayer.ts";
 export { default as dailySchedule } from "./dailySchedule.ts";
+export { default as nbaCup } from "./nbaCup.ts";
 export { default as dangerZone } from "./dangerZone.ts";
 export { default as dashboard } from "./dashboard.ts";
 export { default as defaultNewLeagueSettings } from "./defaultNewLeagueSettings.ts";

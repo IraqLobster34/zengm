@@ -14,6 +14,7 @@ import clsx from "clsx";
 const TeamHistory = ({
 	bestRecord,
 	championships,
+	nbaCupWins,
 	finalsAppearances,
 	history,
 	players,
@@ -95,6 +96,7 @@ const TeamHistory = ({
 							<Overall
 								bestRecord={bestRecord}
 								championships={championships}
+								nbaCupWins={nbaCupWins}
 								finalsAppearances={finalsAppearances}
 								numSeasons={history.length}
 								playoffAppearances={playoffAppearances}
@@ -126,6 +128,9 @@ const TeamHistory = ({
 						userTid={userTid}
 					/>
 					<Championships history={seasonsHistory} />
+					{__SPORT === "basketball" ? (
+						<Championships history={seasonsHistory} cup />
+					) : null}
 					<HideableSection title="Players">
 						<Players
 							godMode={godMode}

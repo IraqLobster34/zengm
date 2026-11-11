@@ -189,14 +189,16 @@ export const getUpcoming = async ({
 	};
 
 	const upcoming: {
+		nbaCup?: import("../../common/nbaCup.ts").CupStage;
 		finals?: boolean;
 		forceWin?: number | "tie";
 		gid: number;
 		season: number;
 		teams: [ReturnType<typeof getTeam>, ReturnType<typeof getTeam>];
 	}[] = filteredSchedule.map(
-		({ awayTid, day, finals, forceWin, gid, homeTid }) => {
+		({ awayTid, day, finals, forceWin, gid, homeTid, nbaCup }) => {
 			return {
+				nbaCup,
 				finals,
 				forceWin,
 				gid,

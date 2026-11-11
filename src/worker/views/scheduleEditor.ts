@@ -11,6 +11,7 @@ import { idb } from "../db/index.ts";
 import { g } from "../util/index.ts";
 import { defineView } from "../util/defineView.ts";
 import { isAllStarGame, isTradeDeadline } from "../../common/specialGames.ts";
+import { getCup } from "../core/season/nbaCup.ts";
 
 export const formatScheduleForEditor = (
 	scheduleRaw: ScheduleGameWithoutKey[],
@@ -123,6 +124,9 @@ export default defineView({
 
 			return {
 				allStarGame: g.get("allStarGame"),
+				nbaCupActive:
+					getCup()?.season === g.get("season") &&
+					getCup()?.stage !== "complete",
 				allStarGameAlreadyHappened,
 				canRegenerateSchedule,
 				maxDayAlreadyPlayed,

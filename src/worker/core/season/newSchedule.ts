@@ -3,6 +3,7 @@ import type { Conditions } from "../../../common/types.ts";
 import { g, helpers, logEvent } from "../../util/index.ts";
 import { getRealSchedule } from "./getRealSchedule.football.ts";
 import newScheduleGood from "./newScheduleGood.ts";
+import { canStartCup } from "./nbaCup.ts";
 import {
 	ALL_STAR_GAME_TIDS,
 	TRADE_DEADLINE_TIDS,
@@ -25,7 +26,17 @@ const newSchedule = (
 		}
 	}
 
-	const { tids, warning } = newScheduleGood(teams);
+	const { tids, warning } = newScheduleGood(
+		teams,
+		canStartCup(teams)
+			? {
+					divs: g.get("divs"),
+					numGames: 76, // Four group games and two knockout/consolation games follow.
+					numGamesConf: g.get("numGamesConf"),
+					numGamesDiv: g.get("numGamesDiv"),
+				}
+			: undefined,
+	);
 
 	// Add trade deadline
 	const tradeDeadline = g.get("tradeDeadline");

@@ -200,6 +200,8 @@ export const routeInfos = {
 	"/l/:lid/injuries/:team": "injuries",
 	"/l/:lid/injuries/:team/:season": "injuries",
 	"/l/:lid/daily_schedule": "dailySchedule",
+	"/l/:lid/nba_cup": "nbaCup",
+	"/l/:lid/nba_cup/:season": "nbaCup",
 	"/l/:lid/daily_schedule/:season": "dailySchedule",
 	"/l/:lid/daily_schedule/:season/:day": "dailySchedule",
 	"/l/:lid/daily_schedule/:season/:day/:cid": "dailySchedule",

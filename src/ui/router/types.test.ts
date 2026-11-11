@@ -3,6 +3,9 @@ import { test } from "vitest";
 import type { RouteParams } from "./types.ts";
 
 test("RouteParams", () => {
+	typeAssert<IsExact<RouteParams<"nbaCup">, { lid: string; season?: string }>>(
+		true,
+	);
 	typeAssert<IsExact<RouteParams<"dashboard">, Record<string, never>>>(true);
 
 	typeAssert<IsExact<RouteParams<"newLeague">, { x?: string }>>(true);

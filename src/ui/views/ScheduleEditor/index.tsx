@@ -582,6 +582,7 @@ const reducer = (
 };
 
 const ScheduleEditor = ({
+	nbaCupActive,
 	allStarGame,
 	allStarGameAlreadyHappened,
 	canRegenerateSchedule,
@@ -984,6 +985,17 @@ const ScheduleEditor = ({
 			],
 		};
 	});
+
+	if (nbaCupActive) {
+		return (
+			<p>
+				The schedule is managed by the NBA Cup until the tournament ends. View
+				tournament standings on{" "}
+				<a href={helpers.leagueUrl(["nba_cup"])}>NBA Cup</a>. You can edit the
+				remaining schedule after the championship.
+			</p>
+		);
+	}
 
 	return (
 		<div>

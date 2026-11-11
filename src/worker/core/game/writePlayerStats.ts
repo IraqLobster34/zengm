@@ -250,6 +250,10 @@ const writePlayerStats = async (
 	const playersToSave = new Set<Player>();
 
 	for (const result of results) {
+		// Cup championship box-score stats are saved separately from season stats.
+		if (result.nbaCup === "final") {
+			continue;
+		}
 		const allStarGame = isAllStarGame(result.team[0].id, result.team[1].id);
 
 		const winner = getWinner([result.team[0].stat, result.team[1].stat]);

@@ -93,7 +93,11 @@ const Player2 = ({
 	const awardsBySeason = Map.groupBy(
 		orderBy(
 			player.awards.filter(
-				(award) => award.type === undefined || award.type === "All-Star",
+				(award) =>
+					award.type === undefined ||
+					award.type === "All-Star" ||
+					award.type === "NBA Cup MVP" ||
+					award.type === "NBA Cup Winner",
 			),
 			(award) => (award.type === undefined ? 0 : 1),
 		),

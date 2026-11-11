@@ -8,6 +8,13 @@ import addDaysToSchedule from "./addDaysToSchedule.ts";
 import { PHASE } from "../../../common/constants.ts";
 import { isFinals } from "./isFinals.ts";
 import { recomputeLocalUITeamOvrs } from "../../util/recomputeLocalUITeamOvrs.ts";
+import {
+	canStartCup,
+	makeCupSchedule,
+	getCup,
+	getCupHistory,
+} from "./nbaCup.ts";
+import setGameAttributes from "../league/setGameAttributes.ts";
 
 const makePlayoffsKey = (game: ScheduleGameWithoutKey) =>
 	JSON.stringify([game.homeTid, game.awayTid]);
@@ -37,7 +44,7 @@ const setSchedule = async (tids: [number, number][]) => {
 
 	const finals = playoffs && (await isFinals());
 
-	const schedule = addDaysToSchedule(
+	let schedule = addDaysToSchedule(
 		tids.map(([homeTid, awayTid]) => ({
 			homeTid,
 			awayTid,
@@ -57,6 +64,29 @@ const setSchedule = async (tids: [number, number][]) => {
 			if (finals) {
 				game.finals = true;
 			}
+		}
+	}
+
+	if (__SPORT === "basketball" && g.get("phase") === PHASE.PRESEASON) {
+		const previous = getCup();
+		if (previous?.stage === "complete") {
+			await setGameAttributes({
+				nbaCupHistory: { ...getCupHistory(), [previous.season]: previous },
+			});
+		}
+		const teams = (await idb.cache.teams.getAll())
+			.filter((t) => !t.disabled)
+			.map((t) => ({ tid: t.tid, seasonAttrs: { cid: t.cid } }));
+		if (canStartCup(teams)) {
+			// The games cache contains only this season. Use the global high-water
+			// marks so new schedules cannot overwrite archived seasons' box scores.
+			const firstGid =
+				Math.max(idb.cache._maxIds.games, idb.cache._maxIds.schedule) + 1;
+			const plan = makeCupSchedule(schedule, teams, g.get("season"), firstGid);
+			schedule = plan.schedule;
+			await setGameAttributes({ nbaCup: plan.cup });
+		} else {
+			await setGameAttributes({ nbaCup: null });
 		}
 	}
 

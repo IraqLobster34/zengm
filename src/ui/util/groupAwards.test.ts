@@ -2,6 +2,22 @@ import { assert, test } from "vitest";
 import type { PlayerAward } from "../../common/types.ts";
 import { groupAwards } from "./groupAwards.ts";
 
+test("cup awards retain their counts and seasons on player profiles", () => {
+	const grouped = groupAwards([
+		{ season: 2026, type: "NBA Cup Winner" },
+		{ season: 2027, type: "NBA Cup Winner" },
+		{ season: 2027, type: "NBA Cup MVP" },
+	]);
+	assert.strictEqual(
+		grouped.find((award) => award.type === "NBA Cup Winner")?.count,
+		2,
+	);
+	assert.deepStrictEqual(
+		grouped.find((award) => award.type === "NBA Cup MVP")?.seasons,
+		{ "NBA Cup MVP": ["2027"] },
+	);
+});
+
 test("works with built-in awards", () => {
 	const awards: PlayerAward[] = [
 		{

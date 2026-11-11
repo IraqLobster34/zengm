@@ -192,6 +192,7 @@ const getPlayoffInfos = async (game: Game) => {
 
 export const gameSimToBoxScore = async (results: GameResults, att: number) => {
 	const gameStats: Game = {
+		nbaCup: results.nbaCup,
 		gid: results.gid,
 		day: results.day,
 		att,
@@ -321,7 +322,7 @@ export const gameSimToBoxScore = async (results: GameResults, att: number) => {
 	gameStats.lost.sPts = results.team[tl].stat.sPts;
 	const tied = winner === -1;
 
-	if (g.get("phase") < PHASE.PLAYOFFS) {
+	if (g.get("phase") < PHASE.PLAYOFFS && results.nbaCup !== "final") {
 		if (
 			tied &&
 			gameStats.teams[0].tied !== undefined &&
@@ -688,17 +689,19 @@ const writeGameStats = async (
 	if (playoffInfos && playoffInfos[tw].won === numGamesToWinSeries) {
 		seriesWinner = gameStats.won.tid;
 	}
-	await headToHead.addGame({
-		tids: [gameStats.won.tid, gameStats.lost.tid],
-		pts: [gameStats.won.pts, gameStats.lost.pts],
-		sPts:
-			gameStats.won.sPts === undefined
-				? undefined
-				: [gameStats.won.sPts, gameStats.lost.sPts!],
-		overtime: gameStats.overtimes > 0,
-		playoffRound: currentRound,
-		seriesWinner,
-	});
+	if (results.nbaCup !== "final") {
+		await headToHead.addGame({
+			tids: [gameStats.won.tid, gameStats.lost.tid],
+			pts: [gameStats.won.pts, gameStats.lost.pts],
+			sPts:
+				gameStats.won.sPts === undefined
+					? undefined
+					: [gameStats.won.sPts, gameStats.lost.sPts!],
+			overtime: gameStats.overtimes > 0,
+			playoffRound: currentRound,
+			seriesWinner,
+		});
+	}
 
 	await idb.cache.games.put(gameStats);
 

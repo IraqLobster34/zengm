@@ -22,7 +22,7 @@ import { isAllStarGame } from "../../../common/specialGames.ts";
 const writeTeamStats = async (results: GameResults) => {
 	const allStarGame = isAllStarGame(results.team[0].id, results.team[1].id);
 
-	if (allStarGame) {
+	if (allStarGame || results.nbaCup === "final") {
 		return g.get("defaultStadiumCapacity");
 	}
 

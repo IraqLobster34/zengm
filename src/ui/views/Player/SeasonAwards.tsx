@@ -4,6 +4,12 @@ import { helpers } from "../../util/helpers.ts";
 import { formatPlayerAwardName } from "../../../common/awards.ts";
 
 const getAwardText = (award: PlayerAward) => {
+	if (award.type === "NBA Cup MVP") {
+		return "Cup MVP";
+	}
+	if (award.type === "NBA Cup Winner") {
+		return "Cup";
+	}
 	if (award.type === "All-Star") {
 		return "AS";
 	}
@@ -29,6 +35,20 @@ const SeasonAwards = ({
 	return (
 		<>
 			{awards.map((award, i) => {
+				if (award.type === "NBA Cup MVP" || award.type === "NBA Cup Winner") {
+					return (
+						<Fragment key={i}>
+							{i > 0 ? "," : undefined}
+							<a
+								href={helpers.leagueUrl(["nba_cup", season])}
+								title={award.type}
+								className={award.type === "NBA Cup MVP" ? "fw-bold" : undefined}
+							>
+								{getAwardText(award)}
+							</a>
+						</Fragment>
+					);
+				}
 				if (award.type === "All-Star") {
 					return (
 						<Fragment key={i}>

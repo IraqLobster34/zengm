@@ -10,6 +10,8 @@ import { helpers } from "./helpers.ts";
 // These are "awards" not stored in awards table to show before/after normal awards
 const awardsStart = ["Inducted into the Hall of Fame", "Won Championship"];
 const awardsEnd = [
+	"NBA Cup MVP",
+	"NBA Cup Winner",
 	"All-Star MVP",
 	"All-Star",
 	"Slam Dunk Contest Winner",

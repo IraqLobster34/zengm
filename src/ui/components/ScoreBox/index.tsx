@@ -7,6 +7,7 @@ import { TeamLogoInline } from "../TeamLogoInline.tsx";
 import { defaultGameAttributes } from "../../../common/defaultGameAttributes.ts";
 import { PlayerNameLabels } from "../PlayerNameLabels.tsx";
 import getWinner from "../../../common/getWinner.ts";
+import { cupStageName, type CupStage } from "../../../common/nbaCup.ts";
 import { getCol } from "../../../common/getCol.ts";
 import { getBestPlayerBoxScore } from "../../../common/getBestPlayerBoxScore.ts";
 import { bySport } from "../../../common/sportFunctions.ts";
@@ -90,6 +91,7 @@ export const ScoreBox = memo(
 		boxScoreTeamOverride?: string;
 		className?: string;
 		game: {
+			nbaCup?: CupStage;
 			finals?: boolean;
 			forceWin?: number;
 			gid: number;
@@ -243,6 +245,12 @@ export const ScoreBox = memo(
 						actions.length > 0 ? "border-end-0" : undefined,
 					)}
 				>
+					{game.nbaCup && !small ? (
+						<div className="small fw-bold text-body-secondary px-2 pt-1">
+							NBA Cup · {cupStageName(game.nbaCup)}
+							{game.nbaCup === "final" ? " · Excluded from season stats" : ""}
+						</div>
+					) : null}
 					{tradeDeadline ? (
 						<div
 							className={`${

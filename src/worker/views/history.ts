@@ -18,6 +18,7 @@ import type { RouteParams } from "../../ui/router/types.ts";
 import { getSeasonState, validateSeason } from "../util/processInputs.ts";
 import { isCurrentSeasonComplete } from "../../common/seasons.ts";
 import { player, team } from "../core/index.ts";
+import { getCupSeason } from "../core/season/nbaCup.ts";
 
 const processInputs = (params: RouteParams<"history">) => {
 	let season = validateSeason(params.season);
@@ -288,6 +289,10 @@ export default defineView({
 				champ,
 				confs: g.get("confs", season),
 				invalidSeason: false as const,
+				nbaCup: getCupSeason(season),
+				nbaCupChampion: teams.find(
+					(team) => team.tid === getCupSeason(season)?.champion,
+				),
 				retiredPlayers,
 				retiredStat,
 				season,

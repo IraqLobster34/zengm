@@ -5,6 +5,7 @@ import { helpers } from "../../util/helpers.ts";
 const Overall = ({
 	bestRecord,
 	championships,
+	nbaCupWins,
 	finalsAppearances,
 	numSeasons,
 	playoffAppearances,
@@ -18,6 +19,7 @@ const Overall = ({
 	View<"teamHistory">,
 	| "bestRecord"
 	| "championships"
+	| "nbaCupWins"
 	| "finalsAppearances"
 	| "playoffAppearances"
 	| "totalLost"
@@ -52,6 +54,12 @@ const Overall = ({
 				Finals Appearances: {finalsAppearances}
 				<br />
 				Championships: {championships}
+				{__SPORT === "basketball" ? (
+					<>
+						<br />
+						NBA Cup Wins: {nbaCupWins}
+					</>
+				) : null}
 				<br />
 				Best Record:{" "}
 				{bestRecord ? (

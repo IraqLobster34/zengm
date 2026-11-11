@@ -1,134 +1,83 @@
-# Basketball GM, Football GM, ZenGM Baseball, and ZenGM Hockey
+# NBA Cup mod for Basketball GM
 
-Single-player sports simulation games. Make trades, set rosters, draft players,
-and try to build the next dynasty, all from within your web browser. The games
-are implemented entirely in client-side JavaScript, backed by IndexedDB.
+An unofficial source-code mod that adds an in-season NBA Cup to Basketball GM: group play, a conference knockout bracket, a Cup MVP, and lasting player and team honors.
 
-Copyright (C) ZenGM, LLC. All rights reserved.
+![NBA Cup bracket, championship banner, and tournament MVP](docs/screenshots/01-cup-bracket.png)
 
-Email: <jeremy@zengm.com>
+## Features
 
-Website: <https://zengm.com/>
+- **League → NBA Cup:** a dedicated page with group standings, qualifiers, a playoff-style bracket, scores, and box-score links.
+- **Six groups and eight qualifiers:** three group winners and one wild card per conference advance to single-game quarterfinals, semifinals, and a neutral-site championship.
+- **82 regular-season games:** knockout and consolation games preserve 82 counting games for every team. The finalists play an extra championship that is excluded from regular-season records and stats.
+- **NBA Cup MVP:** selected from the champion's final roster by total Game Score across the tournament, including the final.
+- **Player awards:** NBA Cup Winner and NBA Cup MVP honors on profiles and in season award columns.
+- **Team and league history:** separate Cup win totals, banners, season labels, champion and MVP columns, and season-summary results.
+- **Archived tournaments:** a season selector for past Cups. Cup titles are counted separately from league championships.
 
-Development: <https://github.com/zengm-games/zengm>
+Screenshots use a simulated league with fictional teams and players.
 
-Discussion:
+## Run your own private copy
 
-- [Discord](https://zengm.com/discord/)
-- Reddit: [Basketball GM](https://www.reddit.com/r/BasketballGM/),
-  [Football GM](https://www.reddit.com/r/Football_GM/),
-  [ZenGM Baseball](https://www.reddit.com/r/ZenGMBaseball/),
-  [ZenGM Hockey](https://www.reddit.com/r/ZenGMHockey/)
+Install **Node.js 24** and **Git**. Node.js includes npm; the commands below use pnpm 12 through npm without requiring a global pnpm installation.
 
-## Who is this for?
+```sh
+git clone --branch mods --single-branch https://github.com/IraqLobster34/zengm.git zengm-nba-cup
+cd zengm-nba-cup
+npx --yes pnpm@12 install
+node --run dev
+```
 
-If you just want to play a game, go to <https://zengm.com/>. Instructions below
-are for developers who want to run a copy locally so they can make changes to
-the code.
+For a source ZIP, extract it and open a terminal in the folder containing `package.json`, then run the last two commands. An internet connection is needed for the first dependency installation.
 
-## License and contributor license agreement
+Open the URL printed by the server, normally `http://localhost:3000`. Basketball is the default sport. Keep the terminal open while playing; press **Ctrl+C** to stop it.
 
-**This project is NOT open source, but it is also not completely closed. Please
-see [LICENSE.md](LICENSE.md) for details.**
+**To see the Cup:** create a basketball league with **30 active teams, two conferences of 15, and 82 games**, advance from preseason to the regular season, and open **League → NBA Cup**. Existing regular seasons get their first Cup the next time a compatible season begins. Other sports and incompatible league sizes retain their normal schedules.
 
-If you want to contribute code to this project, you must sign a contributor
-license agreement. There are separate forms for individuals and entities (such
-as corporations):
+Saves live in your browser. Export backups of leagues you care about before trying a mod, and use a consistent browser and local address to return to the same saved leagues.
 
-- [Individual CLA](CLA-individual.md) (this is probably what you want)
-- [Entity CLA](CLA-entity.md)
+## Screenshots
 
-Make a copy of the form, fill in your information at the bottom, and send an
-email to jeremy@zengm.com with the subject line, "Contributor License Agreement
-from YOUR_NAME_HERE (GITHUB_USERNAME_HERE)".
+### Group play
 
-## Setup
+![Six Cup groups with records, point differential, and qualification marks](docs/screenshots/02-group-standings.png)
 
-First install [Node.js](https://nodejs.org/) 24 and [pnpm](https://pnpm.io/) 12.
+### Player awards
 
-Then install the dependencies:
+![NBA Cup MVP and NBA Cup Winner awards on a player profile](docs/screenshots/04-player-awards.png)
 
-    pnpm install
+### League history
 
-and start the dev server, which watches the source code for changes:
+![League history with Cup champion and MVP columns](docs/screenshots/06-league-history.png)
 
-    node --run dev
+See the [full gallery](docs/SCREENSHOTS.md) for player profiles, team history, season summaries, and the narrow-screen layout.
 
-The `dev` script will tell you a URL to open in your browser to view the game,
-<http://localhost:3000> unless that port is already in use.
+## Adaptations and limitations
 
-By default this builds the basketball version of the game. For other sports, set
-the `SPORT` environment variable to `football`, `baseball`, or `hockey`, like:
+This adapts the NBA Cup to ZenGM's calendar and fictional leagues:
 
-    SPORT=football node --run dev
+- Groups are drawn randomly rather than seeded by last year's records.
+- Group nights are interleaved with the first 20 schedule days, followed by a dedicated knockout window.
+- Group tiebreaks use head-to-head for a two-team tie, point differential, points scored, and draw order. Wild-card/conference seeding use record, differential, points, and team ID as the final fallback. Scores include overtime.
+- Non-qualifiers play a home-and-away consolation pair that may cross conferences.
+- The schedule editor is unavailable until the Cup ends, protecting reserved tournament games.
 
-## Other dev info
+This initial version does not add Cup prize money or an All-Tournament Team. Completed Cups from an older version can receive profile awards when opened if their saved box scores are still available.
 
-### Tests
+## Development
 
-TypeScript and ESLint are used to enforce some coding standards. To run them on
-the entire codebase, run:
+```sh
+node --run lint
+node --run test
+```
 
-    node --run lint
+The Cup, schedule, award grouping, and route checks passed **32 tests**, with one upstream test skipped. TypeScript and lint checks on changed source files passed. Browser checks covered a full Cup and regular season, 82 counting games per team, profile awards, history screens, and the championship banner.
 
-Integration and unit tests spread out through the codebase in \*.test.ts files.
-Coverage is not great. They can be run from the command line with:
+See [MODDING.md](MODDING.md) for implementation notes and the Graphify map, [release notes](RELEASE_NOTES.md) for this mod, and the [original upstream README](README.upstream.md) for ZenGM's development and contribution documentation.
 
-    node --run test
+## License and credits
 
-### Git workflow
+Basketball GM and ZenGM are created by **ZenGM, LLC**. This is an unofficial mod, not an official ZenGM or NBA release.
 
-If you want to contribute changes back to the project, first create a fork on
-GitHub. Then make your changes in a new branch. Confirm that the tests
-(hopefully including new ones you wrote!) and lint scripts all pass. Finally,
-send me a pull request.
+ZenGM is **not open source**. Its [original license](LICENSE.md) permits sharing modified source code with the license included and running a private local copy. It prohibits hosting a playable version for others or distributing playable installers. This fork shares source and local setup instructions under those terms; it does not provide a hosted game or installer.
 
-It's also probably a good idea to [create an issue on
-GitHub](https://github.com/zengm-games/zengm/issues) or [send me a
-message](https://zengm.com/contact/) before you start working on something. I
-don't want you to spend lots of time on something that I don't want to put in
-the game!
-
-### Code overview
-
-This is a single-page app that runs almost entirely client-side by storing data
-in IndexedDB. The core of the game runs inside a Shared Worker (or a Web Worker
-in crappy browsers that don't support Shared Workers), and then each open tab
-runs only UI code that talks to the worker. The UI code is in the `src/ui`
-folder and the core game code is in the `src/worker` folder. They communicate
-through the `toUI` and `toWorker` functions.
-
-The UI is built with React and Bootstrap.
-
-In the worker, data is ultimately stored in IndexedDB, but for performance and
-cross-browser compatibility reasons, a cache (implemented in
-`src/worker/db/Cache.ts`) sits on top of the database containing all commonly
-accessed data. The idea is that IndexedDB should only be accessed for uncommon
-situations, like viewing stats from past seasons. For simulating games and
-viewing current data, only the cache should be necessary.
-
-The cache is overly complicated because (1) the values it returns are mutable,
-so you better not mess with them accidentally, and (2) when you do purposely
-mutate a value (like updating a player's stats), you need to remember to always
-write it back to the cache manually by calling `idb.cache.*.put`.
-
-In both the worker and UI processes, there is a global variable `self.bbgm`
-which gives you access to many of the internal functions of the game from
-within your browser.
-
-### Shared Worker debugging
-
-As mentioned above, the core of a game runs in a Shared Worker. This makes
-debugging a little tricky. For instance, in Chrome, if you `console.log`
-something inside the Shared Worker, you won't see it in the normal JS console.
-Instead, you need to go to chrome://inspect/#workers and click "Inspect" under
-<http://localhost:3000/gen/worker.js>.
-
-In any browser, if you have two tabs open and you reload one of them, the worker
-process will not reload. So make sure you close all tabs except one before
-reloading if you want to see changes in the worker.
-
-### Thank you BrowserStack
-
-Shout out to [BrowserStack](https://www.browserstack.com/) for helping with
-cross-browser testing.
+Upstream: [zengm-games/zengm](https://github.com/zengm-games/zengm).

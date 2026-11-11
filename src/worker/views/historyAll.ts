@@ -7,6 +7,7 @@ import { bySport } from "../../common/sportFunctions.ts";
 import { PlayersCache } from "../db/PlayersCache.ts";
 import { defineView } from "../util/defineView.ts";
 import { team } from "../core/index.ts";
+import { getCupSeason } from "../core/season/nbaCup.ts";
 
 const getAbbrev = (
 	tid: number,
@@ -41,6 +42,7 @@ export default defineView({
 	load: async ({ updateEvents }) => {
 		if (
 			updateEvents.has("firstRun") ||
+			updateEvents.has("gameSim") ||
 			(updateEvents.has("newPhase") && g.get("phase") === PHASE.DRAFT_LOTTERY)
 		) {
 			const teams = await team.getFormattedAll({
@@ -125,7 +127,10 @@ export default defineView({
 
 			// Start with the oldest season we have team or awards history for
 			const maxSeason =
-				g.get("phase") > PHASE.PLAYOFFS ? g.get("season") : g.get("season") - 1;
+				g.get("phase") > PHASE.PLAYOFFS ||
+				getCupSeason(g.get("season"))?.champion !== undefined
+					? g.get("season")
+					: g.get("season") - 1;
 			let minSeason = Infinity;
 			for (const t of teams) {
 				if (t.seasonAttrs.length > 0 && t.seasonAttrs[0]!.season < minSeason) {
@@ -224,6 +229,14 @@ export default defineView({
 
 				seasons.push({
 					season,
+					nbaCupChamp:
+						getCupSeason(season)?.champion !== undefined
+							? formatTeamWrapper(
+									{ tid: getCupSeason(season)!.champion!, seed: undefined },
+									season,
+								)
+							: undefined,
+					nbaCupMvp: getCupSeason(season)?.mvp,
 					runnerUp: undefined as FormattedTeam | undefined,
 					champ: undefined as FormattedTeam | undefined,
 					awards,
@@ -235,6 +248,9 @@ export default defineView({
 
 			for (const row of seasons) {
 				const season = row.season;
+				if (season === g.get("season") && g.get("phase") <= PHASE.PLAYOFFS) {
+					continue;
+				}
 
 				// Only check for finals result for seasons that are over
 				const series = playoffSeriesBySeason[season];
@@ -315,14 +331,16 @@ export default defineView({
 			const counts: {
 				awards: Record<string, Record<number, number>>;
 				champ: Record<number, number>;
+				nbaCupChamp: Record<number, number>;
 				runnerUp: Record<number, number>;
 			} = {
 				awards: {},
 				champ: {},
+				nbaCupChamp: {},
 				runnerUp: {},
 			};
 
-			const teamCategories = ["champ", "runnerUp"] as const;
+			const teamCategories = ["champ", "runnerUp", "nbaCupChamp"] as const;
 			for (const row of seasons.toReversed()) {
 				for (const category of teamCategories) {
 					if (!row[category]) {

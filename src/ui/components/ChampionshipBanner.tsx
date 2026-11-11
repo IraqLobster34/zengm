@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 
 export const ChampionshipBanner = ({
 	className,
+	championshipName = "League Champions",
 	hideRope,
 	hideText,
 	season,
@@ -10,6 +11,7 @@ export const ChampionshipBanner = ({
 	t,
 }: {
 	className?: string;
+	championshipName?: string;
 	hideRope?: boolean;
 	hideText?: boolean;
 	season: number;
@@ -94,7 +96,7 @@ export const ChampionshipBanner = ({
 							className="text-center"
 							style={{ fontSize: 16, lineHeight: 1 }}
 						>
-							League Champions
+							{championshipName}
 						</div>
 					)}
 				</foreignObject>

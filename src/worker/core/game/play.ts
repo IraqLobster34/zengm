@@ -36,6 +36,7 @@ import type {
 	UpdateEvents,
 } from "../../../common/types.ts";
 import allowForceTie from "../../../common/allowForceTie.ts";
+import { updateCup } from "../season/nbaCup.ts";
 import getWinner from "../../../common/getWinner.ts";
 import { setLiveSimRatingsStatsPopoverPlayers } from "./setLiveSimRatingsStatsPopoverPlayers.ts";
 import {
@@ -140,6 +141,7 @@ const playDays = async (
 		for (const { gid } of results) {
 			await idb.cache.schedule.delete(gid);
 		}
+		await updateCup(conditions);
 
 		// Invalidate leaders cache, if it exists
 		local.seasonLeaders = undefined;
@@ -357,6 +359,7 @@ const playDays = async (
 		doPlayByPlay = false,
 		homeCourtFactor = 1,
 		neutralSite = false,
+		nbaCup,
 	}: {
 		gid: number;
 		day: number | undefined;
@@ -364,6 +367,7 @@ const playDays = async (
 		doPlayByPlay?: boolean;
 		homeCourtFactor?: number;
 		neutralSite?: boolean;
+		nbaCup?: ScheduleGame["nbaCup"];
 	}) => {
 		let dh;
 		if (__SPORT === "baseball") {
@@ -394,19 +398,23 @@ const playDays = async (
 			baseInjuryRate = g.get("injuryRate");
 		}
 
-		return new GameSim({
+		const gameSim = new GameSim({
 			gid,
 			day,
 			teams,
 			doPlayByPlay,
 			homeCourtFactor,
-			neutralSite: neutralSite || allStarGame,
+			neutralSite: neutralSite || allStarGame || nbaCup === "final",
 			allStarGame,
-			baseInjuryRate,
+			baseInjuryRate: nbaCup === "final" ? 0 : baseInjuryRate,
 
 			// @ts-expect-error
 			dh,
-		}).run();
+		});
+		if (nbaCup) {
+			gameSim.maxOvertimes = Infinity;
+		}
+		return gameSim.run();
 	};
 
 	// Simulates a day of games (whatever is in schedule) and passes the results to cbSaveResults
@@ -425,14 +433,15 @@ const playDays = async (
 			const forceTie = game.forceWin === "tie";
 			const invalidForceTie =
 				forceTie &&
-				!allowForceTie({
-					homeTid: game.homeTid,
-					awayTid: game.awayTid,
-					ties: season.hasTies("current"),
-					phase: g.get("phase"),
-					elam: g.get("elam"),
-					elamASG: g.get("elamASG"),
-				});
+				(game.nbaCup !== undefined ||
+					!allowForceTie({
+						homeTid: game.homeTid,
+						awayTid: game.awayTid,
+						ties: season.hasTies("current"),
+						phase: g.get("phase"),
+						elam: g.get("elam"),
+						elamASG: g.get("elamASG"),
+					}));
 
 			if (g.get("godMode") && game.forceWin !== undefined && !invalidForceTie) {
 				const NUM_TRIES = 2000;
@@ -476,6 +485,7 @@ const playDays = async (
 
 					const result = getResult({
 						gid: game.gid,
+						nbaCup: game.nbaCup,
 						day: game.day,
 						teams: helpers.deepCopy(teamsInput), // So stats start at 0 each time
 						doPlayByPlay,
@@ -547,6 +557,7 @@ const playDays = async (
 
 				const result = getResult({
 					gid: game.gid,
+					nbaCup: game.nbaCup,
 					day: game.day,
 					teams: teamsInput,
 					doPlayByPlay,
@@ -556,6 +567,11 @@ const playDays = async (
 			}
 		}
 
+		for (const result of results) {
+			(result as GameResults).nbaCup = schedule.find(
+				(game) => game.gid === result.gid,
+			)?.nbaCup;
+		}
 		await cbSaveResults(results, dayOver);
 	};
 

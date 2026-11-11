@@ -1,0 +1,7 @@
+# Disposable extraction cache and local process state.
+cache/
+*.lock
+
+# Local incremental scan metadata (not needed to browse the map).
+/.graphify_root
+/manifest.json
