@@ -16,6 +16,6 @@ The winning roster gets NBA Cup Winner awards on player profiles, and there's an
 
 Screenshots and setup: https://github.com/IraqLobster34/zengm/tree/mods
 
-You'll need Node.js 24 to run a private local copy. Start a 30-team basketball league with two 15-team conferences and an 82-game season, then open League → NBA Cup after preseason. The group draw, calendar, and tiebreaks are adapted for ZenGM rather than an exact recreation of the NBA schedule.
+You'll need Node.js 24 to run a private local copy. Start a 30-team basketball league with two 15-team conferences and an 82-game season, then open League → NBA Cup after preseason. The draw uses the NBA's five seeded pots based on last season's conference standings, with one team from each pot per group. A first season without history uses a random draw. The calendar and group tiebreaks remain adapted for ZenGM.
 
 This is source code under ZenGM's original license, not a hosted game or installer. Credit to ZenGM for Basketball GM. Feedback on the format and UI is welcome.

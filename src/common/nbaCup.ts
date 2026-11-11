@@ -20,6 +20,12 @@ export type NbaCup = {
 	champion?: number;
 	mvp?: { pid: number; tid: number; name: string };
 	awardsGranted?: boolean;
+	// Optional for Cups saved before seeded draws were introduced.
+	draw?: {
+		previousSeason: number;
+		pots: { cid: number; tids: number[][] }[];
+		unseededTids: number[];
+	};
 };
 
 export const cupStageName = (stage: CupStage | "complete") =>

@@ -1,4 +1,4 @@
-import { beforeEach, expect, test } from "vitest";
+import { beforeEach, expect, test, vi } from "vitest";
 import { resetG, resetCache } from "../../../test/helpers.ts";
 import { g, helpers } from "../../util/index.ts";
 import { PHASE } from "../../../common/constants.ts";
@@ -10,6 +10,8 @@ import {
 	grantCupAwards,
 	selectCupMvp,
 	getCupSeason,
+	drawCupGroups,
+	loadCupDrawOrder,
 } from "./nbaCup.ts";
 import { idb } from "../../db/index.ts";
 import writeTeamStats from "../game/writeTeamStats.ts";
@@ -166,7 +168,7 @@ test("saved results advance once even when the last group night is simulated gam
 	expect(g.get("nbaCup")!.stage).toBe("quarterfinal");
 });
 
-const makePlan = () => {
+const makePlan = (seeded = false) => {
 	const teams = helpers
 		.getTeamsDefault()
 		.map((t) => ({ tid: t.tid + 10, seasonAttrs: { cid: t.cid, did: t.did } }));
@@ -179,8 +181,126 @@ const makePlan = () => {
 	const base = addDaysToSchedule(
 		tids.map(([homeTid, awayTid]) => ({ homeTid, awayTid })),
 	);
-	return { ...makeCupSchedule(base, teams, 2027, 1000), teams };
+	return {
+		...makeCupSchedule(
+			base,
+			teams,
+			2027,
+			1000,
+			seeded ? teams.map((t) => t.tid).toReversed() : [],
+		),
+		teams,
+	};
 };
+
+test("seeded groups draw exactly one team from each prior-season pot in their conference", () => {
+	const teams = Array.from({ length: 30 }, (_, i) => ({
+		tid: 40 + i * 7,
+		seasonAttrs: { cid: i < 15 ? 9 : 31 },
+	}));
+	const ranking = teams.map((t) => t.tid).toReversed();
+	const original = [...ranking];
+	for (let draw = 0; draw < 10; draw++) {
+		const result = drawCupGroups(teams, ranking);
+		expect(result.unseededTids).toEqual([]);
+		expect(new Set(result.groups.flatMap((group) => group.tids)).size).toBe(30);
+		for (const conference of result.pots) {
+			const expected = ranking.filter(
+				(tid) =>
+					teams.find((t) => t.tid === tid)!.seasonAttrs.cid === conference.cid,
+			);
+			expect(conference.tids).toEqual(
+				Array.from({ length: 5 }, (_, i) => expected.slice(i * 3, i * 3 + 3)),
+			);
+			for (const group of result.groups.filter(
+				(group) => group.cid === conference.cid,
+			)) {
+				expect(group.tids).toHaveLength(5);
+				for (const pot of conference.tids) {
+					expect(group.tids.filter((tid) => pot.includes(tid))).toHaveLength(1);
+				}
+			}
+		}
+	}
+	expect(ranking).toEqual(original);
+});
+
+test("a first season uses randomized pots; teams without history fill the bottom slots", () => {
+	const { teams, cup } = makePlan();
+	expect(cup.draw!.previousSeason).toBe(2026);
+	expect(cup.draw!.unseededTids.toSorted()).toEqual(
+		teams.map((t) => t.tid).toSorted(),
+	);
+	const missing = [...new Set(teams.map((t) => t.seasonAttrs.cid))].map(
+		(cid) => teams.find((t) => t.seasonAttrs.cid === cid)!.tid,
+	);
+	const ranking = teams
+		.map((t) => t.tid)
+		.filter((tid) => !missing.includes(tid));
+	const result = drawCupGroups(teams, ranking);
+	expect(result.unseededTids.toSorted()).toEqual(missing.toSorted());
+	for (const conference of result.pots) {
+		const missingTid = teams.find(
+			(t) => t.seasonAttrs.cid === conference.cid && missing.includes(t.tid),
+		)!.tid;
+		expect(conference.tids[4]).toContain(missingTid);
+		for (const group of result.groups.filter(
+			(group) => group.cid === conference.cid,
+		)) {
+			for (const pot of conference.tids) {
+				expect(group.tids.filter((tid) => pot.includes(tid))).toHaveLength(1);
+			}
+		}
+	}
+});
+
+test("draw seeding reads last season's regular-season standings and ignores teams outside the draw", async () => {
+	const { teams } = makePlan();
+	const { default: team } = await import("../team/index.ts");
+	const historical = teams.map((t, i) => ({
+		tid: t.tid,
+		seasonAttrs: {
+			...t.seasonAttrs,
+			won: 20 + i,
+			lost: 62 - i,
+			tied: 0,
+			otl: 0,
+			winp: (20 + i) / 82,
+			pts: 0,
+			wonDiv: 0,
+			lostDiv: 0,
+			tiedDiv: 0,
+			otlDiv: 0,
+			wonConf: 0,
+			lostConf: 0,
+			tiedConf: 0,
+			otlConf: 0,
+		},
+		stats: { gp: 82, pts: 100, oppPts: 100 },
+	}));
+	const spy = vi
+		.spyOn(team, "getFormattedAll")
+		.mockResolvedValue(historical as any);
+	try {
+		const eligible = teams.slice(1);
+		const ranking = await loadCupDrawOrder(eligible, 2027);
+		expect(spy).toHaveBeenCalledWith(
+			expect.objectContaining({ season: 2026, showNoStats: true }),
+		);
+		expect(ranking).not.toContain(teams[0]!.tid);
+		for (const cid of new Set(eligible.map((t) => t.seasonAttrs.cid))) {
+			const expected = eligible
+				.filter((t) => t.seasonAttrs.cid === cid)
+				.map((t) => t.tid)
+				.toReversed();
+			expect(ranking.filter((tid) => expected.includes(tid))).toEqual(expected);
+		}
+		spy.mockResolvedValue([]);
+		expect(await loadCupDrawOrder(teams, 2027)).toEqual([]);
+	} finally {
+		spy.mockRestore();
+	}
+});
 
 test("cup supports only new 82-game seasons in two 15-team conferences", () => {
 	const { teams } = makePlan();
@@ -211,7 +331,8 @@ test("every group plays a balanced four-game round robin with no day conflicts",
 });
 
 test("full cup survives serialization and gives all 30 teams exactly 82 counting games", () => {
-	const plan = makePlan();
+	const plan = makePlan(true);
+	expect(plan.cup.draw!.unseededTids).toEqual([]);
 	let cup = plan.cup;
 	const schedule = [...plan.schedule];
 	// Before results exist, no knockout matches may be generated.

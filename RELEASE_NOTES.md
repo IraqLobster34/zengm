@@ -1,5 +1,14 @@
 # NBA Cup mod release notes
 
+## 0.2.0 — NBA-style seeded group draw
+
+- Seeded pots use the previous regular-season conference standings: ranks 1–3, 4–6, 7–9, 10–12, and 13–15.
+- Each group randomly receives exactly one team from every pot.
+- Draw pots are saved with the Cup and can be viewed on its page.
+- First seasons without prior results use a randomized draw. Teams individually missing history fill the remaining lowest-ranked slots randomly.
+- Existing Cup groups are preserved; the change applies to the next draw.
+- Added checks for pot membership, previous-season data, missing history, and seeded schedule totals. 35 focused tests pass, with one upstream test skipped.
+
 ## 0.1.1 — source package cleanup
 
 - Removed generated Graphify output from the published source tree.

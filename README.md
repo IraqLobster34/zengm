@@ -55,7 +55,8 @@ See the [full gallery](docs/SCREENSHOTS.md) for player profiles, team history, s
 
 This adapts the NBA Cup to ZenGM's calendar and fictional leagues:
 
-- Groups are drawn randomly rather than seeded by last year's records.
+- The draw follows the NBA's five-pot system: each conference is ranked by the previous regular season, split into ranks 1–3, 4–6, 7–9, 10–12, and 13–15, and each group receives one randomly drawn team per pot. See the [official draw rules](https://cdn-uat.nba.com/news/nba-cup-frequently-asked-questions).
+- If no prior-season results exist, the first draw is randomized. Teams individually missing history fill the remaining lowest-ranked slots in random order. The Cup page shows the pots and any fallback. Existing groups are not redrawn; this applies when the next Cup schedule is created.
 - Group nights are interleaved with the first 20 schedule days, followed by a dedicated knockout window.
 - Group tiebreaks use head-to-head for a two-team tie, point differential, points scored, and draw order. Wild-card/conference seeding use record, differential, points, and team ID as the final fallback. Scores include overtime.
 - Non-qualifiers play a home-and-away consolation pair that may cross conferences.
@@ -70,7 +71,7 @@ node --run lint
 node --run test
 ```
 
-The Cup, schedule, award grouping, and route checks passed **32 tests**, with one upstream test skipped. TypeScript and lint checks on changed source files passed. Browser checks covered a full Cup and regular season, 82 counting games per team, profile awards, history screens, and the championship banner.
+The Cup, schedule, award grouping, and route checks passed **35 tests**, with one upstream test skipped. TypeScript and lint checks on changed source files passed. Browser checks covered a full Cup and regular season, 82 counting games per team, profile awards, history screens, and the championship banner.
 
 See [MODDING.md](MODDING.md) for implementation notes, [release notes](RELEASE_NOTES.md) for this mod, and the [original upstream README](README.upstream.md) for ZenGM's development and contribution documentation.
 

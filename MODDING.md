@@ -52,7 +52,9 @@ Team history shows a Cup win count, banners, and season winner labels.
 League history has Cup champion and MVP columns, and season summaries show
 the winner and MVP. Cup titles are counted separately from league titles.
 
-Each conference has three randomly drawn groups of five. Every team plays
+Each conference has three groups of five, drawing one team from each of
+five pots based on the previous regular-season conference standings. Pots
+contain ranks 1–3, 4–6, 7–9, 10–12, and 13–15. Every team plays
 four group games (two home, two away). Three group winners and one wild card
 per conference advance to single-game quarterfinals and semifinals. The
 neutral-site championship is excluded from season stats, records, finances,
@@ -63,8 +65,12 @@ preserving 82 counting games per team. The finalists play one extra game.
 Group nights are interleaved with the first 20 schedule days, followed by
 a dedicated knockout window.
 
-Adaptations for ZenGM: group draws are random rather than seeded by last
-year's records. Tiebreaks use head-to-head for a two-team group tie, then
+The draw reads the previous season through the game's standings system and
+uses its regular-season tiebreakers. The Cup page saves and displays the pots.
+When no prior season exists, the draw is random; teams individually missing
+history fill the remaining bottom slots randomly. Existing draws stay intact.
+
+Adaptations for ZenGM: group tiebreaks use head-to-head for a two-team tie, then
 point differential, points, and draw order. Conference seeding uses team ID
 for the final fallback. Scores include overtime. Non-qualifiers play a
 home-and-away consolation pair that may cross conferences. The schedule
@@ -72,8 +78,8 @@ editor is available after the cup ends to protect reserved tournament games.
 The Cup page's season selector retains past tournaments. Completed cups are
 archived when the next season's schedule is generated.
 
-Validation: eight cup tests, award/profile and route tests, and the existing
-schedule tests pass (32 passed, one upstream skipped test). A browser
+Validation: eleven cup tests, award/profile and route tests, and the existing
+schedule tests pass (35 passed, one upstream skipped test). A browser
 simulation completed all 67 cup games and the full regular season: all 30
 teams finished with 82 counting games. Saved team records and stats matched
 counting games with the final excluded. TypeScript and changed-file lint pass.

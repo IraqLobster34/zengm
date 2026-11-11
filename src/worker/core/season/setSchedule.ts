@@ -13,6 +13,7 @@ import {
 	makeCupSchedule,
 	getCup,
 	getCupHistory,
+	loadCupDrawOrder,
 } from "./nbaCup.ts";
 import setGameAttributes from "../league/setGameAttributes.ts";
 
@@ -82,7 +83,14 @@ const setSchedule = async (tids: [number, number][]) => {
 			// marks so new schedules cannot overwrite archived seasons' box scores.
 			const firstGid =
 				Math.max(idb.cache._maxIds.games, idb.cache._maxIds.schedule) + 1;
-			const plan = makeCupSchedule(schedule, teams, g.get("season"), firstGid);
+			const priorSeasonOrder = await loadCupDrawOrder(teams, g.get("season"));
+			const plan = makeCupSchedule(
+				schedule,
+				teams,
+				g.get("season"),
+				firstGid,
+				priorSeasonOrder,
+			);
 			schedule = plan.schedule;
 			await setGameAttributes({ nbaCup: plan.cup });
 		} else {

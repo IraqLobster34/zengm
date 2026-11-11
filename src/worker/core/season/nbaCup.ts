@@ -104,22 +104,92 @@ export const canStartCup = (teams: CupTeam[]) => {
 	);
 };
 
+export const loadCupDrawOrder = async (teams: CupTeam[], season: number) => {
+	const { default: team } = await import("../team/index.ts");
+	const { orderTeams, ORDER_TEAMS_SEASON_ATTRS, ORDER_TEAMS_STATS } =
+		await import("../../util/orderTeams.ts");
+	const previousSeason = season - 1;
+	const historical = (
+		await team.getFormattedAll({
+			attrs: ["tid"],
+			seasonAttrs: ORDER_TEAMS_SEASON_ATTRS,
+			stats: ORDER_TEAMS_STATS,
+			season: previousSeason,
+			showNoStats: true,
+		})
+	).filter((t) => helpers.getTeamSeasonGp(t.seasonAttrs) > 0);
+	const rankedTids: number[] = [];
+	for (const cid of new Set(teams.map((t) => t.seasonAttrs.cid))) {
+		const tids = new Set(
+			teams.filter((t) => t.seasonAttrs.cid === cid).map((t) => t.tid),
+		);
+		const ranked = await orderTeams(
+			historical.filter((t) => tids.has(t.tid)),
+			historical,
+			{
+				season: previousSeason,
+				skipDivisionLeaders: true,
+			},
+		);
+		rankedTids.push(...ranked.map((t) => t.tid));
+	}
+	return rankedTids;
+};
+
+export const drawCupGroups = (
+	teams: CupTeam[],
+	priorSeasonOrder: number[] = [],
+) => {
+	const groups: NbaCup["groups"] = [];
+	const pots: NonNullable<NbaCup["draw"]>["pots"] = [];
+	const unseededTids: number[] = [];
+	for (const cid of new Set(teams.map((t) => t.seasonAttrs.cid))) {
+		const tids = teams
+			.filter((t) => t.seasonAttrs.cid === cid)
+			.map((t) => t.tid);
+		if (tids.length !== 15) {
+			throw new Error("NBA Cup draws require 15 teams per conference");
+		}
+		const known = [...new Set(priorSeasonOrder)].filter((tid) =>
+			tids.includes(tid),
+		);
+		const missing = tids.filter((tid) => !known.includes(tid));
+		shuffle(missing);
+		unseededTids.push(...missing);
+		const ranked = [...known, ...missing];
+		const conferenceGroups: NbaCup["groups"] = Array.from(
+			{ length: 3 },
+			() => ({ cid, tids: [] }),
+		);
+		const conferencePots: number[][] = [];
+		for (let pot = 0; pot < 5; pot++) {
+			// Ranks 1–3, 4–6, 7–9, 10–12, 13–15. Draw one per group.
+			const draw = ranked.slice(pot * 3, pot * 3 + 3);
+			conferencePots.push([...draw]);
+			shuffle(draw);
+			for (let group = 0; group < 3; group++) {
+				conferenceGroups[group]!.tids.push(draw[group]!);
+			}
+		}
+		// Keep the round-robin home/away rotation and final draw tiebreak random,
+		// rather than automatically favoring a team's pot number.
+		for (const group of conferenceGroups) {
+			shuffle(group.tids);
+		}
+		groups.push(...conferenceGroups);
+		pots.push({ cid, tids: conferencePots });
+	}
+	return { groups, pots, unseededTids };
+};
+
 export const makeCupSchedule = (
 	base: ScheduleGameWithoutKey[],
 	teams: CupTeam[],
 	season: number,
 	firstGid: number,
+	priorSeasonOrder: number[] = [],
 ) => {
-	const groups: NbaCup["groups"] = [];
-	for (const cid of new Set(teams.map((team) => team.seasonAttrs.cid))) {
-		const tids = teams
-			.filter((team) => team.seasonAttrs.cid === cid)
-			.map((team) => team.tid);
-		shuffle(tids);
-		for (let i = 0; i < 15; i += 5) {
-			groups.push({ cid, tids: tids.slice(i, i + 5) });
-		}
-	}
+	const { groups, pots, unseededTids } = drawCupGroups(teams, priorSeasonOrder);
 	const schedule: ScheduleGameWithoutKey[] = [];
 	const games: CupGame[] = [];
 	let gid = firstGid;
@@ -159,6 +229,7 @@ export const makeCupSchedule = (
 	}
 	const nextGid = Math.max(...games.map((game) => game.gid)) + 1;
 	const cup: NbaCup = {
+		draw: { previousSeason: season - 1, pots, unseededTids },
 		season,
 		groups,
 		games,

@@ -44,6 +44,44 @@ export const NbaCup = ({ cup }: { cup: Cup }) => {
 				per conference advance. All cup games count toward the regular season
 				except the championship.
 			</p>
+			{cup.draw ? (
+				<details className="mb-3">
+					<summary>Group draw pots</summary>
+					<p className="small text-body-secondary mt-2">
+						Each conference is split into five pots using{" "}
+						{cup.draw.previousSeason} regular-season standings: ranks 1–3, 4–6,
+						7–9, 10–12, and 13–15. Each group draws one team from each pot.
+					</p>
+					{cup.draw.unseededTids.length > 0 ? (
+						<p className="small text-body-secondary">
+							{cup.draw.unseededTids.length === 30
+								? "No prior-season records were available, so the first draw was randomized."
+								: "Teams without prior-season results fill the remaining lowest-ranked slots in random order."}
+						</p>
+					) : null}
+					{cup.draw.pots.map((conference, i) => (
+						<div key={conference.cid} className="mb-2">
+							<strong>
+								Groups {String.fromCharCode(65 + i * 3)}–
+								{String.fromCharCode(67 + i * 3)}
+							</strong>
+							<ol>
+								{conference.tids.map((pot, index) => (
+									<li key={index}>
+										Pot {index + 1}:{" "}
+										{pot.map((tid, j) => (
+											<span key={tid}>
+												{j > 0 ? ", " : ""}
+												{teamLink(tid)}
+											</span>
+										))}
+									</li>
+								))}
+							</ol>
+						</div>
+					))}
+				</details>
+			) : null}
 			<details open={cup.stage === "group"}>
 				<summary className="mb-2">Group standings</summary>
 				<div className="row">
