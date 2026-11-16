@@ -209,6 +209,7 @@ import {
 import { augmentOffers } from "../views/trade.ts";
 import { setAutoSave } from "../core/league/setAutoSave.ts";
 
+import { getCup } from "../core/season/nbaCup.ts";
 import { worldAction } from "../core/basketballWorld/index.ts";
 import { saveModSelection } from "../core/mods/index.ts";
 
@@ -5390,8 +5391,7 @@ const toggleTradeDeadline = async () => {
 			isTradeDeadline(game.homeTid, game.awayTid),
 		);
 		if (tradeDeadline) {
-			await idb.cache.schedule.delete(tradeDeadline.gid);
-			await toUI("deleteGames", [[tradeDeadline.gid]]);
+			await season.deleteScheduledTradeDeadline(tradeDeadline.gid);
 		}
 
 		await updatePlayMenu();
@@ -5488,7 +5488,6 @@ const setScheduleFromEditor = async ({
 	regenerated: boolean;
 	schedule: View<"scheduleEditor">["schedule"];
 }) => {
-	const { getCup } = await import("../core/season/nbaCup.ts");
 	if (getCup()?.season === g.get("season") && getCup()?.stage !== "complete") {
 		throw new Error(
 			"The NBA Cup manages the schedule until the championship is complete.",

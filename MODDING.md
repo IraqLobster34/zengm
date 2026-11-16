@@ -1,7 +1,7 @@
 # ZenGM mod workspace
 
-Local copy of https://github.com/zengm-games/zengm at commit
-`ac109bb79273da0b47e4d583cb889be051bfdf7f` (2026-11-11).
+Local fork of https://github.com/zengm-games/zengm, synchronized through upstream
+commit `205d18eb0` on November 16, 2026.
 Work on branch `mods`. The original repository is the `upstream` remote.
 
 ## Code overview

@@ -1,3 +1,4 @@
+import selectPlayer from "../draft/selectPlayer.ts";
 import { beforeEach, afterEach, expect, test } from "vitest";
 import {
 	roundRobin,
@@ -19,6 +20,7 @@ import {
 	getWorld,
 	makeWorldSchedule,
 	prepareWorldDraft,
+	startWorldSeason,
 	worldAction,
 } from "./index.ts";
 import { simulateWorldGame } from "./sim.ts";
@@ -229,4 +231,79 @@ test("drafted players retain their ID and college history after the draft", asyn
 			.length,
 	).toBeGreaterThan(40);
 	expect(getWorld()?.offseasonProcessed).toBe(true);
+});
+
+test("the ordinary NBA draft preserves a prospect and the world rolls into another season", async () => {
+	await prepareWorldDraft();
+	const prospect = (
+		await idb.cache.players.indexGetAll("playersByTid", -2)
+	)[0]!;
+	const pid = prospect.pid;
+	const career = structuredClone(prospect.basketballPathway!.history);
+	g.setWithoutSavingToDB("phase", 5);
+	const pick = {
+		dpid: 0,
+		tid: 1,
+		originalTid: 1,
+		season: g.get("season"),
+		round: 1,
+		pick: 1,
+	};
+	await idb.cache.draftPicks.add(pick);
+	expect(await selectPlayer(pick, pid)).toBe(true);
+	expect(await selectPlayer(pick, pid)).toBe(false);
+	await finishWorldDraft();
+	const previousSeason = g.get("season");
+	g.setWithoutSavingToDB("season", previousSeason + 1);
+	await startWorldSeason();
+	const world = getWorld()!;
+	expect(world.season).toBe(previousSeason + 1);
+	expect(world.day).toBe(0);
+	expect(world.archives[0]?.draftPids).toContain(pid);
+	const drafted = await idb.cache.players.get(pid);
+	expect(drafted?.tid).toBe(1);
+	expect(drafted?.basketballPathway?.history).toEqual(career);
+	const college = await idb.cache.players.indexGetAll(
+		"playersByTid",
+		WORLD_TIDS.college,
+	);
+	expect(college.length).toBe(8 * 13);
+	expect(college.every((p) => p.basketballPathway?.status === "college")).toBe(
+		true,
+	);
+	await advanceWorld(7);
+	expect(getWorld()?.day).toBe(7);
+});
+
+test("NBA assignment and recall preserve the parent roster and contract", async () => {
+	for (const p of players.slice(0, 15)) {
+		p.tid = 0;
+		p.basketballPathway!.status = "nba";
+		await idb.cache.players.put(p);
+	}
+	const p = players[0]!;
+	const contract = structuredClone(p.contracts);
+	await worldAction({ type: "assign", pid: p.pid });
+	const assigned = await idb.cache.players.get(p.pid);
+	expect(assigned?.tid).toBe(0);
+	expect(assigned?.basketballPathway?.assigned).toBe(true);
+	expect(assigned?.contracts).toEqual(contract);
+	await worldAction({ type: "recall", pid: p.pid });
+	expect(
+		(await idb.cache.players.get(p.pid))?.basketballPathway?.assigned,
+	).toBe(false);
+	await expect(
+		worldAction({ type: "recall", pid: players[30]!.pid }),
+	).rejects.toThrow("your assigned players");
+});
+
+test("retired recruits cannot reappear in recruiting or college rosters", async () => {
+	const p = players[0]!;
+	p.tid = -3;
+	p.basketballPathway!.status = "portal";
+	await idb.cache.players.put(p);
+	getWorld()!.offseasonProcessed = true;
+	await expect(
+		worldAction({ type: "recruit", pid: p.pid, nil: 0 }),
+	).rejects.toThrow();
 });

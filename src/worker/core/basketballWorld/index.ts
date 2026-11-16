@@ -645,8 +645,9 @@ const playWorldDay = async (world: BasketballWorld, players: Player[]) => {
 };
 
 export const advanceWorld = async (days: number, persist = true) => {
-	if (!Number.isFinite(days) || days < 1)
+	if (!Number.isFinite(days) || days < 1) {
 		throw new Error("Choose a positive number of days to simulate.");
+	}
 	if (!worldEnabled()) {
 		return;
 	}
@@ -941,7 +942,7 @@ export const worldAction = async (action: WorldAction) => {
 		world.userSchoolId = action.teamId!;
 	} else if (action.pid !== undefined) {
 		const p = await idb.cache.players.get(action.pid);
-		if (!p) {
+		if (!p || p.tid === PLAYER.RETIRED) {
 			throw new Error("Player not found.");
 		}
 		const path = p.basketballPathway;
@@ -1010,10 +1011,11 @@ export const worldAction = async (action: WorldAction) => {
 						other.basketballPathway.schoolId === world.userSchoolId &&
 						!other.basketballPathway.redshirt,
 				);
-				if (available.length <= 5)
+				if (available.length <= 5) {
 					throw new Error(
 						"Keep at least five players active for college games.",
 					);
+				}
 			}
 			path.redshirt = !path.redshirt;
 		} else if (action.type === "assign") {
