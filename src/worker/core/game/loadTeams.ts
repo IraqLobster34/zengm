@@ -471,7 +471,9 @@ const loadTeams = async (tids: number[], conditions: Conditions) => {
 		}
 	} else {
 		for (const tid of tids) {
-			const players = await idb.cache.players.indexGetAll("playersByTid", tid);
+			const players = (
+				await idb.cache.players.indexGetAll("playersByTid", tid)
+			).filter((p) => !p.basketballPathway?.assigned);
 			const t = await idb.cache.teams.get(tid);
 
 			if (!t) {

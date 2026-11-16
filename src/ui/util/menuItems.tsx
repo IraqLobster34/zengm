@@ -1,3 +1,4 @@
+import { modRegistry } from "../../common/mods.ts";
 import { toWorker } from "./toWorker.ts";
 import {
 	DAILY_SCHEDULE,
@@ -59,6 +60,14 @@ export const menuItems: (MenuItemLink | MenuItemHeader)[] = [
 		commandPalette: true,
 		path: "/",
 		text: "Leagues",
+	},
+	{
+		type: "link",
+		active: (pageID) => pageID === "mods",
+		nonLeague: true,
+		commandPalette: true,
+		path: "/mods",
+		text: "Mods",
 	},
 	...(REAL_PLAYERS_INFO
 		? ([
@@ -178,18 +187,25 @@ export const menuItems: (MenuItemLink | MenuItemHeader)[] = [
 				path: ["playoffs"],
 				text: "Playoffs",
 			},
-			...(__SPORT === "basketball"
-				? [
-						{
-							type: "link" as const,
-							active: (pageID?: string) => pageID === "nbaCup",
-							league: true,
-							commandPalette: true,
-							path: ["nba_cup"],
-							text: "NBA Cup",
-						} satisfies MenuItemLink,
-					]
-				: []),
+			{
+				type: "link",
+				active: (pageID) => pageID === "mods",
+				league: true,
+				commandPalette: true,
+				path: ["mods"],
+				text: "Mods",
+			},
+			...modRegistry
+				.filter((mod) => mod.sports.includes(__SPORT) && mod.page)
+				.map((mod): MenuItemLink => ({
+					type: "link",
+					modId: mod.id,
+					active: (pageID) => pageID === mod.page!.id,
+					league: true,
+					commandPalette: true,
+					path: [mod.page!.path] as MenuItemLink["path"],
+					text: mod.page!.name,
+				})),
 			{
 				type: "link",
 				active: (pageID) => pageID === "dailySchedule",

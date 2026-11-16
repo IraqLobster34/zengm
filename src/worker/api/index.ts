@@ -1,3 +1,4 @@
+import type { ModConfiguration } from "../../common/mods.ts";
 import { csvFormat, csvFormatRows } from "d3-dsv";
 import type {
 	Contract,
@@ -207,6 +208,9 @@ import {
 } from "../../common/specialGames.ts";
 import { augmentOffers } from "../views/trade.ts";
 import { setAutoSave } from "../core/league/setAutoSave.ts";
+
+import { worldAction } from "../core/basketballWorld/index.ts";
+import { saveModSelection } from "../core/mods/index.ts";
 
 const acceptContractNegotiation = async ({
 	pid,
@@ -675,6 +679,7 @@ const createLeague = async (
 		fromFile,
 		startingSeasonFromInput,
 		leagueCreationID,
+		mods,
 	}: {
 		name: string;
 		tid: number;
@@ -698,6 +703,7 @@ const createLeague = async (
 		};
 		startingSeasonFromInput: string | undefined;
 		leagueCreationID: string;
+		mods?: ModConfiguration;
 	},
 	conditions: Conditions,
 ): Promise<number> => {
@@ -801,6 +807,7 @@ const createLeague = async (
 		const lid = importLid ?? (await getNewLeagueLid());
 
 		await league.createStream(leagueData, {
+			mods,
 			conditions,
 			confs,
 			divs,
@@ -5548,6 +5555,8 @@ const api = {
 	toolsMenu,
 	undoLog,
 	main: {
+		basketballWorldAction: whileWorkerBusy(worldAction),
+		saveModSelection: whileWorkerBusy(saveModSelection),
 		acceptContractNegotiation,
 		addTeam,
 		advancedPlayerSearch,

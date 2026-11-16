@@ -1,7 +1,9 @@
 import clsx from "clsx";
+import { isModEnabled } from "../../common/mods.ts";
 import { memo, useCallback, useId, useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { Dropdown, Nav } from "react-bootstrap";
+import { useLocal } from "../util/local.ts";
 import { helpers } from "../util/helpers.ts";
 import type {
 	MenuItemLink,
@@ -135,6 +137,15 @@ const MenuItem = ({
 	openID?: string;
 	root: boolean;
 }) => {
+	const { mods } = useLocal(["mods"]);
+	if (
+		menuItem.type === "link" &&
+		menuItem.modId &&
+		!isModEnabled(mods, menuItem.modId)
+	) {
+		return null;
+	}
+
 	if (menuItem.type === "text") {
 		return <Dropdown.Header>{menuItem.text}</Dropdown.Header>;
 	}

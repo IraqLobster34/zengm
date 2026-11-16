@@ -17,6 +17,7 @@ import { env } from "../util/env.ts";
 
 // Value type for each key in the attributes store
 export type MetaAttributes = {
+	defaultMods: import("../../common/mods.ts").ModConfiguration;
 	defaultSettingsOverrides: Partial<Settings>;
 	keyboardShortcuts: KeyboardShortcutsLocal;
 	lastChangesVersion: string;

@@ -36,6 +36,7 @@ import type {
 	UpdateEvents,
 } from "../../../common/types.ts";
 import allowForceTie from "../../../common/allowForceTie.ts";
+import { advanceWorld } from "../basketballWorld/index.ts";
 import { updateCup } from "../season/nbaCup.ts";
 import getWinner from "../../../common/getWinner.ts";
 import { setLiveSimRatingsStatsPopoverPlayers } from "./setLiveSimRatingsStatsPopoverPlayers.ts";
@@ -173,6 +174,7 @@ const playDays = async (
 		const updateEvents: UpdateEvents = ["gameSim"];
 
 		if (dayOver) {
+			await advanceWorld(1, false);
 			local.minFractionDiffs = undefined;
 
 			const healedTexts: string[] = [];

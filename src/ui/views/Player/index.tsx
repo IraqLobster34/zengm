@@ -1,3 +1,4 @@
+import { BasketballPathway } from "../../components/BasketballPathway.tsx";
 import { DataTable } from "../../components/DataTable/index.tsx";
 import { dropdownOptions } from "../../hooks/useDropdownOptions.tsx";
 import Injuries from "./Injuries.tsx";
@@ -121,6 +122,8 @@ const Player2 = ({
 				teamURL={teamURL}
 				willingToSign={willingToSign}
 			/>
+
+			<BasketballPathway pathway={player.basketballPathway} />
 
 			{statTables.map(({ name, onlyShowIf, stats, superCols }) => (
 				<StatsTable

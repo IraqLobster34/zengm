@@ -324,10 +324,7 @@ const TopStuff = ({
 
 	const freeAgent = player.tid === PLAYER.FREE_AGENT;
 	const injured = player.injury.gamesRemaining > 0;
-	const showContract =
-		player.tid !== PLAYER.UNDRAFTED &&
-		player.tid !== PLAYER.UNDRAFTED_FANTASY_TEMP &&
-		player.tid !== PLAYER.RETIRED;
+	const showContract = player.tid >= PLAYER.FREE_AGENT;
 	const showTradeFor = player.tid !== userTid && player.tid >= 0;
 	const showTradingBlock = player.tid === userTid;
 

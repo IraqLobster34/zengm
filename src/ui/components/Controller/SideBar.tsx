@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { isModEnabled } from "../../../common/mods.ts";
 import { memo, type ReactNode, useCallback, useEffect, useState } from "react";
 import { localActions, useLocal } from "../../util/local.ts";
 import type {
@@ -76,6 +77,15 @@ const MenuItem = ({
 	pathname?: string;
 	root: boolean;
 }) => {
+	const { mods } = useLocal(["mods"]);
+	if (
+		menuItem.type === "link" &&
+		menuItem.modId &&
+		!isModEnabled(mods, menuItem.modId)
+	) {
+		return null;
+	}
+
 	if (menuItem.type === "text") {
 		return null;
 	}

@@ -165,6 +165,10 @@ const selectPlayer = async (dp: DraftPick, pid: number) => {
 		pickNum,
 	});
 
+	if (p.basketballPathway) {
+		p.basketballPathway.status = "nba";
+		p.basketballPathway.assigned = false;
+	}
 	await idb.cache.players.put(p);
 	await idb.cache.draftPicks.delete(dp.dpid);
 

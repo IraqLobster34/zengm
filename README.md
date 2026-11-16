@@ -1,10 +1,14 @@
-# NBA Cup mod for Basketball GM
+# Basketball GM mods: NBA Cup and Connected Basketball
 
 An unofficial source-code mod that adds an in-season NBA Cup to Basketball GM: group play, a conference knockout bracket, a Cup MVP, and lasting player and team honors.
 
 ![NBA Cup bracket, championship banner, and tournament MVP](docs/screenshots/01-cup-bracket.png)
 
 ## Features
+
+- **Connected Basketball:** college seasons and recruiting, an NBA draft pipeline with persistent player identities, and G League assignments, recalls, and call-ups. See the [setup and current simulation limits](docs/CONNECTED_BASKETBALL.md).
+
+- **Main menu → Mods:** choose defaults for new leagues, review them before creation, and manage each league under **League → Mods**. NBA Cup is the first bundled mod; active tournaments are protected and completed history stays saved.
 
 - **League → NBA Cup:** a dedicated page with group standings, qualifiers, a playoff-style bracket, scores, and box-score links.
 - **Six groups and eight qualifiers:** three group winners and one wild card per conference advance to single-game quarterfinals, semifinals, and a neutral-site championship.

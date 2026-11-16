@@ -275,7 +275,10 @@ export const storeInfos: Record<Store, StoreInfo> = {
 			const players2 = await store
 				.index("tid")
 				.getAll(PLAYER.UNDRAFTED_FANTASY_TEMP);
-			const players = players1.concat(players2);
+			const worldPlayers = await store
+				.index("tid")
+				.getAll(IDBKeyRange.bound(-11, -9));
+			const players = players1.concat(players2, worldPlayers);
 
 			// Retired players who are still owed money by a team that released them. This index only has players who are still owed, see updateOwedByTids.
 			const pids = new Set(players.map((p) => p.pid));

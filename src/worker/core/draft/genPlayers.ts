@@ -4,11 +4,19 @@ import genPlayersWithoutSaving from "./genPlayersWithoutSaving.ts";
 import { idb } from "../../db/index.ts";
 import { g, helpers, logEvent } from "../../util/index.ts";
 
+import { worldEnabled, prepareWorldDraft } from "../basketballWorld/index.ts";
+
 const genPlayers = async (
 	draftYear: number,
 	scoutingLevel?: number,
 	forceScrubs?: boolean,
 ) => {
+	if (worldEnabled() && !forceScrubs) {
+		if (draftYear === g.get("season") && g.get("phase") >= 4) {
+			await prepareWorldDraft();
+		}
+		return;
+	}
 	// If scoutingLevel is not supplied, have to hit the DB to get it
 	if (scoutingLevel === undefined) {
 		scoutingLevel = await finances.getLevelLastThree("scouting", {

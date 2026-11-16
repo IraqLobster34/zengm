@@ -1,0 +1,2557 @@
+[
+	{
+		"id": 2000,
+		"name": "Abilene Christian",
+		"mascot": "Wildcats",
+		"abbrev": "ACU",
+		"conference": "UAC"
+	},
+	{
+		"id": 2005,
+		"name": "Air Force",
+		"mascot": "Falcons",
+		"abbrev": "AF",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 2006,
+		"name": "Akron",
+		"mascot": "Zips",
+		"abbrev": "AKR",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 333,
+		"name": "Alabama",
+		"mascot": "Crimson Tide",
+		"abbrev": "ALA",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2010,
+		"name": "Alabama A&M",
+		"mascot": "Bulldogs",
+		"abbrev": "AAMU",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 2011,
+		"name": "Alabama State",
+		"mascot": "Hornets",
+		"abbrev": "ALST",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 2016,
+		"name": "Alcorn State",
+		"mascot": "Braves",
+		"abbrev": "ALCN",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 44,
+		"name": "American",
+		"mascot": "Eagles",
+		"abbrev": "AMER",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 2026,
+		"name": "App State",
+		"mascot": "Mountaineers",
+		"abbrev": "APP",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 12,
+		"name": "Arizona",
+		"mascot": "Wildcats",
+		"abbrev": "ARIZ",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 9,
+		"name": "Arizona St",
+		"mascot": "Sun Devils",
+		"abbrev": "ASU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 8,
+		"name": "Arkansas",
+		"mascot": "Razorbacks",
+		"abbrev": "ARK",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2032,
+		"name": "Arkansas State",
+		"mascot": "Red Wolves",
+		"abbrev": "ARST",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2029,
+		"name": "Arkansas-Pine Bluff",
+		"mascot": "Golden Lions",
+		"abbrev": "UAPB",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 349,
+		"name": "Army",
+		"mascot": "Black Knights",
+		"abbrev": "ARMY",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 2,
+		"name": "Auburn",
+		"mascot": "Tigers",
+		"abbrev": "AUB",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2046,
+		"name": "Austin Peay",
+		"mascot": "Governors",
+		"abbrev": "APSU",
+		"conference": "UAC"
+	},
+	{
+		"id": 252,
+		"name": "BYU",
+		"mascot": "Cougars",
+		"abbrev": "BYU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 2934,
+		"name": "Bakersfield",
+		"mascot": "Roadrunners",
+		"abbrev": "CSUB",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 2050,
+		"name": "Ball State",
+		"mascot": "Cardinals",
+		"abbrev": "BALL",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 239,
+		"name": "Baylor",
+		"mascot": "Bears",
+		"abbrev": "BAY",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 91,
+		"name": "Bellarmine",
+		"mascot": "Knights",
+		"abbrev": "BELL",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 2057,
+		"name": "Belmont",
+		"mascot": "Bruins",
+		"abbrev": "BEL",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 2065,
+		"name": "Bethune-Cookman",
+		"mascot": "Wildcats",
+		"abbrev": "BCU",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 2066,
+		"name": "Binghamton",
+		"mascot": "Bearcats",
+		"abbrev": "BING",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 68,
+		"name": "Boise St",
+		"mascot": "Broncos",
+		"abbrev": "BOIS",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 103,
+		"name": "Boston College",
+		"mascot": "Eagles",
+		"abbrev": "BC",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 104,
+		"name": "Boston U",
+		"mascot": "Terriers",
+		"abbrev": "BU",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 189,
+		"name": "Bowling Green",
+		"mascot": "Falcons",
+		"abbrev": "BGSU",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 71,
+		"name": "Bradley",
+		"mascot": "Braves",
+		"abbrev": "BRAD",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 225,
+		"name": "Brown",
+		"mascot": "Bears",
+		"abbrev": "BRWN",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 2803,
+		"name": "Bryant",
+		"mascot": "Bulldogs",
+		"abbrev": "BRY",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 2083,
+		"name": "Bucknell",
+		"mascot": "Bison",
+		"abbrev": "BUCK",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 2084,
+		"name": "Buffalo",
+		"mascot": "Bulls",
+		"abbrev": "BUF",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 2086,
+		"name": "Butler",
+		"mascot": "Bulldogs",
+		"abbrev": "BTLR",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 2115,
+		"name": "C Connecticut",
+		"mascot": "Blue Devils",
+		"abbrev": "CCSU",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 2117,
+		"name": "C Michigan",
+		"mascot": "Chippewas",
+		"abbrev": "CMU",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 2856,
+		"name": "CA Baptist",
+		"mascot": "Lancers",
+		"abbrev": "CBU",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 2463,
+		"name": "CSU Northridge",
+		"mascot": "Matadors",
+		"abbrev": "CSUN",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 13,
+		"name": "Cal Poly",
+		"mascot": "Mustangs",
+		"abbrev": "CP",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 25,
+		"name": "California",
+		"mascot": "Golden Bears",
+		"abbrev": "CAL",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2097,
+		"name": "Campbell",
+		"mascot": "Fighting Camels",
+		"abbrev": "CAM",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2099,
+		"name": "Canisius",
+		"mascot": "Golden Griffins",
+		"abbrev": "CAN",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2110,
+		"name": "Central Arkansas",
+		"mascot": "Bears",
+		"abbrev": "CARK",
+		"conference": "UAC"
+	},
+	{
+		"id": 232,
+		"name": "Charleston",
+		"mascot": "Cougars",
+		"abbrev": "COFC",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2127,
+		"name": "Charleston So",
+		"mascot": "Buccaneers",
+		"abbrev": "CHSO",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 2429,
+		"name": "Charlotte",
+		"mascot": "49ers",
+		"abbrev": "CLT",
+		"conference": "American Conference"
+	},
+	{
+		"id": 236,
+		"name": "Chattanooga",
+		"mascot": "Mocs",
+		"abbrev": "UTC",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 2130,
+		"name": "Chicago St",
+		"mascot": "Cougars",
+		"abbrev": "CHST",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 2132,
+		"name": "Cincinnati",
+		"mascot": "Bearcats",
+		"abbrev": "CIN",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 228,
+		"name": "Clemson",
+		"mascot": "Tigers",
+		"abbrev": "CLEM",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 325,
+		"name": "Cleveland St",
+		"mascot": "Vikings",
+		"abbrev": "CLE",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 324,
+		"name": "Coastal Carolina",
+		"mascot": "Chanticleers",
+		"abbrev": "CCU",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2142,
+		"name": "Colgate",
+		"mascot": "Raiders",
+		"abbrev": "COLG",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 38,
+		"name": "Colorado",
+		"mascot": "Buffaloes",
+		"abbrev": "COLO",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 36,
+		"name": "Colorado St",
+		"mascot": "Rams",
+		"abbrev": "CSU",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 171,
+		"name": "Columbia",
+		"mascot": "Lions",
+		"abbrev": "COLU",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 2154,
+		"name": "Coppin St",
+		"mascot": "Eagles",
+		"abbrev": "COPP",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 172,
+		"name": "Cornell",
+		"mascot": "Big Red",
+		"abbrev": "COR",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 156,
+		"name": "Creighton",
+		"mascot": "Bluejays",
+		"abbrev": "CREI",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 159,
+		"name": "Dartmouth",
+		"mascot": "Big Green",
+		"abbrev": "DART",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 2166,
+		"name": "Davidson",
+		"mascot": "Wildcats",
+		"abbrev": "DAV",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2168,
+		"name": "Dayton",
+		"mascot": "Flyers",
+		"abbrev": "DAY",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 305,
+		"name": "DePaul",
+		"mascot": "Blue Demons",
+		"abbrev": "DEP",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 48,
+		"name": "Delaware",
+		"mascot": "Blue Hens",
+		"abbrev": "DEL",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2169,
+		"name": "Delaware St",
+		"mascot": "Hornets",
+		"abbrev": "DSU",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 2172,
+		"name": "Denver",
+		"mascot": "Pioneers",
+		"abbrev": "DEN",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 2174,
+		"name": "Detroit Mercy",
+		"mascot": "Titans",
+		"abbrev": "DETM",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 2181,
+		"name": "Drake",
+		"mascot": "Bulldogs",
+		"abbrev": "DRKE",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 2182,
+		"name": "Drexel",
+		"mascot": "Dragons",
+		"abbrev": "DREX",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 150,
+		"name": "Duke",
+		"mascot": "Blue Devils",
+		"abbrev": "DUKE",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2184,
+		"name": "Duquesne",
+		"mascot": "Dukes",
+		"abbrev": "DUQ",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2197,
+		"name": "E Illinois",
+		"mascot": "Panthers",
+		"abbrev": "EIU",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2199,
+		"name": "E Michigan",
+		"mascot": "Eagles",
+		"abbrev": "EMU",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 331,
+		"name": "E Washington",
+		"mascot": "Eagles",
+		"abbrev": "EWU",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 151,
+		"name": "East Carolina",
+		"mascot": "Pirates",
+		"abbrev": "ECU",
+		"conference": "American Conference"
+	},
+	{
+		"id": 2193,
+		"name": "East Tennessee State",
+		"mascot": "Buccaneers",
+		"abbrev": "ETSU",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 2837,
+		"name": "East Texas A&M",
+		"mascot": "Lions",
+		"abbrev": "ETAM",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2198,
+		"name": "Eastern Kentucky",
+		"mascot": "Colonels",
+		"abbrev": "EKU",
+		"conference": "UAC"
+	},
+	{
+		"id": 2210,
+		"name": "Elon",
+		"mascot": "Phoenix",
+		"abbrev": "ELON",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 339,
+		"name": "Evansville",
+		"mascot": "Purple Aces",
+		"abbrev": "EVAN",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 2226,
+		"name": "FAU",
+		"mascot": "Owls",
+		"abbrev": "FAU",
+		"conference": "American Conference"
+	},
+	{
+		"id": 161,
+		"name": "FDU",
+		"mascot": "Knights",
+		"abbrev": "FDU",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 526,
+		"name": "FGCU",
+		"mascot": "Eagles",
+		"abbrev": "FGCU",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 2229,
+		"name": "FIU",
+		"mascot": "Panthers",
+		"abbrev": "FIU",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2217,
+		"name": "Fairfield",
+		"mascot": "Stags",
+		"abbrev": "FAIR",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 57,
+		"name": "Florida",
+		"mascot": "Gators",
+		"abbrev": "FLA",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 50,
+		"name": "Florida A&M",
+		"mascot": "Rattlers",
+		"abbrev": "FAMU",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 52,
+		"name": "Florida St",
+		"mascot": "Seminoles",
+		"abbrev": "FSU",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2230,
+		"name": "Fordham",
+		"mascot": "Rams",
+		"abbrev": "FOR",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 278,
+		"name": "Fresno St",
+		"mascot": "Bulldogs",
+		"abbrev": "FRES",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 2239,
+		"name": "Fullerton",
+		"mascot": "Titans",
+		"abbrev": "CSUF",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 231,
+		"name": "Furman",
+		"mascot": "Paladins",
+		"abbrev": "FUR",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 45,
+		"name": "G Washington",
+		"mascot": "Revolutionaries",
+		"abbrev": "GW",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2241,
+		"name": "Gardner-Webb",
+		"mascot": "Runnin' Bulldogs",
+		"abbrev": "GWEB",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 2244,
+		"name": "George Mason",
+		"mascot": "Patriots",
+		"abbrev": "GMU",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 46,
+		"name": "Georgetown",
+		"mascot": "Hoyas",
+		"abbrev": "GTWN",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 61,
+		"name": "Georgia",
+		"mascot": "Bulldogs",
+		"abbrev": "UGA",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 290,
+		"name": "Georgia Southern",
+		"mascot": "Eagles",
+		"abbrev": "GASO",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2247,
+		"name": "Georgia State",
+		"mascot": "Panthers",
+		"abbrev": "GAST",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 59,
+		"name": "Georgia Tech",
+		"mascot": "Yellow Jackets",
+		"abbrev": "GT",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2250,
+		"name": "Gonzaga",
+		"mascot": "Bulldogs",
+		"abbrev": "GONZ",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 2755,
+		"name": "Grambling",
+		"mascot": "Tigers",
+		"abbrev": "GRAM",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 2253,
+		"name": "Grand Canyon",
+		"mascot": "Lopes",
+		"abbrev": "GCU",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 2739,
+		"name": "Green Bay",
+		"mascot": "Phoenix",
+		"abbrev": "GB",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 2261,
+		"name": "Hampton",
+		"mascot": "Pirates",
+		"abbrev": "HAMP",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 108,
+		"name": "Harvard",
+		"mascot": "Crimson",
+		"abbrev": "HARV",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 62,
+		"name": "Hawai'i",
+		"mascot": "Rainbow Warriors",
+		"abbrev": "HAW",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 2272,
+		"name": "High Point",
+		"mascot": "Panthers",
+		"abbrev": "HPU",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 2275,
+		"name": "Hofstra",
+		"mascot": "Pride",
+		"abbrev": "HOF",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 107,
+		"name": "Holy Cross",
+		"mascot": "Crusaders",
+		"abbrev": "HC",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 248,
+		"name": "Houston",
+		"mascot": "Cougars",
+		"abbrev": "HOU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 2277,
+		"name": "Houston Christian",
+		"mascot": "Huskies",
+		"abbrev": "HCU",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 47,
+		"name": "Howard",
+		"mascot": "Bison",
+		"abbrev": "HOW",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 85,
+		"name": "IU Indy",
+		"mascot": "Jaguars",
+		"abbrev": "IUIN",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 70,
+		"name": "Idaho",
+		"mascot": "Vandals",
+		"abbrev": "IDHO",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 304,
+		"name": "Idaho St",
+		"mascot": "Bengals",
+		"abbrev": "IDST",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 356,
+		"name": "Illinois",
+		"mascot": "Fighting Illini",
+		"abbrev": "ILL",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2287,
+		"name": "Illinois St",
+		"mascot": "Redbirds",
+		"abbrev": "ILST",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 2916,
+		"name": "Incarnate Word",
+		"mascot": "Cardinals",
+		"abbrev": "UIW",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 84,
+		"name": "Indiana",
+		"mascot": "Hoosiers",
+		"abbrev": "IU",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 282,
+		"name": "Indiana St",
+		"mascot": "Sycamores",
+		"abbrev": "INST",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 314,
+		"name": "Iona",
+		"mascot": "Gaels",
+		"abbrev": "IONA",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2294,
+		"name": "Iowa",
+		"mascot": "Hawkeyes",
+		"abbrev": "IOWA",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 66,
+		"name": "Iowa State",
+		"mascot": "Cyclones",
+		"abbrev": "ISU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 2296,
+		"name": "Jackson State",
+		"mascot": "Tigers",
+		"abbrev": "JKST",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 294,
+		"name": "Jacksonville",
+		"mascot": "Dolphins",
+		"abbrev": "JAX",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 256,
+		"name": "James Madison",
+		"mascot": "Dukes",
+		"abbrev": "JMU",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 55,
+		"name": "Jax State",
+		"mascot": "Gamecocks",
+		"abbrev": "JXST",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2305,
+		"name": "Kansas",
+		"mascot": "Jayhawks",
+		"abbrev": "KU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 140,
+		"name": "Kansas City",
+		"mascot": "Roos",
+		"abbrev": "KC",
+		"conference": "Summit League"
+	},
+	{
+		"id": 2306,
+		"name": "Kansas St",
+		"mascot": "Wildcats",
+		"abbrev": "KSU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 338,
+		"name": "Kennesaw St",
+		"mascot": "Owls",
+		"abbrev": "KENN",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2309,
+		"name": "Kent State",
+		"mascot": "Golden Flashes",
+		"abbrev": "KENT",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 96,
+		"name": "Kentucky",
+		"mascot": "Wildcats",
+		"abbrev": "UK",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 99,
+		"name": "LSU",
+		"mascot": "Tigers",
+		"abbrev": "LSU",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2443,
+		"name": "LSU New Orleans",
+		"mascot": "Privateers",
+		"abbrev": "NOLA",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2325,
+		"name": "La Salle",
+		"mascot": "Explorers",
+		"abbrev": "LAS",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 322,
+		"name": "Lafayette",
+		"mascot": "Leopards",
+		"abbrev": "LAF",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 2320,
+		"name": "Lamar",
+		"mascot": "Cardinals",
+		"abbrev": "LAM",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2330,
+		"name": "Le Moyne",
+		"mascot": "Dolphins",
+		"abbrev": "LEM",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 2329,
+		"name": "Lehigh",
+		"mascot": "Mountain Hawks",
+		"abbrev": "LEH",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 2335,
+		"name": "Liberty",
+		"mascot": "Flames",
+		"abbrev": "LIB",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2815,
+		"name": "Lindenwood",
+		"mascot": "Lions",
+		"abbrev": "LIN",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 288,
+		"name": "Lipscomb",
+		"mascot": "Bisons",
+		"abbrev": "LIP",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 2031,
+		"name": "Little Rock",
+		"mascot": "Trojans",
+		"abbrev": "LR",
+		"conference": "UAC"
+	},
+	{
+		"id": 299,
+		"name": "Long Beach St",
+		"mascot": "Beach",
+		"abbrev": "LBSU",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 112358,
+		"name": "Long Island",
+		"mascot": "Sharks",
+		"abbrev": "LIU",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 2344,
+		"name": "Longwood",
+		"mascot": "Lancers",
+		"abbrev": "LONG",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 309,
+		"name": "Louisiana",
+		"mascot": "Ragin' Cajuns",
+		"abbrev": "UL",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2348,
+		"name": "Louisiana Tech",
+		"mascot": "Bulldogs",
+		"abbrev": "LT",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 97,
+		"name": "Louisville",
+		"mascot": "Cardinals",
+		"abbrev": "LOU",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2350,
+		"name": "Loyola Chicago",
+		"mascot": "Ramblers",
+		"abbrev": "LUC",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2352,
+		"name": "Loyola MD",
+		"mascot": "Greyhounds",
+		"abbrev": "L-MD",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 2351,
+		"name": "Loyola Marymount",
+		"mascot": "Lions",
+		"abbrev": "LMU",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 2379,
+		"name": "MD Eastern",
+		"mascot": "Hawks",
+		"abbrev": "UMES",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 2393,
+		"name": "MTSU",
+		"mascot": "Blue Raiders",
+		"abbrev": "MTSU",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 311,
+		"name": "Maine",
+		"mascot": "Black Bears",
+		"abbrev": "ME",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 2363,
+		"name": "Manhattan",
+		"mascot": "Jaspers",
+		"abbrev": "MAN",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2368,
+		"name": "Marist",
+		"mascot": "Red Foxes",
+		"abbrev": "MRST",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 269,
+		"name": "Marquette",
+		"mascot": "Golden Eagles",
+		"abbrev": "MARQ",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 276,
+		"name": "Marshall",
+		"mascot": "Thundering Herd",
+		"abbrev": "MRSH",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 120,
+		"name": "Maryland",
+		"mascot": "Terrapins",
+		"abbrev": "MD",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2377,
+		"name": "McNeese",
+		"mascot": "Cowboys",
+		"abbrev": "MCN",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 235,
+		"name": "Memphis",
+		"mascot": "Tigers",
+		"abbrev": "MEM",
+		"conference": "American Conference"
+	},
+	{
+		"id": 2382,
+		"name": "Mercer",
+		"mascot": "Bears",
+		"abbrev": "MER",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 2385,
+		"name": "Mercyhurst",
+		"mascot": "Lakers",
+		"abbrev": "MERC",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 2771,
+		"name": "Merrimack",
+		"mascot": "Warriors",
+		"abbrev": "MRMK",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2390,
+		"name": "Miami",
+		"mascot": "Hurricanes",
+		"abbrev": "MIA",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 193,
+		"name": "Miami OH",
+		"mascot": "RedHawks",
+		"abbrev": "M-OH",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 130,
+		"name": "Michigan",
+		"mascot": "Wolverines",
+		"abbrev": "MICH",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 127,
+		"name": "Michigan St",
+		"mascot": "Spartans",
+		"abbrev": "MSU",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 270,
+		"name": "Milwaukee",
+		"mascot": "Panthers",
+		"abbrev": "MILW",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 135,
+		"name": "Minnesota",
+		"mascot": "Golden Gophers",
+		"abbrev": "MINN",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 344,
+		"name": "Mississippi St",
+		"mascot": "Bulldogs",
+		"abbrev": "MSST",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2400,
+		"name": "Mississippi Valley State",
+		"mascot": "Delta Devils",
+		"abbrev": "MVSU",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 142,
+		"name": "Missouri",
+		"mascot": "Tigers",
+		"abbrev": "MIZ",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2623,
+		"name": "Missouri St",
+		"mascot": "Bears",
+		"abbrev": "MOST",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2405,
+		"name": "Monmouth",
+		"mascot": "Hawks",
+		"abbrev": "MONM",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 149,
+		"name": "Montana",
+		"mascot": "Grizzlies",
+		"abbrev": "MONT",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 147,
+		"name": "Montana St",
+		"mascot": "Bobcats",
+		"abbrev": "MTST",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 2413,
+		"name": "Morehead St",
+		"mascot": "Eagles",
+		"abbrev": "MORE",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2415,
+		"name": "Morgan St",
+		"mascot": "Bears",
+		"abbrev": "MORG",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 116,
+		"name": "Mount St Marys",
+		"mascot": "Mountaineers",
+		"abbrev": "MSM",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 93,
+		"name": "Murray St",
+		"mascot": "Racers",
+		"abbrev": "MUR",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 2464,
+		"name": "N Arizona",
+		"mascot": "Lumberjacks",
+		"abbrev": "NAU",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 2458,
+		"name": "N Colorado",
+		"mascot": "Bears",
+		"abbrev": "UNCO",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 2459,
+		"name": "N Illinois",
+		"mascot": "Huskies",
+		"abbrev": "NIU",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 94,
+		"name": "N Kentucky",
+		"mascot": "Norse",
+		"abbrev": "NKU",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 2448,
+		"name": "NC A&T",
+		"mascot": "Aggies",
+		"abbrev": "NCAT",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2428,
+		"name": "NC Central",
+		"mascot": "Eagles",
+		"abbrev": "NCCU",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 152,
+		"name": "NC State",
+		"mascot": "Wolfpack",
+		"abbrev": "NCSU",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2885,
+		"name": "NJIT",
+		"mascot": "Highlanders",
+		"abbrev": "NJIT",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 2426,
+		"name": "Navy",
+		"mascot": "Midshipmen",
+		"abbrev": "NAVY",
+		"conference": "Patriot League"
+	},
+	{
+		"id": 158,
+		"name": "Nebraska",
+		"mascot": "Cornhuskers",
+		"abbrev": "NEB",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2440,
+		"name": "Nevada",
+		"mascot": "Wolf Pack",
+		"abbrev": "NEV",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 160,
+		"name": "New Hampshire",
+		"mascot": "Wildcats",
+		"abbrev": "UNH",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 2441,
+		"name": "New Haven",
+		"mascot": "Chargers",
+		"abbrev": "NHVN",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 167,
+		"name": "New Mexico",
+		"mascot": "Lobos",
+		"abbrev": "UNM",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 166,
+		"name": "New Mexico St",
+		"mascot": "Aggies",
+		"abbrev": "NMSU",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 315,
+		"name": "Niagara",
+		"mascot": "Purple Eagles",
+		"abbrev": "NIA",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2447,
+		"name": "Nicholls",
+		"mascot": "Colonels",
+		"abbrev": "NICH",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2450,
+		"name": "Norfolk St",
+		"mascot": "Spartans",
+		"abbrev": "NORF",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 2453,
+		"name": "North Alabama",
+		"mascot": "Lions",
+		"abbrev": "UNA",
+		"conference": "UAC"
+	},
+	{
+		"id": 153,
+		"name": "North Carolina",
+		"mascot": "Tar Heels",
+		"abbrev": "UNC",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 155,
+		"name": "North Dakota",
+		"mascot": "Fighting Hawks",
+		"abbrev": "UND",
+		"conference": "Summit League"
+	},
+	{
+		"id": 2449,
+		"name": "North Dakota State",
+		"mascot": "Bison",
+		"abbrev": "NDSU",
+		"conference": "Summit League"
+	},
+	{
+		"id": 2454,
+		"name": "North Florida",
+		"mascot": "Ospreys",
+		"abbrev": "UNF",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 249,
+		"name": "North Texas",
+		"mascot": "Mean Green",
+		"abbrev": "UNT",
+		"conference": "American Conference"
+	},
+	{
+		"id": 111,
+		"name": "Northeastern",
+		"mascot": "Huskies",
+		"abbrev": "NE",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2460,
+		"name": "Northern Iowa",
+		"mascot": "Panthers",
+		"abbrev": "UNI",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 77,
+		"name": "Northwestern",
+		"mascot": "Wildcats",
+		"abbrev": "NU",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2466,
+		"name": "Northwestern State",
+		"mascot": "Demons",
+		"abbrev": "NWST",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 87,
+		"name": "Notre Dame",
+		"mascot": "Fighting Irish",
+		"abbrev": "ND",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2473,
+		"name": "Oakland",
+		"mascot": "Golden Grizzlies",
+		"abbrev": "OAK",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 195,
+		"name": "Ohio",
+		"mascot": "Bobcats",
+		"abbrev": "OHIO",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 194,
+		"name": "Ohio State",
+		"mascot": "Buckeyes",
+		"abbrev": "OSU",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 201,
+		"name": "Oklahoma",
+		"mascot": "Sooners",
+		"abbrev": "OU",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 197,
+		"name": "Oklahoma St",
+		"mascot": "Cowboys",
+		"abbrev": "OKST",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 295,
+		"name": "Old Dominion",
+		"mascot": "Monarchs",
+		"abbrev": "ODU",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 145,
+		"name": "Ole Miss",
+		"mascot": "Rebels",
+		"abbrev": "MISS",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2437,
+		"name": "Omaha",
+		"mascot": "Mavericks",
+		"abbrev": "OMA",
+		"conference": "Summit League"
+	},
+	{
+		"id": 198,
+		"name": "Oral Roberts",
+		"mascot": "Golden Eagles",
+		"abbrev": "ORU",
+		"conference": "Summit League"
+	},
+	{
+		"id": 2483,
+		"name": "Oregon",
+		"mascot": "Ducks",
+		"abbrev": "ORE",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 204,
+		"name": "Oregon St",
+		"mascot": "Beavers",
+		"abbrev": "ORST",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 279,
+		"name": "Pacific",
+		"mascot": "Tigers",
+		"abbrev": "PAC",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 219,
+		"name": "Penn",
+		"mascot": "Quakers",
+		"abbrev": "PENN",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 213,
+		"name": "Penn State",
+		"mascot": "Nittany Lions",
+		"abbrev": "PSU",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2492,
+		"name": "Pepperdine",
+		"mascot": "Waves",
+		"abbrev": "PEPP",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 221,
+		"name": "Pitt",
+		"mascot": "Panthers",
+		"abbrev": "PITT",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2501,
+		"name": "Portland",
+		"mascot": "Pilots",
+		"abbrev": "PORT",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 2502,
+		"name": "Portland St",
+		"mascot": "Vikings",
+		"abbrev": "PRST",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 2504,
+		"name": "Prairie View A&M",
+		"mascot": "Panthers",
+		"abbrev": "PV",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 2506,
+		"name": "Presbyterian",
+		"mascot": "Blue Hose",
+		"abbrev": "PRES",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 163,
+		"name": "Princeton",
+		"mascot": "Tigers",
+		"abbrev": "PRIN",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 2507,
+		"name": "Providence",
+		"mascot": "Friars",
+		"abbrev": "PROV",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 2509,
+		"name": "Purdue",
+		"mascot": "Boilermakers",
+		"abbrev": "PUR",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2870,
+		"name": "Purdue FW",
+		"mascot": "Mastodons",
+		"abbrev": "PFW",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 2511,
+		"name": "Queens",
+		"mascot": "Royals",
+		"abbrev": "QUC",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 2514,
+		"name": "Quinnipiac",
+		"mascot": "Bobcats",
+		"abbrev": "QUIN",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2515,
+		"name": "Radford",
+		"mascot": "Highlanders",
+		"abbrev": "RAD",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 227,
+		"name": "Rhode Island",
+		"mascot": "Rams",
+		"abbrev": "URI",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 242,
+		"name": "Rice",
+		"mascot": "Owls",
+		"abbrev": "RICE",
+		"conference": "American Conference"
+	},
+	{
+		"id": 257,
+		"name": "Richmond",
+		"mascot": "Spiders",
+		"abbrev": "RICH",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2520,
+		"name": "Rider",
+		"mascot": "Broncs",
+		"abbrev": "RID",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2523,
+		"name": "Robert Morris",
+		"mascot": "Colonials",
+		"abbrev": "RMU",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 164,
+		"name": "Rutgers",
+		"mascot": "Scarlet Knights",
+		"abbrev": "RUTG",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 79,
+		"name": "S Illinois",
+		"mascot": "Salukis",
+		"abbrev": "SIU",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 88,
+		"name": "S Indiana",
+		"mascot": "Screaming Eagles",
+		"abbrev": "USI",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2569,
+		"name": "SC State",
+		"mascot": "Bulldogs",
+		"abbrev": "SCST",
+		"conference": "Mid-Eastern Athletic Conference"
+	},
+	{
+		"id": 2908,
+		"name": "SC Upstate",
+		"mascot": "Spartans",
+		"abbrev": "UPST",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 2545,
+		"name": "SE Louisiana",
+		"mascot": "Lions",
+		"abbrev": "SELA",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2546,
+		"name": "SE Missouri",
+		"mascot": "Redhawks",
+		"abbrev": "SEMO",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2565,
+		"name": "SIUE",
+		"mascot": "Cougars",
+		"abbrev": "SIUE",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2567,
+		"name": "SMU",
+		"mascot": "Mustangs",
+		"abbrev": "SMU",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 16,
+		"name": "Sacramento St",
+		"mascot": "Hornets",
+		"abbrev": "SAC",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 2529,
+		"name": "Sacred Heart",
+		"mascot": "Pioneers",
+		"abbrev": "SHU",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2603,
+		"name": "Saint Joseph's",
+		"mascot": "Hawks",
+		"abbrev": "JOES",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 139,
+		"name": "Saint Louis",
+		"mascot": "Billikens",
+		"abbrev": "SLU",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2608,
+		"name": "Saint Mary's",
+		"mascot": "Gaels",
+		"abbrev": "SMC",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 2612,
+		"name": "Saint Peter's",
+		"mascot": "Peacocks",
+		"abbrev": "SPU",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 2534,
+		"name": "Sam Houston",
+		"mascot": "Bearkats",
+		"abbrev": "SHSU",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2535,
+		"name": "Samford",
+		"mascot": "Bulldogs",
+		"abbrev": "SAM",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 301,
+		"name": "San Diego",
+		"mascot": "Toreros",
+		"abbrev": "USD",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 21,
+		"name": "San Diego St",
+		"mascot": "Aztecs",
+		"abbrev": "SDSU",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 2539,
+		"name": "San Francisco",
+		"mascot": "Dons",
+		"abbrev": "SF",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 23,
+		"name": "San Jos\u00e9 St",
+		"mascot": "Spartans",
+		"abbrev": "SJSU",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 2540,
+		"name": "Santa Barbara",
+		"mascot": "Gauchos",
+		"abbrev": "UCSB",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 2541,
+		"name": "Santa Clara",
+		"mascot": "Broncos",
+		"abbrev": "SCU",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 2547,
+		"name": "Seattle U",
+		"mascot": "Redhawks",
+		"abbrev": "SEA",
+		"conference": "West Coast Conference"
+	},
+	{
+		"id": 2550,
+		"name": "Seton Hall",
+		"mascot": "Pirates",
+		"abbrev": "HALL",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 2561,
+		"name": "Siena",
+		"mascot": "Saints",
+		"abbrev": "SIE",
+		"conference": "Metro Conference"
+	},
+	{
+		"id": 6,
+		"name": "South Alabama",
+		"mascot": "Jaguars",
+		"abbrev": "USA",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2579,
+		"name": "South Carolina",
+		"mascot": "Gamecocks",
+		"abbrev": "SC",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 233,
+		"name": "South Dakota",
+		"mascot": "Coyotes",
+		"abbrev": "SDAK",
+		"conference": "Summit League"
+	},
+	{
+		"id": 2571,
+		"name": "South Dakota State",
+		"mascot": "Jackrabbits",
+		"abbrev": "SDST",
+		"conference": "Summit League"
+	},
+	{
+		"id": 58,
+		"name": "South Florida",
+		"mascot": "Bulls",
+		"abbrev": "USF",
+		"conference": "American Conference"
+	},
+	{
+		"id": 2582,
+		"name": "Southern",
+		"mascot": "Jaguars",
+		"abbrev": "SOU",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 2572,
+		"name": "Southern Miss",
+		"mascot": "Golden Eagles",
+		"abbrev": "USM",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 253,
+		"name": "Southern Utah",
+		"mascot": "Thunderbirds",
+		"abbrev": "SUU",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 179,
+		"name": "St Bonaventure",
+		"mascot": "Bonnies",
+		"abbrev": "SBU",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2599,
+		"name": "St John's",
+		"mascot": "Red Storm",
+		"abbrev": "SJU",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 2900,
+		"name": "St. Thomas",
+		"mascot": "Tommies",
+		"abbrev": "STMN",
+		"conference": "Summit League"
+	},
+	{
+		"id": 24,
+		"name": "Stanford",
+		"mascot": "Cardinal",
+		"abbrev": "STAN",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2617,
+		"name": "Stephen F. Austin",
+		"mascot": "Lumberjacks",
+		"abbrev": "SFA",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 56,
+		"name": "Stetson",
+		"mascot": "Hatters",
+		"abbrev": "STET",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 284,
+		"name": "Stonehill",
+		"mascot": "Skyhawks",
+		"abbrev": "STO",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 2619,
+		"name": "Stony Brook",
+		"mascot": "Seawolves",
+		"abbrev": "STBK",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 183,
+		"name": "Syracuse",
+		"mascot": "Orange",
+		"abbrev": "SYR",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2628,
+		"name": "TCU",
+		"mascot": "Horned Frogs",
+		"abbrev": "TCU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 2627,
+		"name": "Tarleton State",
+		"mascot": "Texans",
+		"abbrev": "TAR",
+		"conference": "UAC"
+	},
+	{
+		"id": 218,
+		"name": "Temple",
+		"mascot": "Owls",
+		"abbrev": "TEM",
+		"conference": "American Conference"
+	},
+	{
+		"id": 2633,
+		"name": "Tennessee",
+		"mascot": "Volunteers",
+		"abbrev": "TENN",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 2634,
+		"name": "Tennessee St",
+		"mascot": "Tigers",
+		"abbrev": "TNST",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2635,
+		"name": "Tennessee Tech",
+		"mascot": "Golden Eagles",
+		"abbrev": "TNTC",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 251,
+		"name": "Texas",
+		"mascot": "Longhorns",
+		"abbrev": "TEX",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 245,
+		"name": "Texas A&M",
+		"mascot": "Aggies",
+		"abbrev": "TA&M",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 357,
+		"name": "Texas A&M-Corpus Christi",
+		"mascot": "Islanders",
+		"abbrev": "AMCC",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2640,
+		"name": "Texas Southern",
+		"mascot": "Tigers",
+		"abbrev": "TXSO",
+		"conference": "Southwestern Athletic Conference"
+	},
+	{
+		"id": 326,
+		"name": "Texas St",
+		"mascot": "Bobcats",
+		"abbrev": "TXST",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 2641,
+		"name": "Texas Tech",
+		"mascot": "Red Raiders",
+		"abbrev": "TTU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 2643,
+		"name": "The Citadel",
+		"mascot": "Bulldogs",
+		"abbrev": "CIT",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 2649,
+		"name": "Toledo",
+		"mascot": "Rockets",
+		"abbrev": "TOL",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 119,
+		"name": "Towson",
+		"mascot": "Tigers",
+		"abbrev": "TOW",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2653,
+		"name": "Troy",
+		"mascot": "Trojans",
+		"abbrev": "TROY",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2655,
+		"name": "Tulane",
+		"mascot": "Green Wave",
+		"abbrev": "TULN",
+		"conference": "American Conference"
+	},
+	{
+		"id": 202,
+		"name": "Tulsa",
+		"mascot": "Golden Hurricane",
+		"abbrev": "TLSA",
+		"conference": "American Conference"
+	},
+	{
+		"id": 5,
+		"name": "UAB",
+		"mascot": "Blazers",
+		"abbrev": "UAB",
+		"conference": "American Conference"
+	},
+	{
+		"id": 399,
+		"name": "UAlbany",
+		"mascot": "Great Danes",
+		"abbrev": "UALB",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 302,
+		"name": "UC Davis",
+		"mascot": "Aggies",
+		"abbrev": "UCD",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 300,
+		"name": "UC Irvine",
+		"mascot": "Anteaters",
+		"abbrev": "UCI",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 27,
+		"name": "UC Riverside",
+		"mascot": "Highlanders",
+		"abbrev": "UCR",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 28,
+		"name": "UC San Diego",
+		"mascot": "Tritons",
+		"abbrev": "UCSD",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 2116,
+		"name": "UCF",
+		"mascot": "Knights",
+		"abbrev": "UCF",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 26,
+		"name": "UCLA",
+		"mascot": "Bruins",
+		"abbrev": "UCLA",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 41,
+		"name": "UConn",
+		"mascot": "Huskies",
+		"abbrev": "CONN",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 82,
+		"name": "UIC",
+		"mascot": "Flames",
+		"abbrev": "UIC",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 2433,
+		"name": "UL Monroe",
+		"mascot": "Warhawks",
+		"abbrev": "ULM",
+		"conference": "Sun Belt Conference"
+	},
+	{
+		"id": 2378,
+		"name": "UMBC",
+		"mascot": "Retrievers",
+		"abbrev": "UMBC",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 113,
+		"name": "UMass",
+		"mascot": "Minutemen",
+		"abbrev": "MASS",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 2349,
+		"name": "UMass Lowell",
+		"mascot": "River Hawks",
+		"abbrev": "UML",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 2427,
+		"name": "UNC Asheville",
+		"mascot": "Bulldogs",
+		"abbrev": "UNCA",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 2430,
+		"name": "UNC Greensboro",
+		"mascot": "Spartans",
+		"abbrev": "UNCG",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 350,
+		"name": "UNC Wilmington",
+		"mascot": "Seahawks",
+		"abbrev": "UNCW",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2439,
+		"name": "UNLV",
+		"mascot": "Rebels",
+		"abbrev": "UNLV",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 30,
+		"name": "USC",
+		"mascot": "Trojans",
+		"abbrev": "USC",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 250,
+		"name": "UT Arlington",
+		"mascot": "Mavericks",
+		"abbrev": "UTA",
+		"conference": "UAC"
+	},
+	{
+		"id": 2630,
+		"name": "UT Martin",
+		"mascot": "Skyhawks",
+		"abbrev": "UTM",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 292,
+		"name": "UT Rio Grande Valley",
+		"mascot": "Vaqueros",
+		"abbrev": "RGV",
+		"conference": "Southland Conference"
+	},
+	{
+		"id": 2638,
+		"name": "UTEP",
+		"mascot": "Miners",
+		"abbrev": "UTEP",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 2636,
+		"name": "UTSA",
+		"mascot": "Roadrunners",
+		"abbrev": "UTSA",
+		"conference": "American Conference"
+	},
+	{
+		"id": 254,
+		"name": "Utah",
+		"mascot": "Utes",
+		"abbrev": "UTAH",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 328,
+		"name": "Utah State",
+		"mascot": "Aggies",
+		"abbrev": "USU",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 3101,
+		"name": "Utah Tech",
+		"mascot": "Trailblazers",
+		"abbrev": "UTU",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 3084,
+		"name": "Utah Valley",
+		"mascot": "Wolverines",
+		"abbrev": "UVU",
+		"conference": "Big West Conference"
+	},
+	{
+		"id": 2670,
+		"name": "VCU",
+		"mascot": "Rams",
+		"abbrev": "VCU",
+		"conference": "Atlantic 10 Conference"
+	},
+	{
+		"id": 2678,
+		"name": "VMI",
+		"mascot": "Keydets",
+		"abbrev": "VMI",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 2674,
+		"name": "Valparaiso",
+		"mascot": "Beacons",
+		"abbrev": "VAL",
+		"conference": "Missouri Valley Conference"
+	},
+	{
+		"id": 238,
+		"name": "Vanderbilt",
+		"mascot": "Commodores",
+		"abbrev": "VAN",
+		"conference": "Southeastern Conference"
+	},
+	{
+		"id": 261,
+		"name": "Vermont",
+		"mascot": "Catamounts",
+		"abbrev": "UVM",
+		"conference": "America East Conference"
+	},
+	{
+		"id": 222,
+		"name": "Villanova",
+		"mascot": "Wildcats",
+		"abbrev": "VILL",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 258,
+		"name": "Virginia",
+		"mascot": "Cavaliers",
+		"abbrev": "UVA",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 259,
+		"name": "Virginia Tech",
+		"mascot": "Hokies",
+		"abbrev": "VT",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 2710,
+		"name": "W Illinois",
+		"mascot": "Leathernecks",
+		"abbrev": "WIU",
+		"conference": "Ohio Valley Conference"
+	},
+	{
+		"id": 2711,
+		"name": "W Michigan",
+		"mascot": "Broncos",
+		"abbrev": "WMU",
+		"conference": "Mid-American Conference"
+	},
+	{
+		"id": 2681,
+		"name": "Wagner",
+		"mascot": "Seahawks",
+		"abbrev": "WAG",
+		"conference": "Northeast Conference"
+	},
+	{
+		"id": 154,
+		"name": "Wake Forest",
+		"mascot": "Demon Deacons",
+		"abbrev": "WAKE",
+		"conference": "Atlantic Coast Conference"
+	},
+	{
+		"id": 264,
+		"name": "Washington",
+		"mascot": "Huskies",
+		"abbrev": "WASH",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 265,
+		"name": "Washington St",
+		"mascot": "Cougars",
+		"abbrev": "WSU",
+		"conference": "Pac-12 Conference"
+	},
+	{
+		"id": 2692,
+		"name": "Weber St",
+		"mascot": "Wildcats",
+		"abbrev": "WEB",
+		"conference": "Big Sky Conference"
+	},
+	{
+		"id": 2697,
+		"name": "West Florida",
+		"mascot": "Argonauts",
+		"abbrev": "UWF",
+		"conference": "Atlantic Sun Conference"
+	},
+	{
+		"id": 2698,
+		"name": "West Georgia",
+		"mascot": "Wolves",
+		"abbrev": "WGA",
+		"conference": "UAC"
+	},
+	{
+		"id": 277,
+		"name": "West Virginia",
+		"mascot": "Mountaineers",
+		"abbrev": "WVU",
+		"conference": "Big 12 Conference"
+	},
+	{
+		"id": 2717,
+		"name": "Western Carolina",
+		"mascot": "Catamounts",
+		"abbrev": "WCU",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 98,
+		"name": "Western KY",
+		"mascot": "Hilltoppers",
+		"abbrev": "WKU",
+		"conference": "Conference USA"
+	},
+	{
+		"id": 2724,
+		"name": "Wichita St",
+		"mascot": "Shockers",
+		"abbrev": "WICH",
+		"conference": "American Conference"
+	},
+	{
+		"id": 2729,
+		"name": "William & Mary",
+		"mascot": "Tribe",
+		"abbrev": "W&M",
+		"conference": "Coastal Athletic Association"
+	},
+	{
+		"id": 2737,
+		"name": "Winthrop",
+		"mascot": "Eagles",
+		"abbrev": "WIN",
+		"conference": "Big South Conference"
+	},
+	{
+		"id": 275,
+		"name": "Wisconsin",
+		"mascot": "Badgers",
+		"abbrev": "WIS",
+		"conference": "Big Ten Conference"
+	},
+	{
+		"id": 2747,
+		"name": "Wofford",
+		"mascot": "Terriers",
+		"abbrev": "WOF",
+		"conference": "Southern Conference"
+	},
+	{
+		"id": 2750,
+		"name": "Wright St",
+		"mascot": "Raiders",
+		"abbrev": "WRST",
+		"conference": "Horizon League"
+	},
+	{
+		"id": 2751,
+		"name": "Wyoming",
+		"mascot": "Cowboys",
+		"abbrev": "WYO",
+		"conference": "Mountain West Conference"
+	},
+	{
+		"id": 2752,
+		"name": "Xavier",
+		"mascot": "Musketeers",
+		"abbrev": "XAV",
+		"conference": "Big East Conference"
+	},
+	{
+		"id": 43,
+		"name": "Yale",
+		"mascot": "Bulldogs",
+		"abbrev": "YALE",
+		"conference": "Ivy League"
+	},
+	{
+		"id": 2754,
+		"name": "Youngstown St",
+		"mascot": "Penguins",
+		"abbrev": "YSU",
+		"conference": "Horizon League"
+	}
+]

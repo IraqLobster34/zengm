@@ -4,6 +4,8 @@ import { g, helpers } from "../../util/index.ts";
 import type { Conditions, PhaseReturn, Player } from "../../../common/types.ts";
 import { NotEnoughTeamsError } from "../draft/genOrder.ts";
 
+import { prepareWorldDraft } from "../basketballWorld/index.ts";
+
 const newPhaseDraft = async (conditions: Conditions): Promise<PhaseReturn> => {
 	// In case some weird situation results in games still in the schedule, clear them
 	await idb.cache.schedule.clear();
@@ -38,6 +40,7 @@ const newPhaseDraft = async (conditions: Conditions): Promise<PhaseReturn> => {
 
 	await idb.cache.players.putAll(playersWhoDied);
 
+	await prepareWorldDraft();
 	await draft.genPlayers(currentSeason);
 
 	if (g.get("draftType") !== "freeAgents") {

@@ -1,3 +1,4 @@
+import { getModSelection } from "../core/mods/index.ts";
 import { idb } from "../db/index.ts";
 import { defineView } from "../util/defineView.ts";
 import { env } from "../util/env.ts";
@@ -61,6 +62,7 @@ export default defineView({
 	processInputs,
 	load: async ({ inputs: { lid, type } }) => {
 		const godModeLimits = newLeagueGodModeLimits();
+		const mods = await getModSelection(false);
 
 		const overrides = await getMetaAttribute("defaultSettingsOverrides");
 
@@ -81,6 +83,7 @@ export default defineView({
 					type,
 					godModeLimits,
 					defaultSettings,
+					mods,
 				};
 			}
 		}
@@ -96,6 +99,7 @@ export default defineView({
 			type,
 			godModeLimits,
 			defaultSettings,
+			mods,
 		};
 	},
 });

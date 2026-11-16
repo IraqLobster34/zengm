@@ -586,6 +586,8 @@ export type TragicDeaths = {
 type FootballOvertime = "suddenDeath" | "exceptFg" | "bothPossess";
 
 export type GameAttributesLeague = {
+	basketballWorld?: import("./basketballWorld.ts").BasketballWorld;
+	mods?: import("./mods.ts").ModConfiguration;
 	nbaCup?: import("./nbaCup.ts").NbaCup | null;
 	nbaCupHistory?: Record<number, import("./nbaCup.ts").NbaCup>;
 	aiJerseyRetirement: boolean;
@@ -971,6 +973,7 @@ export type Message = {
 } & MessageWithoutKey;
 
 export type MenuItemLink = {
+	modId?: string;
 	type: "link";
 	active?: (pageID?: string, pathname?: string) => boolean;
 	league?: true;
@@ -1249,6 +1252,7 @@ export type MinimalPlayerRatings = {
 };
 
 export type PlayerWithoutKey<PlayerRatings = MinimalPlayerRatings> = {
+	basketballPathway?: import("./basketballWorld.ts").BasketballPathway;
 	awards: PlayerAward[];
 	born: {
 		year: number;

@@ -1,3 +1,4 @@
+import { getDefaultMods, type ModConfiguration } from "../../../common/mods.ts";
 import { m, AnimatePresence } from "framer-motion";
 import {
 	useState,
@@ -59,6 +60,7 @@ import { confirm } from "../../util/confirm.tsx";
 import { safeLocalStorage } from "../../util/safeLocalStorage.ts";
 import { realtimeUpdate } from "../../util/realtimeUpdate.ts";
 import { applyRealTeamInfo } from "../../../common/applyRealTeamInfo.ts";
+import { ModSelection } from "../../components/ModSelection.tsx";
 import { gameAttributesArrayToObject } from "../../../common/gameAttributesArrayToObject.ts";
 import { unwrapGameAttribute } from "../../../common/unwrapGameAttribute.ts";
 
@@ -682,6 +684,7 @@ const getGenderOverride = (): GameAttributesLeague["gender"] | undefined => {
 };
 
 const NewLeague = (props: View<"newLeague">) => {
+	const [mods, setMods] = useState(props.mods);
 	const [startingSeason, setStartingSeason] = useState(
 		String(new Date().getFullYear()),
 	);
@@ -782,6 +785,13 @@ const NewLeague = (props: View<"newLeague">) => {
 		},
 	);
 
+	const importedModAttributes =
+		(state.customize === "custom-rosters" ||
+			state.customize === "custom-url") &&
+		state.keptKeys.includes("gameAttributes")
+			? state.basicInfo?.gameAttributes
+			: undefined;
+
 	let title: string;
 	if (importing) {
 		title = "Import League";
@@ -872,6 +882,7 @@ const NewLeague = (props: View<"newLeague">) => {
 			const hasRookieContracts = state.basicInfo?.hasRookieContracts ?? true;
 
 			const lid = await toWorker("main", "createLeague", {
+				mods,
 				name: state.name,
 				tid: state.tid,
 				file: state.file,
@@ -1261,6 +1272,18 @@ const NewLeague = (props: View<"newLeague">) => {
 							</p>
 						</>
 					) : null}
+					<ModSelection
+						configuration={
+							importedModAttributes
+								? ((importedModAttributes.mods as
+										| ModConfiguration
+										| undefined) ?? getDefaultMods())
+								: mods
+						}
+						onChange={setMods}
+						disabled={state.creating}
+						imported={!!importedModAttributes}
+					/>
 					<div className="row">
 						<div className="col-sm-6">
 							<div className="mb-3">

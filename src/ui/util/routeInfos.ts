@@ -1,6 +1,7 @@
 export const routeInfos = {
 	// Non-league views
 	"/": "dashboard",
+	"/mods": "mods",
 	"/new_league": "newLeague",
 	"/new_league/:x": "newLeague",
 	"/achievements": "achievements",
@@ -18,6 +19,10 @@ export const routeInfos = {
 
 	// League views
 	"/l/:lid": "leagueDashboard",
+	"/l/:lid/mods": "mods",
+	"/l/:lid/basketball_world": "basketballWorld",
+	"/l/:lid/basketball_world/:section": "basketballWorld",
+	"/l/:lid/basketball_world/:section/:team": "basketballWorld",
 	"/l/:lid/new_team": "newTeam",
 	"/l/:lid/inbox": "inbox",
 	"/l/:lid/message": "message",

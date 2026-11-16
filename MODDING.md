@@ -32,7 +32,49 @@ machine; the detected pnpm version at setup was 11.25.0, so use pnpm 12
 before installing dependencies. Dependencies were subsequently installed
 with pnpm 12.18.0 for the NBA Cup mod.
 
+## Connected Basketball
+
+See [the Connected Basketball guide](docs/CONNECTED_BASKETBALL.md) for setup,
+features, data sources, architecture, and current realism limits.
+
 ## NBA Cup mod
+
+### Mods menu and connector
+
+Open **Mods** from the main menu to choose defaults for new leagues. Review
+or change the selection on the New League screen. These defaults do not
+change existing leagues. Open **League → Mods** to change one league.
+
+NBA Cup is the first bundled mod. It remains enabled by default for basketball
+to preserve this fork's behavior. Other sports show it as unavailable.
+Scheduling changes apply when the next season's schedule is generated.
+An active tournament cannot be disabled. Completed tournaments, awards, and
+history remain saved, with a results link on the league's Mods screen even
+after disabling future Cups.
+
+Selections and versions are stored in the league's `mods` game attribute and
+travel with exports and clones. Importing game attributes preserves the
+file's selection; older files without mod settings retain the original NBA
+Cup behavior. Unavailable enabled mods, unsupported sports, wrong versions,
+missing dependencies, and conflicts are rejected before activation.
+
+The connector supports bundled source mods:
+
+- Declare metadata, supported sports, dependencies, conflicts, default state,
+  and an optional league menu entry in `src/common/mods.ts`.
+- Use `isLeagueModEnabled(id)` from `src/worker/core/mods/index.ts` to gate
+  new gameplay at an appropriate lifecycle boundary. NBA Cup gates season
+  scheduling through `canStartCup`; simulations of already scheduled games
+  and historical results remain intact.
+- Register the mod's view and route through the normal game view system.
+  Its manifest's menu entry appears in the sidebar, top menu, and command
+  palette when enabled.
+- Keep changing league state in the worker. Add any mod-specific lock or
+  migration before exposing a setting that could invalidate a saved season.
+- Bump the manifest version only with a migration or deliberate compatibility
+  decision: enabled saved versions must match the installed version.
+
+The initial framework does not download or execute third-party packages.
 
 Start a basketball league and advance to the regular season. The cup starts
 automatically for 82-game leagues with 30 active teams in two conferences of 15. An existing regular season gets its first cup next season. Other league

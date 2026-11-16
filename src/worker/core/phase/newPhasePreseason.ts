@@ -42,6 +42,8 @@ import {
 import { userControlsTeam } from "../../util/userControlsTeam.ts";
 
 // When a player changes teams or leaves his team at the start of a new season without a normal signing or release (repeat season, forced historical rosters), his contract just ends before this season
+import { startWorldSeason } from "../basketballWorld/index.ts";
+
 const endContractBeforeNewSeason = (
 	p: Player,
 	contract: Contract,
@@ -588,6 +590,8 @@ const newPhasePreseason = async (
 	}
 
 	await idb.cache.players.putAll(players);
+
+	await startWorldSeason();
 
 	await realRosters.checkDisableForceHistoricalRosters(
 		newSeason,

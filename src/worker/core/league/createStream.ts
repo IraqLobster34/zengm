@@ -1,3 +1,5 @@
+import { resolveModsForNewLeague } from "../../../common/mods.ts";
+import { getMetaAttribute } from "../../db/metaAttributes.ts";
 import type { IDBPTransaction } from "@dumbmatter/idb";
 import {
 	draft,
@@ -1285,6 +1287,7 @@ const finalizeActivePlayers = async ({
 };
 
 type CreateStreamProps = {
+	mods?: import("../../../common/mods.ts").ModConfiguration;
 	conditions?: Conditions;
 	confs: Conf[];
 	divs: Div[];
@@ -1315,6 +1318,7 @@ const isRandomDebuts = (randomization: Settings["randomization"]) =>
 	randomization === "debutsForeverKeepCurrent";
 
 const beforeDBStream = async ({
+	mods,
 	conditions,
 	confs,
 	divs,
@@ -1329,6 +1333,7 @@ const beforeDBStream = async ({
 	tid,
 }: Pick<
 	CreateStreamProps,
+	| "mods"
 	| "conditions"
 	| "confs"
 	| "divs"
@@ -1408,6 +1413,14 @@ const beforeDBStream = async ({
 		teamInfos,
 		tid,
 		version: fromFile.version,
+	});
+
+	gameAttributes.mods = resolveModsForNewLeague({
+		importedAttributes: !getLeagueOptions
+			? filteredFromFile.gameAttributes
+			: undefined,
+		selection: mods,
+		defaults: await getMetaAttribute("defaultMods"),
 	});
 
 	let averagePopulation: number | undefined;
@@ -2000,6 +2013,7 @@ const createStream = async (
 		startingSeasonFromInput,
 		teamsFromInput, // use if none in file
 		tid,
+		mods,
 	}: CreateStreamProps,
 ) => {
 	// console.time("createStream");
@@ -2017,6 +2031,7 @@ const createStream = async (
 		teamStats,
 		teams,
 	} = await beforeDBStream({
+		mods,
 		conditions,
 		confs,
 		divs,

@@ -1,0 +1,219 @@
+[
+	{
+		"id": 2,
+		"name": "Austin Spurs",
+		"abbrev": "AUS",
+		"parentAbbrev": "SAS",
+		"parentRegion": "San Antonio"
+	},
+	{
+		"id": 4,
+		"name": "Capital City Go-Go",
+		"abbrev": "CAP",
+		"parentAbbrev": "WAS",
+		"parentRegion": "Washington"
+	},
+	{
+		"id": 3,
+		"name": "Cleveland Charge",
+		"abbrev": "CLC",
+		"parentAbbrev": "CLE",
+		"parentRegion": "Cleveland"
+	},
+	{
+		"id": 22,
+		"name": "Coachella Valley Lakers",
+		"abbrev": "CVL",
+		"parentAbbrev": "LAL",
+		"parentRegion": "Los Angeles"
+	},
+	{
+		"id": 28,
+		"name": "College Park Skyhawks",
+		"abbrev": "CPS",
+		"parentAbbrev": "ATL",
+		"parentRegion": "Atlanta"
+	},
+	{
+		"id": 5,
+		"name": "Delaware Blue Coats",
+		"abbrev": "DEL",
+		"parentAbbrev": "PHI",
+		"parentRegion": "Philadelphia"
+	},
+	{
+		"id": 8,
+		"name": "Grand Rapids Gold",
+		"abbrev": "GRD",
+		"parentAbbrev": "DEN",
+		"parentRegion": "Denver"
+	},
+	{
+		"id": 9,
+		"name": "Greensboro Swarm",
+		"abbrev": "GBO",
+		"parentAbbrev": "CHA",
+		"parentRegion": "Charlotte"
+	},
+	{
+		"id": 10,
+		"name": "Iowa Wolves",
+		"abbrev": "IWA",
+		"parentAbbrev": "MIN",
+		"parentRegion": "Minnesota"
+	},
+	{
+		"id": 6,
+		"name": "Laketown Squadron",
+		"abbrev": "LAK",
+		"parentAbbrev": "NOP",
+		"parentRegion": "New Orleans"
+	},
+	{
+		"id": 12,
+		"name": "Long Island Nets",
+		"abbrev": "LIN",
+		"parentAbbrev": "BKN",
+		"parentRegion": "Brooklyn"
+	},
+	{
+		"id": 13,
+		"name": "Maine Celtics",
+		"abbrev": "MNE",
+		"parentAbbrev": "BOS",
+		"parentRegion": "Boston"
+	},
+	{
+		"id": 14,
+		"name": "Memphis Hustle",
+		"abbrev": "MHU",
+		"parentAbbrev": "MEM",
+		"parentRegion": "Memphis"
+	},
+	{
+		"id": 124612,
+		"name": "Mexico City Capitanes",
+		"abbrev": "MXC",
+		"parentAbbrev": "",
+		"parentRegion": ""
+	},
+	{
+		"id": 15,
+		"name": "Motor City Cruise",
+		"abbrev": "MCC",
+		"parentAbbrev": "DET",
+		"parentRegion": "Detroit"
+	},
+	{
+		"id": 7,
+		"name": "Noblesville Boom",
+		"abbrev": "NOB",
+		"parentAbbrev": "IND",
+		"parentRegion": "Indiana"
+	},
+	{
+		"id": 16,
+		"name": "Oklahoma City Blue",
+		"abbrev": "OKL",
+		"parentAbbrev": "OKC",
+		"parentRegion": "Oklahoma City"
+	},
+	{
+		"id": 11,
+		"name": "Osceola Magic",
+		"abbrev": "OSC",
+		"parentAbbrev": "ORL",
+		"parentRegion": "Orlando"
+	},
+	{
+		"id": 17,
+		"name": "Raptors 905",
+		"abbrev": "RAP",
+		"parentAbbrev": "TOR",
+		"parentRegion": "Toronto"
+	},
+	{
+		"id": 18,
+		"name": "Rio Grande Valley Vipers",
+		"abbrev": "RGV",
+		"parentAbbrev": "HOU",
+		"parentRegion": "Houston"
+	},
+	{
+		"id": 128019,
+		"name": "Rip City Remix",
+		"abbrev": "RCITY",
+		"parentAbbrev": "POR",
+		"parentRegion": "Portland"
+	},
+	{
+		"id": 19,
+		"name": "Salt Lake City Stars",
+		"abbrev": "SLC",
+		"parentAbbrev": "UTA",
+		"parentRegion": "Utah"
+	},
+	{
+		"id": 1,
+		"name": "San Diego Clippers",
+		"abbrev": "SAN",
+		"parentAbbrev": "LAC",
+		"parentRegion": "Los Angeles"
+	},
+	{
+		"id": 20,
+		"name": "Santa Cruz Warriors",
+		"abbrev": "SCW",
+		"parentAbbrev": "GSW",
+		"parentRegion": "Golden State"
+	},
+	{
+		"id": 21,
+		"name": "Sioux Falls Skyforce",
+		"abbrev": "SXF",
+		"parentAbbrev": "MIA",
+		"parentRegion": "Miami"
+	},
+	{
+		"id": 23,
+		"name": "Stockton Kings",
+		"abbrev": "STO",
+		"parentAbbrev": "SAC",
+		"parentRegion": "Sacramento"
+	},
+	{
+		"id": 24,
+		"name": "Texas Legends",
+		"abbrev": "TEX",
+		"parentAbbrev": "DAL",
+		"parentRegion": "Dallas"
+	},
+	{
+		"id": 129713,
+		"name": "Valley Suns",
+		"abbrev": "VALLEY",
+		"parentAbbrev": "PHX",
+		"parentRegion": "Phoenix"
+	},
+	{
+		"id": 25,
+		"name": "Westchester Knicks",
+		"abbrev": "WES",
+		"parentAbbrev": "NYK",
+		"parentRegion": "New York"
+	},
+	{
+		"id": 26,
+		"name": "Windy City Bulls",
+		"abbrev": "WCB",
+		"parentAbbrev": "CHI",
+		"parentRegion": "Chicago"
+	},
+	{
+		"id": 27,
+		"name": "Wisconsin Herd",
+		"abbrev": "WIS",
+		"parentAbbrev": "MIL",
+		"parentRegion": "Milwaukee"
+	}
+]

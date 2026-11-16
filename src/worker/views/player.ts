@@ -83,6 +83,7 @@ export const getPlayer = async <
 			"imgURL",
 			"watch",
 			"college",
+			"basketballPathway",
 			"relatives",
 			"untradable",
 			"jerseyNumber",
@@ -192,7 +193,14 @@ export const getCommon = async (
 
 	const retired = p.tid === PLAYER.RETIRED;
 
-	let teamName = "";
+	let teamName =
+		p.basketballPathway && p.tid < -8
+			? p.basketballPathway.status === "college"
+				? p.college
+				: p.basketballPathway.status === "gLeague"
+					? "G League"
+					: "College recruiting"
+			: "";
 	if (p.tid >= 0) {
 		teamName = `${g.get("teamInfoCache")[p.tid]?.region} ${
 			g.get("teamInfoCache")[p.tid]?.name

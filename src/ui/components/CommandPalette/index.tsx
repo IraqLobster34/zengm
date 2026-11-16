@@ -27,6 +27,7 @@ import {
 	formatKeyboardShortcut,
 	useKeyboardShortcuts,
 } from "../../util/keyboardShortcuts.ts";
+import { isModEnabled } from "../../../common/mods.ts";
 import { menuItems } from "../../util/menuItems.tsx";
 import { safeLocalStorage } from "../../util/safeLocalStorage.ts";
 import { local, useLocal } from "../../util/local.ts";
@@ -117,6 +118,13 @@ const getResultsGroupedDefault = ({
 		}
 
 		if (!menuItem.nonLeague && !inLeague) {
+			return false;
+		}
+
+		if (
+			menuItem.modId &&
+			!isModEnabled(local.getState().mods, menuItem.modId)
+		) {
 			return false;
 		}
 
@@ -730,6 +738,7 @@ const ModeText = ({ inLeague }: { inLeague: boolean }) => {
 const CommandPaletteInner = ({ onHide }: { onHide: () => void }) => {
 	const {
 		challengeNoRatings,
+		mods,
 		godMode,
 		hideDisabledTeams,
 		lid,
@@ -737,6 +746,7 @@ const CommandPaletteInner = ({ onHide }: { onHide: () => void }) => {
 		teamInfoCache,
 	} = useLocal([
 		"challengeNoRatings",
+		"mods",
 		"godMode",
 		"hideDisabledTeams",
 		"lid",
@@ -783,6 +793,7 @@ const CommandPaletteInner = ({ onHide }: { onHide: () => void }) => {
 			active = false;
 		};
 	}, [
+		mods,
 		challengeNoRatings,
 		godMode,
 		hideDisabledTeams,

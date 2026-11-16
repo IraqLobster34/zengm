@@ -72,6 +72,7 @@ const getLeagueState = (): Pick<
 	maxContract: defaultGameAttributes.maxContract,
 	minContract: defaultGameAttributes.minContract,
 	minPayroll: defaultGameAttributes.minPayroll,
+	mods: undefined,
 	neutralSite: defaultGameAttributes.neutralSite,
 	nextPhase: undefined,
 	numGames: defaultGameAttributes.numGames[0].value,

@@ -1,3 +1,4 @@
+import { validateMods } from "../../../common/mods.ts";
 import { league } from "../index.ts";
 import { idb } from "../../db/index.ts";
 import { g, helpers } from "../../util/index.ts";
@@ -32,6 +33,18 @@ export const ALWAYS_WRAP = [
  */
 const loadGameAttributes = async () => {
 	const gameAttributes = await idb.cache.gameAttributes.getAll();
+
+	// Optional mod data must not carry over from a previously opened league.
+	g.setWithoutSavingToDB("basketballWorld", undefined);
+	g.setWithoutSavingToDB("mods", undefined);
+	g.setWithoutSavingToDB("nbaCup", null);
+	g.setWithoutSavingToDB("nbaCupHistory", {});
+	const savedMods = gameAttributes.find(
+		(attribute) => attribute.key === "mods",
+	);
+	if (savedMods?.value !== undefined) {
+		validateMods(savedMods.value);
+	}
 
 	for (const { key, value } of gameAttributes) {
 		if (gameAttributesKeysOtherSports.has(key)) {

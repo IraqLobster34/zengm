@@ -3,7 +3,10 @@ import { idb } from "../../db/index.ts";
 import { g } from "../../util/index.ts";
 import type { PhaseReturn } from "../../../common/types.ts";
 
+import { finishWorldDraft } from "../basketballWorld/index.ts";
+
 const newPhaseAfterDraft = async (): Promise<PhaseReturn> => {
+	await finishWorldDraft();
 	// In case some weird situation results in games still in the schedule, clear them
 	await idb.cache.schedule.clear();
 

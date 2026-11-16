@@ -1,3 +1,4 @@
+import { isModEnabled } from "../../../common/mods.ts";
 import type { CupGame, NbaCup } from "../../../common/nbaCup.ts";
 import { cupQualifiers } from "../../../common/nbaCup.ts";
 import type {
@@ -10,6 +11,12 @@ import { idb } from "../../db/index.ts";
 import { g, helpers, logEvent } from "../../util/index.ts";
 import setGameAttributes from "../league/setGameAttributes.ts";
 import addAward from "../player/addAward.ts";
+import team from "../team/index.ts";
+import {
+	orderTeams,
+	ORDER_TEAMS_SEASON_ATTRS,
+	ORDER_TEAMS_STATS,
+} from "../../util/orderTeams.ts";
 import type { Game } from "../../../common/types.ts";
 
 type CupTeam = { tid: number; seasonAttrs: { cid: number } };
@@ -93,6 +100,10 @@ export const canStartCup = (teams: CupTeam[]) => {
 	const cids = [...new Set(teams.map((team) => team.seasonAttrs.cid))];
 	return (
 		__SPORT === "basketball" &&
+		isModEnabled(
+			Object.hasOwn(g, "mods") ? g.get("mods") : undefined,
+			"nba-cup",
+		) &&
 		g.get("phase") === PHASE.PRESEASON &&
 		g.get("numGames") === 82 &&
 		teams.length === 30 &&
@@ -105,9 +116,6 @@ export const canStartCup = (teams: CupTeam[]) => {
 };
 
 export const loadCupDrawOrder = async (teams: CupTeam[], season: number) => {
-	const { default: team } = await import("../team/index.ts");
-	const { orderTeams, ORDER_TEAMS_SEASON_ATTRS, ORDER_TEAMS_STATS } =
-		await import("../../util/orderTeams.ts");
 	const previousSeason = season - 1;
 	const historical = (
 		await team.getFormattedAll({

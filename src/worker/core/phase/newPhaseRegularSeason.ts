@@ -135,9 +135,12 @@ const deleteOldBoxScores = async () => {
 	}
 };
 
+import { initializeWorld } from "../basketballWorld/index.ts";
+
 const newPhaseRegularSeason = async (
 	conditions: Conditions,
 ): Promise<PhaseReturn> => {
+	await initializeWorld();
 	const teams = await team.getFormattedAll({
 		attrs: ["tid"],
 		seasonAttrs: ["cid", "did"],
