@@ -1,218 +1,375 @@
 import { useState } from "react";
-import type { View } from "../../common/types.ts";
-import type { WorldAction } from "../../worker/core/basketballWorld/index.ts";
+import type { View, Col } from "../../common/types.ts";
+import {
+	DataTable,
+	type DataTableRow,
+} from "../components/DataTable/index.tsx";
+import { WorldPlayoffs } from "../components/WorldPlayoffs.tsx";
 import useTitleBar from "../hooks/useTitleBar.tsx";
 import { helpers } from "../util/helpers.ts";
-import { toWorker } from "../util/toWorker.ts";
-import { realtimeUpdate } from "../util/realtimeUpdate.ts";
 
-type Person = View<"basketballWorld">["roster"][number];
-const money = (amount: number) => `$${Math.round(amount).toLocaleString()}`;
-const nameLink = (p: Person) => (
-	<a href={helpers.leagueUrl(["player", p.pid])}>{p.name}</a>
-);
-
-const BasketballWorld = (props: View<"basketballWorld">) => {
-	useTitleBar({ title: "College & G League" });
-	const [busy, setBusy] = useState(false);
-	const [error, setError] = useState("");
-	const [message, setMessage] = useState("");
-	const [conference, setConference] = useState("");
-	const [offer, setOffer] = useState("50000");
-	const action = async (request: WorldAction) => {
-		setBusy(true);
-		setError("");
-		setMessage("");
-		try {
-			await toWorker("main", "basketballWorldAction", request);
-			await realtimeUpdate(["playerMovement"]);
-			setMessage("World updated.");
-		} catch (error) {
-			setError(error instanceof Error ? error.message : String(error));
-		} finally {
-			setBusy(false);
-		}
-	};
-	const school = props.schools.find((t) => t.id === props.schoolId);
-	const managed = props.schools.find((t) => t.id === props.userSchoolId);
-	const teams = props.section === "g_league" ? props.affiliates : props.schools;
-	const teamName = (id: number, competition: string) =>
-		(competition === "college" ? props.schools : props.affiliates).find(
-			(t) => t.id === id,
-		)?.name ?? "Unknown team";
-	const playerTable = (
-		people: Person[],
-		mode: "roster" | "recruit" | "nba" | "callUp" | "draft",
-	) => (
-		<div className="table-responsive">
-			<table className="table table-striped table-sm">
-				<thead>
-					<tr>
-						<th>Player</th>
-						<th>Pos</th>
-						<th>Age</th>
-						{!props.hideRatings ? (
-							<>
-								<th>Ovr</th>
-								<th>Pot</th>
-							</>
-						) : null}
-						<th>{mode === "recruit" ? "Interest" : "Team / pathway"}</th>
-						<th>GP</th>
-						<th>PPG</th>
-						<th>RPG</th>
-						<th>APG</th>
-						<th>Action / status</th>
-					</tr>
-				</thead>
-				<tbody>
-					{people.map((p) => {
-						const stats = p.history
-							.filter((row) => row.season === props.season)
-							.at(-1);
-						return (
-							<tr key={p.pid}>
-								<td>{nameLink(p)}</td>
-								<td>{p.pos}</td>
-								<td>{p.age}</td>
-								{!props.hideRatings ? (
-									<>
-										<td>{p.ovr}</td>
-										<td>{p.pot}</td>
-									</>
-								) : null}
-								<td>
-									{mode === "recruit"
-										? `${Math.round(p.interest)} / 100`
-										: p.status === "college"
-											? `${p.remaining} eligible season${p.remaining === 1 ? "" : "s"}${p.redshirt ? ", redshirt" : ""}`
-											: p.assigned
-												? "NBA assignment"
-												: p.status === "nba"
-													? "NBA"
-													: p.status === "draft"
-														? p.college
-														: "G League"}
-								</td>
-								<td>{stats?.gp ?? 0}</td>
-								{["pts", "reb", "ast"].map((key) => (
-									<td key={key}>
-										{stats && stats.gp > 0
-											? (
-													stats[key as "pts" | "reb" | "ast"] / stats.gp
-												).toFixed(1)
-											: "—"}
-									</td>
-								))}
-								<td>
-									{mode === "recruit" ? (
-										<button
-											className="btn btn-sm btn-outline-primary"
-											disabled={busy || !props.recruitingOpen}
-											onClick={() =>
-												void action({
-													type: "recruit",
-													pid: p.pid,
-													nil: Number(offer),
-												})
-											}
-										>
-											Offer / recruit
-										</button>
-									) : mode === "nba" ? (
-										<button
-											className="btn btn-sm btn-outline-primary"
-											disabled={busy}
-											onClick={() =>
-												void action({
-													type: p.assigned ? "recall" : "assign",
-													pid: p.pid,
-												})
-											}
-										>
-											{p.assigned ? "Recall to NBA" : "Assign to affiliate"}
-										</button>
-									) : mode === "callUp" ? (
-										<button
-											className="btn btn-sm btn-outline-primary"
-											disabled={busy}
-											onClick={() =>
-												void action({ type: "callUp", pid: p.pid })
-											}
-										>
-											Sign NBA minimum
-										</button>
-									) : mode === "roster" &&
-									  props.section === "college" &&
-									  props.schoolId === props.userSchoolId ? (
-										<button
-											className="btn btn-sm btn-outline-secondary"
-											disabled={busy || props.day > 0}
-											onClick={() =>
-												void action({ type: "redshirt", pid: p.pid })
-											}
-										>
-											{p.redshirt ? "Activate" : "Redshirt"}
-										</button>
-									) : p.drafted ? (
-										"Drafted"
-									) : p.status === "draft" ? (
-										"Available in NBA draft"
-									) : (
-										""
-									)}
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
-			{people.length === 0 ? (
-				<p className="text-body-secondary">No players here yet.</p>
-			) : null}
-		</div>
+type Props = View<"basketballWorld">;
+const url = (section: string, id?: number) =>
+	helpers.leagueUrl(
+		id === undefined
+			? ["basketball_world", section]
+			: ["basketball_world", section, id],
 	);
+const numeric = (title: string, desc?: string): Col => ({
+	title,
+	desc,
+	sortType: "number",
+	sortSequence: ["desc", "asc"],
+});
+const fixed = (value: number, digits = 1) => ({
+	value: value.toFixed(digits),
+	sortValue: value,
+	searchValue: value.toFixed(digits),
+});
 
+const WorldStandings = ({ props }: { props: Props }) => {
+	const [conference, setConference] = useState("");
+	const [scope, setScope] = useState("all");
+	const college = props.section === "college";
+	const standings = college ? props.collegeStandings : props.gLeagueStandings;
+	const selected = standings.filter(
+		(t) =>
+			(!conference || t.conference === conference) &&
+			(!college || scope !== "top25" || props.rankings.indexOf(t.id) < 25),
+	);
+	const cols: Col[] = [
+		numeric("#", "Rank within the selected standings"),
+		{ title: "Team" },
+		{ title: college ? "Conference" : "NBA affiliate" },
+		numeric("GP"),
+		numeric("W"),
+		numeric("L"),
+		numeric("PCT", "Regular-season winning percentage"),
+		numeric(
+			"GB",
+			college
+				? "Games behind the conference leader, using conference games"
+				: "Games behind the conference leader",
+		),
+		...(college
+			? [
+					{
+						title: "Conf",
+						desc: "Conference wins and losses",
+						sortType: "number",
+					} satisfies Col,
+				]
+			: []),
+		{ title: "Home" },
+		{ title: "Away" },
+		{ title: "L10" },
+		{ title: "Streak" },
+		numeric("PPG"),
+		numeric("OPPG", "Opponent points per game"),
+		numeric("DIFF", "Average point differential"),
+	];
+	const rows: DataTableRow[] = selected.map((t) => {
+		const field = props.brackets.find(
+			(b) => b.stage === (college ? "national" : "playoffs"),
+		);
+		const qualified =
+			field?.rounds.some(
+				(round) =>
+					round.byes.includes(t.id) ||
+					round.games.some((game) => game.home === t.id || game.away === t.id),
+			) || field?.champion === t.id;
+		const champion = props.brackets.some(
+			(b) => b.stage === "conference" && b.champion === t.id,
+		);
+		const rank = conference
+			? t.conferenceRank
+			: college && scope === "top25"
+				? props.rankings.indexOf(t.id) + 1
+				: t.rank;
+		const parent = !college
+			? props.affiliates.find((a) => a.id === t.id)?.parent
+			: undefined;
+		return {
+			key: t.id,
+			data: [
+				rank,
+				{
+					value: (
+						<>
+							<a href={url(props.section, t.id)}>{t.name}</a>
+							{champion ? (
+								<span className="badge text-bg-success ms-2">AQ</span>
+							) : qualified ? (
+								<span className="badge text-bg-secondary ms-2">Qualified</span>
+							) : null}
+						</>
+					),
+					sortValue: t.name,
+					searchValue: `${t.name} ${t.abbrev}`,
+				},
+				college ? t.conference : (parent ?? "Independent"),
+				t.gp,
+				t.won,
+				t.lost,
+				fixed(t.pct, 3),
+				{ value: t.gp && t.gb !== 0 ? t.gb.toFixed(1) : "—", sortValue: t.gb },
+				...(college
+					? [
+							{
+								value: `${t.confWon}–${t.confLost}`,
+								sortValue: t.conferencePct,
+							},
+						]
+					: []),
+				`${t.homeWon}–${t.homeLost}`,
+				`${t.awayWon}–${t.awayLost}`,
+				t.last10,
+				t.streak,
+				t.gp ? fixed(t.ppg) : "—",
+				t.gp ? fixed(t.oppg) : "—",
+				t.gp ? fixed(t.diff) : "—",
+			],
+		};
+	});
 	return (
-		<div style={{ maxWidth: 1200 }}>
-			<p>
-				Follow a player from college basketball through the NBA draft and G
-				League development. All three competitions share this league save.
+		<>
+			<div className="d-flex flex-wrap gap-3 align-items-end mb-3">
+				<div>
+					<label htmlFor="world-conference" className="form-label">
+						Conference
+					</label>
+					<select
+						id="world-conference"
+						className="form-select"
+						value={conference}
+						onChange={(event) => setConference(event.target.value)}
+					>
+						<option value="">All conferences</option>
+						{[...new Set(standings.map((t) => t.conference))]
+							.sort()
+							.map((name) => (
+								<option key={name}>{name}</option>
+							))}
+					</select>
+				</div>
+				{college ? (
+					<div>
+						<label htmlFor="world-ranking" className="form-label">
+							Standings
+						</label>
+						<select
+							id="world-ranking"
+							className="form-select"
+							value={scope}
+							onChange={(event) => setScope(event.target.value)}
+						>
+							<option value="all">All teams</option>
+							<option value="top25">Model top 25</option>
+						</select>
+					</div>
+				) : null}
+			</div>
+			<p className="small text-body-secondary">
+				Regular-season records only.{" "}
+				{conference
+					? "Teams are ranked within their conference."
+					: "Use a conference filter to compare conference positions."}{" "}
+				Select a team to see its roster and results.{" "}
+				{college ? "AQ = conference tournament champion." : ""}
 			</p>
-			{error ? (
-				<div className="alert alert-danger" role="alert">
-					{error}
-				</div>
+			<DataTable
+				name={`Connected ${college ? "College" : "G League"} Standings ${conference || "all"} ${scope}`}
+				cols={cols}
+				rows={rows}
+				defaultSort={[0, "asc"]}
+				defaultStickyCols={2}
+				pagination
+			/>
+			{college && scope === "top25" ? (
+				<p className="small text-body-secondary">
+					Model rankings consider record, opponent strength, and scoring margin.
+					They are not official polls or the NCAA NET.
+				</p>
 			) : null}
-			{message ? (
-				<div className="visually-hidden" role="status">
-					{message}
+		</>
+	);
+};
+
+const PlayerTable = ({
+	people,
+	props,
+}: {
+	people: Props["roster"];
+	props: Props;
+}) => {
+	const college = props.competition === "college";
+	const cols: Col[] = [
+		{ title: "Player" },
+		{ title: "Pos" },
+		numeric("Age"),
+		...(!props.hideRatings ? [numeric("Ovr"), numeric("Pot")] : []),
+		{ title: "Status" },
+		numeric("GP"),
+		numeric("MPG"),
+		numeric("PPG"),
+		numeric("RPG"),
+		numeric("APG"),
+	];
+	const rows: DataTableRow[] = people.map((p) => {
+		const stats = p.history
+			.filter(
+				(s) => s.season === props.season && s.competition === props.competition,
+			)
+			.at(-1);
+		return {
+			key: p.pid,
+			data: [
+				{
+					value: <a href={helpers.leagueUrl(["player", p.pid])}>{p.name}</a>,
+					sortValue: p.name,
+				},
+				p.pos,
+				p.age,
+				...(!props.hideRatings ? [p.ovr, p.pot] : []),
+				p.status === "draft"
+					? "NBA draft prospect"
+					: p.drafted
+						? "Drafted"
+						: p.assigned
+							? "NBA assignment"
+							: college
+								? `${p.remaining} eligible seasons${p.redshirt ? ", redshirt" : ""}`
+								: "G League",
+				stats?.gp ?? 0,
+				...(["min", "pts", "reb", "ast"] as const).map((key) =>
+					stats?.gp ? fixed(stats[key] / stats.gp) : "—",
+				),
+			],
+		};
+	});
+	return (
+		<DataTable
+			name={`Connected Roster ${props.section}`}
+			cols={cols}
+			rows={rows}
+			defaultSort={[0, "asc"]}
+			defaultStickyCols={1}
+			pagination
+		/>
+	);
+};
+
+const BoxScore = ({
+	game,
+	props,
+}: {
+	game: NonNullable<Props["boxScore"]>;
+	props: Props;
+}) => {
+	const teams =
+		game.competition === "college" ? props.schools : props.affiliates;
+	const name = (id: number) =>
+		teams.find((t) => t.id === id)?.name ?? "Unknown team";
+	return (
+		<>
+			<h2 className="h4">
+				{name(game.home)} {game.pts?.[0] ?? "—"}–{game.pts?.[1] ?? "—"}{" "}
+				{name(game.away)}
+			</h2>
+			<p className="text-body-secondary">
+				Day {game.day} · {game.stage}{" "}
+				{game.overtimes
+					? `· ${game.overtimes} overtime period${game.overtimes === 1 ? "" : "s"}`
+					: ""}
+			</p>
+			{game.box?.map((box, side) => (
+				<div className="table-responsive mb-4" key={side}>
+					<table className="table table-striped table-sm">
+						<caption className="caption-top fw-bold">
+							{name(side === 0 ? game.home : game.away)}
+						</caption>
+						<thead>
+							<tr>
+								<th>Player</th>
+								<th>MIN</th>
+								<th>PTS</th>
+								<th>REB</th>
+								<th>AST</th>
+								<th>FG</th>
+								<th>3PT</th>
+								<th>FT</th>
+								<th>TO</th>
+								<th>PF</th>
+							</tr>
+						</thead>
+						<tbody>
+							{box.map((p) => (
+								<tr key={p.pid}>
+									<td>
+										<a href={helpers.leagueUrl(["player", p.pid])}>{p.name}</a>
+									</td>
+									<td>{p.min.toFixed(1)}</td>
+									<td>{p.pts}</td>
+									<td>{p.reb}</td>
+									<td>{p.ast}</td>
+									<td>
+										{p.fg}/{p.fga}
+									</td>
+									<td>
+										{p.tp}/{p.tpa}
+									</td>
+									<td>
+										{p.ft}/{p.fta}
+									</td>
+									<td>{p.tov}</td>
+									<td>{p.pf}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				</div>
-			) : null}
+			))}
+		</>
+	);
+};
+
+const BasketballWorld = (props: Props) => {
+	useTitleBar({ title: "College & G League" });
+	const college = props.section === "college";
+	const teams = college ? props.schools : props.affiliates;
+	const selected =
+		props.selectedTeam !== undefined
+			? teams.find((t) => t.id === props.selectedTeam)
+			: undefined;
+	const tabs = [
+		["college", "College standings"],
+		["g_league", "G League standings"],
+		["playoffs", "Playoffs"],
+		["draft", "NBA draft pipeline"],
+		["history", "History & rules"],
+	];
+	const name = (id: number) =>
+		teams.find((t) => t.id === id)?.name ?? "Unknown team";
+	return (
+		<div style={{ maxWidth: 1280 }}>
+			<p>
+				College programs and G League clubs are managed automatically. Follow
+				their standings, prospects, and playoffs while you manage your NBA team.
+			</p>
 			{!props.enabled ? (
 				<p>
 					Enable <strong>Connected Basketball</strong> under{" "}
-					<a href={helpers.leagueUrl(["mods"])}>League → Mods</a> to create a
-					connected world.
+					<a href={helpers.leagueUrl(["mods"])}>League → Mods</a>. The connected
+					world will be created automatically.
 				</p>
 			) : !props.initialized ? (
-				<>
-					<p>
-						Create the world with 365 colleges, conference tournaments, a
-						national championship, and 31 G League clubs. Players and coaches
-						are generated.
-					</p>
-					<button
-						className="btn btn-primary"
-						disabled={busy}
-						onClick={() => void action({ type: "initialize" })}
-					>
-						{busy ? "Building world…" : "Create connected world"}
-					</button>
-				</>
+				<p role="status">
+					The connected world starts automatically when you begin the NBA
+					regular season. Use Play → Until regular season to get started.
+				</p>
 			) : (
 				<>
-					<div className="d-flex flex-wrap align-items-center gap-2 mb-3">
+					<div className="border-top border-bottom py-2 mb-3 d-flex flex-wrap justify-content-between gap-2">
 						<strong>
 							{props.season} season · Day {props.day} ·{" "}
 							{props.stage === "regular"
@@ -221,313 +378,123 @@ const BasketballWorld = (props: View<"basketballWorld">) => {
 									? "Postseason"
 									: "Offseason"}
 						</strong>
-						<span className="ms-sm-auto" />
-						<button
-							className="btn btn-sm btn-outline-primary"
-							disabled={busy || props.stage === "offseason"}
-							onClick={() => void action({ type: "advance", days: 1 })}
-						>
-							Play day
-						</button>
-						<button
-							className="btn btn-sm btn-outline-primary"
-							disabled={busy || props.stage === "offseason"}
-							onClick={() => void action({ type: "advance", days: 7 })}
-						>
-							Play week
-						</button>
-						<button
-							className="btn btn-sm btn-outline-primary"
-							disabled={busy || props.stage === "offseason"}
-							onClick={() => void action({ type: "advance", days: 164 })}
-						>
-							{busy ? "Simulating…" : "Finish world season"}
-						</button>
+						<span className="text-body-secondary">
+							Advances with the NBA Play menu
+						</span>
 					</div>
-					<p className="small text-body-secondary">
-						College and G League games also advance as you play NBA days. The
-						NBA draft waits for the college postseason to finish.
-					</p>
-					<nav
-						aria-label="Basketball competitions"
-						className="nav nav-tabs mb-3"
-					>
-						{[
-							["college", "College"],
-							["recruiting", "Recruiting & transfers"],
-							["g_league", "G League"],
-							["draft", "NBA draft pipeline"],
-							["history", "History & rules"],
-						].map(([section, title]) => (
+					<nav className="nav nav-tabs mb-4" aria-label="Connected basketball">
+						{tabs.map(([section, title]) => (
 							<a
 								key={section}
+								href={url(section!)}
 								className={`nav-link${props.section === section ? " active" : ""}`}
 								aria-current={props.section === section ? "page" : undefined}
-								href={helpers.leagueUrl(["basketball_world", section!])}
 							>
 								{title}
 							</a>
 						))}
 					</nav>
-					{props.section === "college" || props.section === "g_league" ? (
-						<>
-							<div className="row g-3 mb-3">
-								<div className="col-md-6">
-									<label htmlFor="world-team" className="form-label">
-										{props.section === "college" ? "College" : "G League club"}
-									</label>
-									<select
-										id="world-team"
-										className="form-select"
-										value={
-											props.section === "college"
-												? props.schoolId
-												: (props.roster[0]?.affiliateId ??
-													props.affiliates[0]?.id)
-										}
-										onChange={(event) =>
-											void realtimeUpdate(
-												[],
-												helpers.leagueUrl([
-													"basketball_world",
-													props.section,
-													event.target.value,
-												]),
-											)
-										}
-									>
-										{teams.map((t) => (
-											<option key={t.id} value={t.id}>
-												{t.name}
-											</option>
-										))}
-									</select>
-								</div>
-								{school && props.section === "college" ? (
-									<div className="col-md-6 align-self-end">
-										<p className="mb-1">
-											{school.conference} · {school.won}–{school.lost} (
-											{school.confWon}–{school.confLost} conference)
-										</p>
-										<p className="small mb-1">
-											Coach: {school.coach} · Program prestige:{" "}
-											{school.prestige} · NIL budget:{" "}
-											{money(school.budget - school.spent)} remaining
-										</p>
-										{props.schoolId !== props.userSchoolId ? (
-											<button
-												className="btn btn-sm btn-outline-primary"
-												disabled={busy}
-												onClick={() =>
-													void action({
-														type: "manageCollege",
-														teamId: props.schoolId,
-													})
-												}
-											>
-												Manage this college
-											</button>
-										) : (
-											<span className="small text-success">
-												Your college program
-											</span>
-										)}
-									</div>
-								) : null}
-							</div>
-							{playerTable(props.roster, "roster")}
-							<h2 className="h4">Standings</h2>
-							<label htmlFor="world-conference" className="form-label">
-								Conference
-							</label>
-							<select
-								id="world-conference"
-								className="form-select mb-2"
-								style={{ maxWidth: 420 }}
-								value={conference}
-								onChange={(event) => setConference(event.target.value)}
-							>
-								<option value="">All conferences</option>
-								{[...new Set(teams.map((t) => t.conference))]
-									.sort()
-									.map((name) => (
-										<option key={name}>{name}</option>
-									))}
-							</select>
-							<div className="table-responsive">
-								<table className="table table-striped table-sm">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Conference</th>
-											<th>W</th>
-											<th>L</th>
-											<th>Conf W</th>
-											<th>Conf L</th>
-											<th>Point differential</th>
-										</tr>
-									</thead>
-									<tbody>
-										{teams
-											.filter((t) => !conference || t.conference === conference)
-											.sort((a, b) => b.won - a.won || a.lost - b.lost)
-											.map((t) => (
-												<tr key={t.id}>
-													<td>
-														<a
-															href={helpers.leagueUrl([
-																"basketball_world",
-																props.section,
-																t.id,
-															])}
-														>
-															{t.name}
-														</a>
-													</td>
-													<td>{t.conference}</td>
-													<td>{t.won}</td>
-													<td>{t.lost}</td>
-													<td>{t.confWon}</td>
-													<td>{t.confLost}</td>
-													<td>{t.pf - t.pa}</td>
+					{props.section === "playoffs" ? (
+						<WorldPlayoffs {...props} />
+					) : props.section === "college" || props.section === "g_league" ? (
+						selected ? (
+							<>
+								<a href={url(props.section)} className="d-inline-block mb-3">
+									Back to {college ? "college" : "G League"} standings
+								</a>
+								<h2 className="h4">{selected.name}</h2>
+								<p className="text-body-secondary">
+									{selected.conference} · {selected.won}–{selected.lost} overall
+									{college ? ` · Coach ${selected.coach}` : ""}
+								</p>
+								<PlayerTable props={props} people={props.roster} />
+								<h3 className="h5 mt-4">Recent results</h3>
+								{props.latest.length === 0 ? (
+									<p>
+										No games played yet. Results appear as the NBA calendar
+										advances.
+									</p>
+								) : (
+									<div className="table-responsive">
+										<table className="table table-striped">
+											<thead>
+												<tr>
+													<th>Day</th>
+													<th>Home</th>
+													<th>Score</th>
+													<th>Away</th>
+													<th>Competition</th>
 												</tr>
-											))}
-									</tbody>
-								</table>
-							</div>
-							{props.section === "g_league" ? (
-								<>
-									<h2 className="h4">Your NBA roster</h2>
-									<p>
-										Assignments keep the NBA contract and roster spot. Recall a
-										player to make him available for NBA games.
-									</p>
-									{playerTable(props.nbaRoster, "nba")}
-									<h2 className="h4">Available for NBA call-up</h2>
-									<p>
-										Signing uses an NBA roster spot and a minimum contract. G
-										League affiliation alone does not give the parent NBA team
-										exclusive signing rights.
-									</p>
-									{playerTable(props.callUps, "callUp")}
-								</>
-							) : null}
-							<h2 className="h4">Recent games</h2>
-							{props.latest.length === 0 ? (
-								<p>No games played yet.</p>
-							) : (
-								props.latest.map((game) => (
-									<details className="border-top py-2" key={game.id}>
-										<summary>
-											{teamName(game.home, game.competition)} {game.pts![0]}–
-											{game.pts![1]} {teamName(game.away, game.competition)} ·
-											Day {game.day} · {game.stage}
-										</summary>
-										{game.box?.map((box, i) => (
-											<div className="table-responsive" key={i}>
-												<table className="table table-sm">
-													<caption className="caption-top">
-														{teamName(
-															i === 0 ? game.home : game.away,
-															game.competition,
-														)}
-													</caption>
-													<thead>
-														<tr>
-															<th>Player</th>
-															<th>MIN</th>
-															<th>PTS</th>
-															<th>REB</th>
-															<th>AST</th>
-															<th>FG</th>
-															<th>3PT</th>
-															<th>FT</th>
-															<th>TO</th>
-															<th>PF</th>
-														</tr>
-													</thead>
-													<tbody>
-														{box.map((p) => (
-															<tr key={p.pid}>
-																<td>
-																	<a
-																		href={helpers.leagueUrl(["player", p.pid])}
-																	>
-																		{p.name}
-																	</a>
-																</td>
-																<td>{p.min.toFixed(1)}</td>
-																<td>{p.pts}</td>
-																<td>{p.reb}</td>
-																<td>{p.ast}</td>
-																<td>
-																	{p.fg}/{p.fga}
-																</td>
-																<td>
-																	{p.tp}/{p.tpa}
-																</td>
-																<td>
-																	{p.ft}/{p.fta}
-																</td>
-																<td>{p.tov}</td>
-																<td>{p.pf}</td>
-															</tr>
-														))}
-													</tbody>
-												</table>
-											</div>
-										))}
-									</details>
-								))
-							)}
-						</>
-					) : props.section === "recruiting" ? (
-						<>
-							<h2 className="h4">Recruit for {managed?.name}</h2>
-							<p>
-								{props.recruitingOpen
-									? `Signing period open. ${props.recruitingPoints} recruiting points remain; each contact costs 10.`
-									: "The transfer portal and incoming recruiting class open after the NBA draft. Returning players and recruits are allocated before the next preseason."}
-							</p>
-							<label htmlFor="nil-offer" className="form-label">
-								Annual NIL offer
-							</label>
-							<input
-								id="nil-offer"
-								type="number"
-								min="0"
-								step="10000"
-								value={offer}
-								onChange={(event) => setOffer(event.target.value)}
-								className="form-control mb-3"
-								style={{ maxWidth: 240 }}
-							/>
-							<p className="small text-body-secondary">
-								Offers increase interest. A commitment uses one of 15 roster
-								places and must fit the program budget. NIL values are
-								simulated.
-							</p>
-							{playerTable(props.recruits, "recruit")}
-						</>
+											</thead>
+											<tbody>
+												{props.latest.map((game) => (
+													<tr key={game.id}>
+														<td>{game.day}</td>
+														<td>{name(game.home)}</td>
+														<td>
+															<a href={url("game", game.id)}>
+																{game.pts![0]}–{game.pts![1]}
+															</a>
+														</td>
+														<td>{name(game.away)}</td>
+														<td>{game.stage}</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</div>
+								)}
+							</>
+						) : (
+							<WorldStandings key={props.section} props={props} />
+						)
 					) : props.section === "draft" ? (
 						<>
-							<h2 className="h4">College prospects in the NBA draft</h2>
+							<h2 className="h4">College-to-NBA draft pipeline</h2>
 							<p>
-								Prospects become available after the college postseason and the
-								declaration process. Draft them from the game's{" "}
-								<a href={helpers.leagueUrl(["draft"])}>NBA draft screen</a>.
-								Their college careers remain on their player profiles.
+								College programs handle recruiting, transfers, and eligibility.
+								After their postseason, eligible prospects enter the{" "}
+								<a href={helpers.leagueUrl(["draft"])}>normal NBA draft</a> with
+								the same player identity and college history.
 							</p>
-							{playerTable(props.prospects, "draft")}
+							{props.prospects.length ? (
+								<PlayerTable props={props} people={props.prospects} />
+							) : (
+								<p className="text-body-secondary">
+									This season’s declarations are not complete yet. Continue the
+									NBA season to see the draft class.
+								</p>
+							)}
 						</>
+					) : props.section === "game" ? (
+						props.boxScore ? (
+							<>
+								<a
+									href={url(
+										props.boxScore.stage === "regular"
+											? props.boxScore.competition === "college"
+												? "college"
+												: "g_league"
+											: "playoffs",
+									)}
+									className="d-inline-block mb-3"
+								>
+									Back to{" "}
+									{props.boxScore.stage === "regular"
+										? "standings"
+										: "playoffs"}
+								</a>
+								<BoxScore game={props.boxScore} props={props} />
+							</>
+						) : (
+							<p>That game could not be found.</p>
+						)
 					) : (
 						<>
 							<h2 className="h4">Season history</h2>
-							{props.archives.length === 0 ? (
-								<p>The first season is still in progress.</p>
-							) : (
+							{props.archives.length ? (
 								<div className="table-responsive">
-									<table className="table">
+									<table className="table table-striped">
 										<thead>
 											<tr>
 												<th>Season</th>
@@ -544,84 +511,45 @@ const BasketballWorld = (props: View<"basketballWorld">) => {
 													<td>{row.collegeChampion}</td>
 													<td>{row.nitChampion}</td>
 													<td>{row.gLeagueChampion}</td>
-													<td>
-														{row.draftPids.map((pid) => (
-															<a
-																key={pid}
-																className="me-2"
-																href={helpers.leagueUrl(["player", pid])}
-															>
-																#{pid}
-															</a>
-														))}
-													</td>
+													<td>{row.draftPids.length}</td>
 												</tr>
 											))}
 										</tbody>
 									</table>
 								</div>
+							) : (
+								<p>The first season is still in progress.</p>
 							)}
-							<h2 className="h4">Rules and simulation model</h2>
+							<h2 className="h4 mt-4">How the connected world works</h2>
 							<p>
-								Rules profile: {props.rules}. College eligibility tracks
-								enrollment, seasons played, academic standing, and redshirts.
-								Later entrants use the five-year model. Individual waivers,
-								recruiting calendars, two-way contracts, and the full NCAA
-								compliance system are not modeled in this version.
+								Rules profile: {props.rules}. All secondary clubs operate
+								automatically: recruiting, transfers, roster decisions, and
+								development. Their games advance alongside NBA days, and the
+								college postseason finishes before the NBA draft. G League staff
+								assign young NBA reserves and recall them when the parent team
+								needs them or the G League season ends.
 							</p>
 							<p>
-								College games use two halves and a five-foul limit; G League
-								games use four quarters, six fouls, and the single-free-throw
-								scoring rule. Standings and box scores are separate from NBA
-								statistics. Schedules, budgets, coaching strength, postseason
-								selection, and program prestige are modeled rather than exact
-								reproductions of real seasons.
-							</p>
-							<p>
-								NBA affiliates are mapped to available teams in this league. NBA
-								assignments retain the parent contract. G League free agents can
-								sign with another NBA team after passing roster and budget
-								checks.
+								College games use two halves and a five-foul limit. G League
+								games use four quarters, six fouls, and single-free-throw
+								scoring. Program strength, schedules, budgets, and postseason
+								selection are simulation models. Individual eligibility waivers,
+								two-way contracts, exact recruiting calendars, and every NCAA
+								bracketing restriction are not modeled.
 							</p>
 						</>
 					)}
-					{props.tournaments.length > 0 ? (
-						<>
-							<h2 className="h4 mt-4">Tournaments</h2>
-							<div className="table-responsive">
-								<table className="table table-sm">
-									<thead>
-										<tr>
-											<th>Competition</th>
-											<th>Status</th>
-										</tr>
-									</thead>
-									<tbody>
-										{props.tournaments.map((t) => (
-											<tr key={t.name}>
-												<td>{t.name}</td>
-												<td>
-													{t.champion !== undefined
-														? `${teamName(t.champion, t.competition)} — champions`
-														: `${t.teams.length} remaining · Round ${t.round}`}
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
-							</div>
-						</>
-					) : null}
-					<h2 className="h4 mt-4">World news</h2>
-					<ul>
-						{props.news.slice(0, 12).map((text, i) => (
-							<li key={i}>{text}</li>
-						))}
-					</ul>
+					<details className="mt-4 border-top pt-3">
+						<summary>World news</summary>
+						<ul className="mt-2">
+							{props.news.slice(0, 12).map((text, i) => (
+								<li key={i}>{text}</li>
+							))}
+						</ul>
+					</details>
 				</>
 			)}
 		</div>
 	);
 };
-
 export default BasketballWorld;

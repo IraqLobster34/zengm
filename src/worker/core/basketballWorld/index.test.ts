@@ -15,12 +15,14 @@ import g from "../../util/g.ts";
 import player from "../player/index.ts";
 import {
 	advanceWorld,
+	automateWorldDevelopment,
 	finishWorldDraft,
 	getSelectionScores,
 	getWorld,
 	makeWorldSchedule,
 	prepareWorldDraft,
 	startWorldSeason,
+	syncWorldCalendar,
 	worldAction,
 } from "./index.ts";
 import { simulateWorldGame } from "./sim.ts";
@@ -197,18 +199,23 @@ test("a complete college/G League season persists champions, statistics, and a u
 	expect((await idb.cache.players.getAll()).length).toBe(before);
 });
 
-test("redshirt actions respect ownership and the season boundary", async () => {
-	await worldAction({ type: "redshirt", pid: players[0]!.pid });
-	expect(
-		(await idb.cache.players.get(players[0]!.pid))?.basketballPathway?.redshirt,
-	).toBe(true);
-	await expect(
-		worldAction({ type: "redshirt", pid: players[20]!.pid }),
-	).rejects.toThrow("your college");
-	await advanceWorld(1);
-	await expect(
-		worldAction({ type: "redshirt", pid: players[0]!.pid }),
-	).rejects.toThrow("before its season");
+test("secondary competition management and manual simulation are unavailable", async () => {
+	for (const type of [
+		"manageCollege",
+		"recruit",
+		"redshirt",
+		"assign",
+		"recall",
+		"callUp",
+		"advance",
+		"initialize",
+	]) {
+		await expect(
+			worldAction({ type, pid: players[0]!.pid, days: 164 }),
+		).rejects.toThrow("managed automatically");
+	}
+	expect(getWorld()?.day).toBe(0);
+	expect(players[0]?.basketballPathway?.redshirt).toBe(false);
 });
 
 test("drafted players retain their ID and college history after the draft", async () => {
@@ -275,26 +282,31 @@ test("the ordinary NBA draft preserves a prospect and the world rolls into anoth
 	expect(getWorld()?.day).toBe(7);
 });
 
-test("NBA assignment and recall preserve the parent roster and contract", async () => {
+test("G League staff assign young reserves and automatically recall them for the postseason", async () => {
 	for (const p of players.slice(0, 15)) {
 		p.tid = 0;
 		p.basketballPathway!.status = "nba";
 		await idb.cache.players.put(p);
 	}
-	const p = players[0]!;
-	const contract = structuredClone(p.contracts);
-	await worldAction({ type: "assign", pid: p.pid });
-	const assigned = await idb.cache.players.get(p.pid);
-	expect(assigned?.tid).toBe(0);
-	expect(assigned?.basketballPathway?.assigned).toBe(true);
-	expect(assigned?.contracts).toEqual(contract);
-	await worldAction({ type: "recall", pid: p.pid });
+	g.setWithoutSavingToDB("phase", 1);
+	await automateWorldDevelopment();
+	const roster = await idb.cache.players.indexGetAll("playersByTid", 0);
+	const assigned = roster.filter((p) => p.basketballPathway?.assigned);
+	expect(assigned.length).toBeGreaterThan(0);
+	expect(assigned.length).toBeLessThanOrEqual(2);
 	expect(
-		(await idb.cache.players.get(p.pid))?.basketballPathway?.assigned,
+		roster.filter((p) => !p.basketballPathway?.assigned).length,
+	).toBeGreaterThanOrEqual(10);
+	expect(assigned.every((p) => p.tid === 0 && p.contracts.length === 0)).toBe(
+		true,
+	);
+	g.setWithoutSavingToDB("phase", 3);
+	await automateWorldDevelopment();
+	expect(
+		(await idb.cache.players.indexGetAll("playersByTid", 0)).some(
+			(p) => p.basketballPathway?.assigned,
+		),
 	).toBe(false);
-	await expect(
-		worldAction({ type: "recall", pid: players[30]!.pid }),
-	).rejects.toThrow("your assigned players");
 });
 
 test("retired recruits cannot reappear in recruiting or college rosters", async () => {
@@ -306,4 +318,33 @@ test("retired recruits cannot reappear in recruiting or college rosters", async 
 	await expect(
 		worldAction({ type: "recruit", pid: p.pid, nil: 0 }),
 	).rejects.toThrow();
+});
+
+test("college programs fill their next recruiting class automatically within roster and NIL limits", async () => {
+	await prepareWorldDraft();
+	await finishWorldDraft();
+	const roster = await idb.cache.players.indexGetAll(
+		"playersByTid",
+		WORLD_TIDS.college,
+	);
+	for (const school of getWorld()!.schools) {
+		expect(
+			roster.filter((p) => p.basketballPathway?.schoolId === school.id).length,
+		).toBe(13);
+		expect(school.spent).toBeLessThanOrEqual(school.budget);
+	}
+});
+
+test("secondary seasons keep pace with NBA calendar days and finish automatically", async () => {
+	g.setWithoutSavingToDB("phase", 1);
+	await idb.cache.schedule.add({ gid: 0, homeTid: 0, awayTid: 1, day: 100 });
+	await syncWorldCalendar(50);
+	expect(getWorld()?.day).toBe(82);
+	await syncWorldCalendar(50);
+	expect(getWorld()?.day).toBe(82);
+	await syncWorldCalendar(100);
+	expect(getWorld()?.day).toBe(164);
+	expect(
+		getWorld()?.tournaments.find((t) => t.stage === "playoffs")?.champion,
+	).toBeDefined();
 });

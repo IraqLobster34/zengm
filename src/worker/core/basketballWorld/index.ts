@@ -1,8 +1,8 @@
-import getPayroll from "../team/getPayroll.ts";
-import { PLAYER, PHASE, RATINGS } from "../../../common/constants.ts";
+import { PLAYER, RATINGS } from "../../../common/constants.ts";
 import { isModEnabled } from "../../../common/mods.ts";
 import {
 	collegeEligibility,
+	worldDayForNbaDay,
 	nbaDraftEligible,
 	emptyWorldStats,
 	roundRobin,
@@ -206,7 +206,7 @@ const generatePlayer = async (
 	return p as Player;
 };
 
-export const initializeWorld = async () => {
+const createWorld = async () => {
 	if (!worldEnabled()) {
 		return;
 	}
@@ -300,8 +300,6 @@ export const initializeWorld = async () => {
 		affiliates,
 		games: [],
 		tournaments: [],
-		userSchoolId: schools.find((t) => t.name === "Duke")?.id ?? schools[0]!.id,
-		recruitingPoints: 100,
 		draftPrepared: false,
 		offseasonProcessed: false,
 		archives: [],
@@ -374,14 +372,31 @@ export const initializeWorld = async () => {
 	return world;
 };
 
+let creation: Promise<BasketballWorld | undefined> | undefined;
+export const initializeWorld = async () => {
+	if (!worldEnabled()) {
+		return;
+	}
+	const current = getWorld();
+	if (current && !current.initializing) {
+		return current;
+	}
+	creation ??= createWorld().finally(() => {
+		creation = undefined;
+	});
+	return await creation;
+};
+
 const addTournamentRound = (
 	world: BasketballWorld,
 	tournament: WorldTournament,
 ) => {
+	tournament.seeds ??= [...tournament.teams];
 	if (tournament.teams.length === 1) {
 		tournament.champion = tournament.teams[0];
 		return;
 	}
+	tournament.seeds ??= [...tournament.teams];
 	const teams = tournament.teams;
 	if (teams.length === 0) {
 		return;
@@ -397,6 +412,8 @@ const addTournamentRound = (
 			home: teams[size - games + i]!,
 			away: teams.at(-1 - i)!,
 			stage: tournament.stage,
+			tournament: tournament.name,
+			round: tournament.round,
 			neutral: true,
 		});
 	}
@@ -678,6 +695,31 @@ export const advanceWorld = async (days: number, persist = true) => {
 	}
 };
 
+export const syncWorldCalendar = async (nbaDay: number) => {
+	if (!worldEnabled()) {
+		return;
+	}
+	const world = await initializeWorld();
+	if (!world || world.stage === "offseason") {
+		return;
+	}
+	let target = 164;
+	if (g.get("phase") < 3) {
+		if (!world.nbaRegularSeasonDays) {
+			const schedule = await idb.cache.schedule.getAll();
+			world.nbaRegularSeasonDays = Math.max(
+				nbaDay,
+				...schedule.map((game) => game.day ?? 0),
+			);
+			await saveWorld(world);
+		}
+		target = worldDayForNbaDay(nbaDay, world.nbaRegularSeasonDays);
+	}
+	if (target > world.day) {
+		await advanceWorld(target - world.day, false);
+	}
+};
+
 export const prepareWorldDraft = async () => {
 	if (!worldEnabled()) {
 		return;
@@ -740,6 +782,45 @@ export const prepareWorldDraft = async () => {
 	await saveWorld(world);
 };
 
+const recruitAutomatically = async (
+	world: BasketballWorld,
+	players: Player[],
+) => {
+	const available = shuffle(
+		players.filter(
+			(p) =>
+				p.tid !== PLAYER.RETIRED &&
+				(p.basketballPathway?.status === "recruit" ||
+					p.basketballPathway?.status === "portal"),
+		),
+	).sort((a, b) => score(b) - score(a));
+	const rosterMap = rosters(players, "college");
+	for (const school of shuffle([...world.schools]).sort(
+		(a, b) => b.prestige - a.prestige,
+	)) {
+		const roster = rosterMap.get(school.id) ?? [];
+		while (roster.length < 13) {
+			const p = available.shift() ?? (await generatePlayer(world, "recruit"));
+			const path = p.basketballPathway!;
+			path.status = "college";
+			path.schoolId = school.id;
+			path.redshirt = false;
+			p.tid = WORLD_TIDS.college;
+			p.college = school.name;
+			path.nil = Math.max(
+				0,
+				Math.min(
+					school.budget - school.spent,
+					Math.round((school.budget / 20) * (rating(p).pot / 70)),
+				),
+			);
+			school.spent += path.nil;
+			roster.push(p);
+			await idb.cache.players.put(p);
+		}
+	}
+};
+
 export const finishWorldDraft = async () => {
 	if (!worldEnabled() || !getWorld()) {
 		return;
@@ -770,16 +851,23 @@ export const finishWorldDraft = async () => {
 		await idb.cache.players.put(p);
 	}
 	for (const school of world.schools) {
-		school.spent = 0;
+		school.spent = (await pathwayPlayers())
+			.filter(
+				(p) =>
+					p.basketballPathway?.status === "college" &&
+					p.basketballPathway.schoolId === school.id,
+			)
+			.reduce((sum, p) => sum + (p.basketballPathway?.nil ?? 0), 0);
 	}
 	for (let i = 0; i < world.schools.length * 4; i++) {
 		await generatePlayer(world, "recruit");
 	}
+	await recruitAutomatically(world, await pathwayPlayers());
 	world.offseasonProcessed = true;
-	world.recruitingPoints = 100;
+
 	news(
 		world,
-		"The transfer portal and recruiting class are open. Undrafted professionals have joined G League rosters; NBA draft picks retain their college histories.",
+		"College programs are handling recruiting and transfers automatically. Undrafted professionals have joined G League rosters; NBA draft picks retain their college histories.",
 	);
 	await saveWorld(world);
 };
@@ -862,36 +950,18 @@ export const startWorldSeason = async () => {
 			await generatePlayer(world, "gLeague", affiliate);
 		}
 	}
-	const available = shuffle(
-		players.filter(
-			(p) =>
-				p.basketballPathway!.status === "recruit" ||
-				p.basketballPathway!.status === "portal",
-		),
+	await recruitAutomatically(world, players);
+	const available = players.filter(
+		(p) =>
+			p.basketballPathway?.status === "recruit" ||
+			p.basketballPathway?.status === "portal",
 	);
-	available.sort((a, b) => score(b) - score(a));
-	const rosterMap = rosters(players, "college");
-	for (const school of shuffle([...world.schools]).sort(
-		(a, b) => b.prestige - a.prestige,
-	)) {
-		let size = rosterMap.get(school.id)?.length ?? 0;
-		while (size < 13) {
-			const p = available.shift() ?? (await generatePlayer(world, "recruit"));
-			const path = p.basketballPathway!;
-			path.status = "college";
-			path.schoolId = school.id;
-			path.redshirt = false;
-			p.tid = WORLD_TIDS.college;
-			p.college = school.name;
-			await idb.cache.players.put(p);
-			size++;
-		}
-	}
 	for (const p of available) {
 		p.tid = PLAYER.RETIRED;
 		p.retiredYear = world.season;
 		await idb.cache.players.put(p);
 	}
+
 	for (const t of [...world.schools, ...world.affiliates]) {
 		t.won = 0;
 		t.lost = 0;
@@ -901,6 +971,7 @@ export const startWorldSeason = async () => {
 		t.pa = 0;
 	}
 	world.day = 0;
+	delete world.nbaRegularSeasonDays;
 	world.stage = "regular";
 	world.draftPrepared = false;
 	world.offseasonProcessed = false;
@@ -910,181 +981,20 @@ export const startWorldSeason = async () => {
 	await saveWorld(world);
 };
 
-export type WorldAction = {
-	type:
-		| "initialize"
-		| "advance"
-		| "manageCollege"
-		| "recruit"
-		| "redshirt"
-		| "assign"
-		| "recall"
-		| "callUp";
+export { automateWorldDevelopment } from "./automation.ts";
+
+/** Compatibility response for older open tabs. Secondary clubs are autonomous. */
+export const worldAction = async (_action: {
+	type: string;
+	pid?: number;
 	days?: number;
 	teamId?: number;
-	pid?: number;
 	nil?: number;
-};
-export const worldAction = async (action: WorldAction) => {
-	if (!worldEnabled()) {
-		throw new Error("Enable Connected Basketball in Mods first.");
-	}
-	const world = await initializeWorld();
-	if (!world) {
-		throw new Error("No connected world found.");
-	}
-	if (action.type === "advance") {
-		await advanceWorld(action.days ?? 1);
-	} else if (action.type === "manageCollege") {
-		if (!world.schools.some((t) => t.id === action.teamId)) {
-			throw new Error("Choose a college.");
-		}
-		world.userSchoolId = action.teamId!;
-	} else if (action.pid !== undefined) {
-		const p = await idb.cache.players.get(action.pid);
-		if (!p || p.tid === PLAYER.RETIRED) {
-			throw new Error("Player not found.");
-		}
-		const path = p.basketballPathway;
-		if (action.type === "recruit") {
-			if (
-				!world.offseasonProcessed ||
-				!path ||
-				!["recruit", "portal"].includes(path.status)
-			) {
-				throw new Error("Recruiting opens after the NBA draft.");
-			}
-			const school = world.schools.find((t) => t.id === world.userSchoolId)!;
-			const roster = (await pathwayPlayers()).filter(
-				(p) =>
-					p.basketballPathway!.status === "college" &&
-					p.basketballPathway!.schoolId === school.id,
-			);
-			if (roster.length >= 15) {
-				throw new Error("The college roster is full (15 players).");
-			}
-			const amount = Math.max(0, Math.round(action.nil ?? 0));
-			if (!Number.isFinite(amount) || amount > school.budget - school.spent) {
-				throw new Error("That offer exceeds the remaining NIL budget.");
-			}
-			if (world.recruitingPoints < 10) {
-				throw new Error("No recruiting actions remain this offseason.");
-			}
-			world.recruitingPoints -= 10;
-			path.interest[school.id] =
-				(path.interest[school.id] ?? 0) +
-				25 +
-				school.prestige / 5 +
-				amount / 20000;
-			if (path.interest[school.id]! >= 70 + rating(p).pot / 2) {
-				path.status = "college";
-				path.schoolId = school.id;
-				path.nil = amount;
-				p.college = school.name;
-				p.tid = WORLD_TIDS.college;
-				school.spent += amount;
-				news(
-					world,
-					`${p.firstName} ${p.lastName} committed to ${school.name}.`,
-				);
-			}
-		} else if (action.type === "redshirt") {
-			if (
-				!path ||
-				path.status !== "college" ||
-				path.schoolId !== world.userSchoolId ||
-				world.day > 0
-			) {
-				throw new Error(
-					"Redshirt decisions must be made for your college before its season starts.",
-				);
-			}
-			if (path.enrolled >= 2027) {
-				throw new Error(
-					"This player's five-year ruleset does not gain a season from redshirting.",
-				);
-			}
-			if (!path.redshirt) {
-				const available = (await pathwayPlayers()).filter(
-					(other) =>
-						other.basketballPathway?.status === "college" &&
-						other.basketballPathway.schoolId === world.userSchoolId &&
-						!other.basketballPathway.redshirt,
-				);
-				if (available.length <= 5) {
-					throw new Error(
-						"Keep at least five players active for college games.",
-					);
-				}
-			}
-			path.redshirt = !path.redshirt;
-		} else if (action.type === "assign") {
-			if (!g.get("userTids").includes(p.tid)) {
-				throw new Error("You can assign only players on your NBA roster.");
-			}
-			if (g.get("phase") >= PHASE.PLAYOFFS || world.day >= 150) {
-				throw new Error(
-					"G League assignments are available during the regular season.",
-				);
-			}
-			const roster = await idb.cache.players.indexGetAll("playersByTid", p.tid);
-			if (
-				roster.filter((p) => !p.basketballPathway?.assigned).length <=
-				Math.max(8, g.get("minRosterSize"))
-			) {
-				throw new Error("Keep enough available players on the NBA roster.");
-			}
-			if (g.get("season") - p.draft.year > 2) {
-				throw new Error(
-					"Veteran assignments require consent and are not supported by this assignment control.",
-				);
-			}
-			const affiliate = world.affiliates.find((t) => t.parentTid === p.tid);
-			if (!affiliate) {
-				throw new Error("This NBA team has no affiliate.");
-			}
-			p.basketballPathway ??= newPathway("nba", world.season - 4);
-			p.basketballPathway.assigned = true;
-			p.basketballPathway.affiliateId = affiliate.id;
-		} else if (action.type === "recall") {
-			if (!path?.assigned || !g.get("userTids").includes(p.tid)) {
-				throw new Error("You can recall only your assigned players.");
-			}
-			path.assigned = false;
-		} else if (action.type === "callUp") {
-			if (
-				!path ||
-				path.status !== "gLeague" ||
-				p.tid !== WORLD_TIDS.gLeague ||
-				p.draft.year > world.season
-			) {
-				throw new Error(
-					"Only draft-eligible professional free agents can be called up.",
-				);
-			}
-			const tid = g.get("userTid");
-			const roster = await idb.cache.players.indexGetAll("playersByTid", tid);
-			if (roster.length >= g.get("maxRosterSize")) {
-				throw new Error("Make room on your NBA roster first.");
-			}
-			const payroll = await getPayroll(tid);
-			if (
-				g.get("salaryCapType") === "hard" &&
-				payroll + g.get("minContract") > g.get("salaryCap")
-			) {
-				throw new Error("This contract would exceed the hard salary cap.");
-			}
-			await player.sign(
-				p,
-				tid,
-				{ amount: g.get("minContract"), exp: g.get("season") },
-				g.get("phase"),
-			);
-			path.status = "nba";
-			path.assigned = false;
-		}
-		await idb.cache.players.put(p);
-	}
-	await saveWorld(world);
-	await idb.cache.flush();
+}) => {
+	void _action;
+	return await Promise.reject(
+		new Error(
+			"College and G League clubs are managed automatically. Advance the NBA calendar with the Play menu.",
+		),
+	);
 };

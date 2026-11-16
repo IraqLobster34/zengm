@@ -82,6 +82,8 @@ export type WorldGame = {
 	stage: "regular" | "conference" | "national" | "nit" | "playoffs";
 	conferenceGame?: boolean;
 	neutral?: boolean;
+	tournament?: string;
+	round?: number;
 	pts?: [number, number];
 	box?: [WorldBoxScore[], WorldBoxScore[]];
 	overtimes?: number;
@@ -91,6 +93,7 @@ export type WorldTournament = {
 	competition: WorldCompetition;
 	stage: WorldGame["stage"];
 	teams: number[];
+	seeds?: number[];
 	round: number;
 	day: number;
 	champion?: number;
@@ -105,6 +108,7 @@ export type WorldArchive = {
 };
 export type BasketballWorld = {
 	initializing?: boolean;
+	nbaRegularSeasonDays?: number;
 	version: 1;
 	rules: string;
 	season: number;
@@ -114,8 +118,9 @@ export type BasketballWorld = {
 	affiliates: WorldTeam[];
 	games: WorldGame[];
 	tournaments: WorldTournament[];
-	userSchoolId: number;
-	recruitingPoints: number;
+	// Legacy save fields, ignored by autonomous club management.
+	userSchoolId?: number;
+	recruitingPoints?: number;
 	draftPrepared: boolean;
 	offseasonProcessed: boolean;
 	archives: WorldArchive[];
@@ -177,3 +182,8 @@ export const roundRobin = (
 	}
 	return output;
 };
+
+export const worldDayForNbaDay = (day: number, seasonDays: number) =>
+	Number.isFinite(day) && Number.isFinite(seasonDays) && seasonDays > 0
+		? Math.min(164, Math.max(0, Math.floor((day / seasonDays) * 164)))
+		: 0;

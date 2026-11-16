@@ -6,7 +6,7 @@ An unofficial source-code mod that adds an in-season NBA Cup to Basketball GM: g
 
 ## Features
 
-- **Connected Basketball:** college seasons and recruiting, an NBA draft pipeline with persistent player identities, and G League assignments, recalls, and call-ups. See the [setup and current simulation limits](docs/CONNECTED_BASKETBALL.md).
+- **Connected Basketball:** automatic college seasons and recruiting, an NBA draft pipeline with persistent player identities, and automatic G League assignments and recalls. Read-only standings and playoff brackets follow both competitions. See the [setup and current simulation limits](docs/CONNECTED_BASKETBALL.md).
 
 - **Main menu → Mods:** choose defaults for new leagues, review them before creation, and manage each league under **League → Mods**. NBA Cup is the first bundled mod; active tournaments are protected and completed history stays saved.
 

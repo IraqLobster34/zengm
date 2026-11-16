@@ -1,0 +1,73 @@
+.world-bracket {
+	display: flex;
+	gap: 1.5rem;
+	overflow: auto;
+	max-height: 72vh;
+	min-height: 16rem;
+	padding-bottom: 1rem;
+}
+.world-bracket-round {
+	flex: 0 0 230px;
+	display: flex;
+	flex-direction: column;
+}
+.world-bracket-matches {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: space-around;
+	gap: 1rem;
+}
+.world-matchup {
+	border: 1px solid var(--bs-border-color);
+	border-radius: var(--bs-border-radius);
+	background: var(--bs-body-bg);
+}
+.world-matchup-team {
+	display: grid;
+	grid-template-columns: 1.5rem 1fr 2.25rem;
+	align-items: center;
+	gap: 0.25rem;
+	min-height: 36px;
+	padding: 0.3rem 0.5rem;
+	font-variant-numeric: tabular-nums;
+}
+.world-matchup-team + .world-matchup-team {
+	border-top: 1px solid var(--bs-border-color);
+}
+.world-seed {
+	color: var(--bs-secondary-color);
+	font-size: 0.85em;
+}
+.world-score {
+	text-align: right;
+}
+.world-matchup-footer {
+	border-top: 1px solid var(--bs-border-color);
+	padding: 0.3rem 0.5rem;
+	font-size: 0.85em;
+	color: var(--bs-secondary-color);
+}
+.world-champion {
+	border-left: 3px solid var(--bs-success);
+	padding: 0.25rem 1rem;
+}
+@media (max-width: 575.98px) {
+	.world-bracket-round {
+		display: none;
+		flex-basis: 100%;
+	}
+	.world-bracket-round.is-selected {
+		display: flex;
+	}
+	.world-bracket-matches {
+		gap: 0.75rem;
+	}
+}
+
+.world-bracket-round > h3 {
+	position: sticky;
+	top: 0;
+	background: var(--bs-body-bg);
+	z-index: 1;
+}

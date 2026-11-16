@@ -1,8 +1,10 @@
 # Connected Basketball
 
 Enable **Connected Basketball** in the main-menu Mods screen or when creating a
-basketball league. Open **League → College & G League**, then choose **Create
-connected world**. Historical roster forcing and repeat-season modes must be off.
+basketball league. The world starts automatically with the NBA regular season.
+Open **League → College & G League** to browse standings, rosters, prospects, and
+playoff brackets. College and G League clubs are controlled by the simulation;
+you manage your NBA team. Historical roster forcing and repeat-season modes must be off.
 The normal NBA league remains playable, including NBA Cup if enabled.
 
 ## Included
@@ -12,21 +14,23 @@ The normal NBA league remains playable, including NBA Cup if enabled.
 - College schedules, conference standings and tournaments, automatic qualifiers,
   a modeled at-large selection process, national championship, and NIT.
 - 31 G League clubs, schedules, standings, playoffs, NBA affiliates, NBA player
-  assignments and recalls, and minimum-contract NBA call-ups.
+  automatic assignments and recalls.
 - One player record throughout college, the NBA draft, and professional play.
   College and G League statistics remain visible on NBA player profiles.
 - Enrollment and eligibility clocks, seasons played, GPA checks, redshirts,
-  a transfer pool, recruiting contacts, scholarship roster limits, and NIL offers.
-- College and G League games advance alongside NBA days. You can also advance
-  the secondary competitions from their page. The NBA draft completes the college
-  postseason before preparing the draft pool.
+  an automatic transfer pool, recruiting, scholarship roster limits, and simulated NIL offers.
+- College and G League calendars scale to NBA schedule days and finish by the
+  NBA playoffs. Browse their progress through read-only standings, results, and
+  tournament brackets. The NBA draft also completes any remaining college
+  postseason before preparing its prospect pool.
 - Drafted players join the ordinary NBA roster and contract system. Undrafted
-  professionals join G League rosters. Recruiting opens after the NBA draft.
+  professionals join G League rosters. Automatic recruiting and transfers run after the NBA draft.
   Next preseason archives the results, develops players, and fills college rosters.
 
-Assignments retain the NBA contract and roster spot; assigned players are excluded
-from NBA game lineups until recalled. Call-ups require an open NBA roster place
-and respect a hard salary cap. An affiliate's ordinary G League players are not
+G League staff automatically assign young NBA reserves and recall players when
+NBA injuries, roster changes, the playoffs, or the end of the G League season
+require it. Assignments retain the NBA contract and roster spot; assigned players are excluded
+from NBA game lineups until recalled. An affiliate's ordinary G League players are not
 exclusive NBA property. Established worlds cannot be disabled through Mods.
 
 ## Rules and realism boundaries
@@ -80,3 +84,20 @@ preparation, draft selections, after-draft processing, and preseason rollover.
 
 Targeted tests cover scheduling, eligibility, box-score totals, season completion,
 champions, draft-pool identity, saved world updates, and roster ownership checks.
+
+## Standings and postseason views
+
+Standings use regular-season results, excluding tournament games. Conference
+filters show conference positions; sortable tables include percentage, games
+behind, home/away records, last ten, streaks, scoring, and scoring differential.
+College rankings can be limited to the model top 25. Team links open read-only
+rosters and recent results.
+
+The Playoffs tab separates the national championship, conference tournaments,
+NIT, and G League playoffs. Brackets show initial seeds, scores, byes, future
+rounds, champions, and linked box scores. Older saves without persisted seed
+information show their matchups without inventing seed numbers. On mobile,
+select a round to view it without scrolling through every bracket column.
+
+Legacy requests to manage a college, recruit, redshirt, assign or recall players,
+or manually advance the secondary calendar are rejected by the worker.

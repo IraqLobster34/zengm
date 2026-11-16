@@ -15,6 +15,8 @@ import {
 	isAllStarTid,
 } from "../../../common/specialGames.ts";
 
+import { automateWorldDevelopment } from "../basketballWorld/automation.ts";
+
 const MAX_NUM_PLAYERS_PACE = 7;
 
 export const SKIP_PLAYER_STATS = new Set(["minAvailable"]);
@@ -438,6 +440,7 @@ const loadTeams = async (tids: number[], conditions: Conditions) => {
 			}
 		}
 
+		await automateWorldDevelopment();
 		for (const tid of tids) {
 			const allStarsTeamInd = tid === ALL_STAR_GAME_TIDS[0] ? 0 : 1;
 			const players = [];

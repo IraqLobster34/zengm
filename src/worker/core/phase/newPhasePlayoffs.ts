@@ -8,10 +8,13 @@ import type {
 } from "../../../common/types.ts";
 import { PHASE } from "../../../common/constants.ts";
 
+import { advanceWorld } from "../basketballWorld/index.ts";
+
 const newPhasePlayoffs = async (
 	conditions: Conditions,
 	liveGameSim: boolean = false,
 ): Promise<PhaseReturn> => {
+	await advanceWorld(164, false);
 	await achievement.check("afterRegularSeason", conditions);
 
 	// In case this was somehow set already
